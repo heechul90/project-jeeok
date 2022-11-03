@@ -1,8 +1,11 @@
 package com.jeeok.jeeokmember.core.domain;
 
+import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -25,5 +28,22 @@ public class Member {
 
     @Embedded
     private PhoneNumber phoneNumber;
+
+    //===생성자 메서드===//
+    /** Member 생성 */
+    @Builder(builderMethodName = "createMember")
+    public Member(String email, String password, String name, PhoneNumber phoneNumber) {
+        this.email = email;
+        this.password = new BCryptPasswordEncoder().encode(password);
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    //===수정 메서드===//
+    /** Member 수정 */
+    public void updateMember(UpdateMemberParam param) {
+        this.name = param.getMemberName();
+        this.phoneNumber = param.getPhoneNumber();
+    }
 
 }
