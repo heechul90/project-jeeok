@@ -1,0 +1,41 @@
+server:
+  port: 11000
+
+spring:
+  application:
+    name: member-server
+  profiles:
+    active: dev
+  config:
+    import: optional:configserver:http://localhost:10000/
+
+  datasource:
+    url: jdbc:mariadb://localhost:3307/member_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: heech_user
+    password: heech_pass
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        ues_sql_comment: true
+        default_batch_fetch_size: 1000
+    open-in-view: true
+
+
+#actuator config
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka
+
