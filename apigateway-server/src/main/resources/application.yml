@@ -1,7 +1,7 @@
 server:
   port: 11000
 
-actuator config
+#actuator config
 management:
   endpoints:
     web:
