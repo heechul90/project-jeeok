@@ -1,5 +1,5 @@
 server:
-  port: 11001
+  port: 0
 
 spring:
   application:
@@ -28,14 +28,17 @@ spring:
 
 
 #actuator config
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: refresh
-#
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:10001/eureka
-
+    fetch-registry: true #\uB9C8\uC774\uD06C\uB85C\uC11C\uBE44\uC2A4 \uC778\uC2A4\uD134\uC2A4 \uBAA9\uB85D\uC744 \uB85C\uCEEC\uC5D0 \uCE90\uC2DC\uD560 \uAC83\uC778\uC9C0\uC758 \uC5EC\uBD80
+    register-with-eureka: true #\uB098 \uC790\uC2E0\uC740 \uB4F1\uB85D\uD558\uC9C0 \uC54A\uC74C
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

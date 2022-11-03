@@ -18,6 +18,13 @@ public class HomeController {
 
     @GetMapping("/test")
     public String test(HttpServletRequest request) {
+        log.info("port = {}", request.getLocalPort());
         return str + request.getLocalPort();
+    }
+
+    @GetMapping("/test2")
+    public String test2(HttpServletRequest request) {
+        log.info("port = {}", request.getLocalPort());
+        return str + request.getLocalPort() + "22222";
     }
 }
