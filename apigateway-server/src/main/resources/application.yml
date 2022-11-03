@@ -29,9 +29,15 @@ spring:
           uri: lb://MEMBER-SERVER
           predicates:
             - Path=/member-server/**
-            - Method=GET
           filters:
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
+        - id: jeeoklog-server
+          uri: lb://JEEOKLOG-SERVER
+          predicates:
+            - Path=/jeeoklog-server/**
+          filters:
+            - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
 logging:
   level:
