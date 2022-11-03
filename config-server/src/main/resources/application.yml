@@ -1,0 +1,9 @@
+server:
+  port: 10000
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/heechul90/project-jeeok-config-repo.git
