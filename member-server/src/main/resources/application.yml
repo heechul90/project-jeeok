@@ -34,3 +34,15 @@ eureka:
     register-with-eureka: true
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: debug
+
+token:
+  access-expired-time: 3600000
+  refresh-expired-time: 604800000
+  secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
+  refresh-token-name: refresh-token
+  access-token-name: access-token
