@@ -91,6 +91,4 @@ public class MemberController {
 
         return JsonResult.OK();
     }
-
-
 }
