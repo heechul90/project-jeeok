@@ -22,9 +22,17 @@ public class QMember extends EntityPathBase<Member> {
 
     public static final QMember member = new QMember("member1");
 
+    public final com.jeeok.jeeokmember.common.entity.QBaseEntity _super = new com.jeeok.jeeokmember.common.entity.QBaseEntity(this);
+
+    //inherited
+    public final StringPath createdBy = _super.createdBy;
+
     public final StringPath email = createString("email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    //inherited
+    public final StringPath lastModifiedBy = _super.lastModifiedBy;
 
     public final StringPath name = createString("name");
 

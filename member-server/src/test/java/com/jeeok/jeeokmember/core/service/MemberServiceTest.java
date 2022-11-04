@@ -4,23 +4,28 @@ import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
+import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -35,8 +40,17 @@ class MemberServiceTest {
     public static final String NAME = "jeeok";
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
+
+    //UPDATE_MEMBER
     public static final String UPDATE_NAME = "update_jeeok";
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "3333", "44444");
+
+    //ERROR_MESSAGE
+    public static final String MEMBER = "Member";
+    public static final Long NOT_FOUND_ID = 1L;
+    public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
+    public static final String HAS_MESSAGE_ENDING_WITH = "id=";
+
     @InjectMocks MemberService memberService;
 
     @Mock MemberQueryRepository memberQueryRepository;
@@ -56,7 +70,20 @@ class MemberServiceTest {
     @Test
     @DisplayName("멤버 목록 조회")
     void findMembers() {
-        getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, PHONE_NUMBER);
+        //given
+        List<Member> members = new ArrayList<>();
+        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME, ROLE_TYPE, PHONE_NUMBER)));
+        given(memberQueryRepository.findMembers(any(MemberSearchCondition.class), any(Pageable.class))).willReturn(new PageImpl<>(members));
+
+        MemberSearchCondition confition = new MemberSearchCondition();
+        PageRequest pageRequest = PageRequest.of(0, 10);
+
+        //when
+        Page<Member> content = memberService.findMembers(confition, pageRequest);
+
+        //then
+        assertThat(content.getTotalElements()).isEqualTo(5);
+        assertThat(content.getContent().size()).isEqualTo(5);
     }
 
     @Test
@@ -78,15 +105,6 @@ class MemberServiceTest {
 
         //verify
         verify(memberRepository, times(1)).findById(any(Long.class));
-    }
-
-    @Test
-    @DisplayName("멤버 단건 조회_예외")
-    void findMember_entityNotFound() {
-        //given
-
-
-        //expected
     }
 
     @Test
@@ -124,7 +142,7 @@ class MemberServiceTest {
 
         //when
         memberService.updateMember(0L, param);
-        
+
         //then
         assertThat(member.getName()).isEqualTo(UPDATE_NAME);
         assertThat(member.getPhoneNumber().getFirst()).isEqualTo(UPDATE_PHONE_NUMBER.getFirst());
@@ -150,5 +168,31 @@ class MemberServiceTest {
         //verify
         verify(memberRepository, times(1)).findById(any(Long.class));
         verify(memberRepository, times(1)).delete(any(Member.class));
+    }
+
+    @Test
+    @DisplayName("멤버 findById_예외")
+    void findMember_entityNotFound() {
+        //given
+        given(memberRepository.findById(any(Long.class))).willThrow(new EntityNotFound(MEMBER, NOT_FOUND_ID.toString()));
+
+        //expected
+        assertThatThrownBy(() -> memberService.findMember(NOT_FOUND_ID))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH +NOT_FOUND_ID);
+
+        assertThatThrownBy(() -> memberService.updateMember(NOT_FOUND_ID, any(UpdateMemberParam.class)))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+
+        assertThatThrownBy(() -> memberService.deleteMember(NOT_FOUND_ID))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+
+        //verify
+        verify(memberRepository, times(3)).findById(any(Long.class));
     }
 }
