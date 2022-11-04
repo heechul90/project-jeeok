@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 11001
 
 spring:
   application:
@@ -25,6 +25,9 @@ spring:
         ues_sql_comment: true
         default_batch_fetch_size: 1000
     open-in-view: true
+
+  messages:
+    basename: messages, errors
 
 eureka:
   client:
