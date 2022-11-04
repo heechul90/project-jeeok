@@ -1,6 +1,8 @@
 package com.jeeok.jeeokmember.common.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,7 +14,7 @@ import javax.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
-public class BaseEntity {
+public abstract class BaseEntity {
 
     /** 등록자 */
     @CreatedBy

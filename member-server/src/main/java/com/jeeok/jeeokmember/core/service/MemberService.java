@@ -1,5 +1,7 @@
 package com.jeeok.jeeokmember.core.service;
 
+import com.jeeok.jeeokmember.common.entity.BaseEntity;
+import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
@@ -18,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MemberService {
 
+    public static final String MEMBER = "Member";
+
     private final MemberQueryRepository memberQueryRepository;
     private final MemberRepository memberRepository;
 
@@ -33,7 +37,7 @@ public class MemberService {
      */
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElse(null);
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
     }
 
     /**
@@ -50,7 +54,7 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, UpdateMemberParam param) {
         Member findMember = memberRepository.findById(memberId)
-                .orElse(null);
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
         findMember.updateMember(param);
     }
 
@@ -60,8 +64,7 @@ public class MemberService {
     @Transactional
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
-                .orElse(null);
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
         memberRepository.delete(findMember);
     }
-
 }
