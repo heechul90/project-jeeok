@@ -1,6 +1,5 @@
 package com.jeeok.jeeokmember.core.service;
 
-import com.jeeok.jeeokmember.common.entity.BaseEntity;
 import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;

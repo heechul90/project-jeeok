@@ -136,7 +136,7 @@ class MemberServiceTest {
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(member));
 
         UpdateMemberParam param = UpdateMemberParam.builder()
-                .memberName(UPDATE_NAME)
+                .name(UPDATE_NAME)
                 .phoneNumber(UPDATE_PHONE_NUMBER)
                 .build();
 

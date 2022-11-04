@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 public class UpdateMemberParam {
 
-    private String memberName;
+    private String name;
     private PhoneNumber phoneNumber;
 }

@@ -47,8 +47,7 @@ public class Member extends BaseEntity {
     //===수정 메서드===//
     /** Member 수정 */
     public void updateMember(UpdateMemberParam param) {
-        this.name = param.getMemberName();
+        this.name = param.getName();
         this.phoneNumber = param.getPhoneNumber();
     }
-
 }
