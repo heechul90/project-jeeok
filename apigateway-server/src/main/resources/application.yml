@@ -23,7 +23,28 @@ spring:
   config:
     import: optional:configserver:http://localhost:10000
   cloud:
+    config:
+      name: bootstrap
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigin: "http://localhost:12000"
+            allowedMethod:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+              - PATCH
+            allowedHeaders: '*'
+            allow-credentials: true
       routes:
         - id: member-server
           uri: lb://MEMBER-SERVER
@@ -39,6 +60,9 @@ spring:
           filters:
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
-logging:
-  level:
-    root: debug
+token:
+  access-expired-time: 3600000
+  refresh-expired-time: 604800000
+  secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
+  refresh-token-name: refresh-token
+  access-token-name: access-token
