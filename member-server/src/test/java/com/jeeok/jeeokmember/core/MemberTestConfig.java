@@ -20,10 +20,4 @@ public class MemberTestConfig {
         return new MemberQueryRepository(em);
     }
 
-    @Bean
-    public RestDocsMockMvcConfigurationCustomizer restDocsMockMvcConfigurationCustomizer() {
-        return configurer -> configurer.operationPreprocessors()
-                .withRequestDefaults(prettyPrint())
-                .withResponseDefaults(prettyPrint());
-    }
 }

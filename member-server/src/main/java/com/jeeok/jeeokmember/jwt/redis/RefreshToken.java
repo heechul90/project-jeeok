@@ -3,9 +3,8 @@ package com.jeeok.jeeokmember.jwt.redis;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-
-import javax.persistence.Id;
 
 @Getter
 @RedisHash("refresh_token")

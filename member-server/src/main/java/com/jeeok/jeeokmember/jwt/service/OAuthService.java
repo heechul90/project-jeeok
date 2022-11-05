@@ -1,8 +1,8 @@
 package com.jeeok.jeeokmember.jwt.service;
 
-import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
+import com.jeeok.jeeokmember.config.auth.PrincipalDetailService;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.repository.MemberRepository;
 import com.jeeok.jeeokmember.jwt.dto.OAuthAttributeDto;
@@ -12,11 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -32,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -40,27 +34,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2User>, UserDetailsService {
+public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenService refreshTokenService;
+    private final PrincipalDetailService principalDetailService;
     private final CookieProvider cookieProvider;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member findMember = memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Member not found in the database"));
-
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(findMember.getRoleType().name()));
-
-        return new User(
-                findMember.getId().toString(),
-                findMember.getPassword(),
-                authorities
-        );
-    }
 
     @Override
     @Transactional
@@ -84,7 +64,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
         String email = savedMember.getEmail();
 
-        Collection<? extends GrantedAuthority> authorities = this.loadUserByUsername(email).getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = principalDetailService.loadUserByUsername(email).getAuthorities();
 
         return new DefaultOAuth2User(
                 authorities,
