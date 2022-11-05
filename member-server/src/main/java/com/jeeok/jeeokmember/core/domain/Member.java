@@ -30,17 +30,21 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
+    @Enumerated(EnumType.STRING)
+    private AuthType authType;
+
     @Embedded
     private PhoneNumber phoneNumber;
 
     //===생성자 메서드===//
     /** Member 생성 */
     @Builder(builderMethodName = "createMember")
-    public Member(String email, String password, String name, RoleType roleType, PhoneNumber phoneNumber) {
+    public Member(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
         this.email = email;
         this.password = new BCryptPasswordEncoder().encode(password);
         this.name = name;
         this.roleType = roleType;
+        this.authType = authType;
         this.phoneNumber = phoneNumber;
     }
 
