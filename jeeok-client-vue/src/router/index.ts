@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
+import LoginView from "../views/Login.vue";
 import JeeoklogHomeView from "../views/jeeoklog/JeeoklogHomeView.vue";
 import JeeoklogWriteView from "../views/jeeoklog/JeeoklogWriteView.vue";
 import JeeoklogReadView from "../views/jeeoklog/JeeoklogReadView.vue";
