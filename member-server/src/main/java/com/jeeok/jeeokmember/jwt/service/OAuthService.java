@@ -95,7 +95,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
         Date expiredTime = jwtTokenProvider.getExpiredTime(jwtAccessToken);
 
-        response.sendRedirect("http://localhost:8080/auth?" +
+        response.sendRedirect("http://localhost:5713/auth?" +
                 "accessToken=" + jwtAccessToken +
                 "&expiredTime=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(expiredTime));
     }

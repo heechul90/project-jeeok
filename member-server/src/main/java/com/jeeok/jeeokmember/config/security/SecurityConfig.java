@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(oAuthService)
                 .and()
-                .failureUrl("http://localhost:8080/login")
+                .failureUrl("http://localhost:5713/login")
                 .successHandler(oAuthService::onAuthenticationSuccess);
 
         http.addFilter(loginAuthenticationFilter);
