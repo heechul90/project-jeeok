@@ -1,5 +1,5 @@
 <template>
-  <h1>지옥로그 Home</h1>
+  <h1>Jeeoklog Home</h1>
   <ul>
     <li v-for="post in posts" :key="post.postId">
       <div class="title">

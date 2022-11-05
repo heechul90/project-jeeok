@@ -1,5 +1,5 @@
 <template>
-  <h2>Login</h2>
+  <h2>Jeeok Login</h2>
 </template>
 
 <script setup lang="ts"></script>
