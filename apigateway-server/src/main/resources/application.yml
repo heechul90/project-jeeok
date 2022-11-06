@@ -35,7 +35,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigin: "http://localhost:12000"
+            allowedOrigin: "http://localhost:5713"
             allowedMethod:
               - GET
               - POST
@@ -46,6 +46,13 @@ spring:
             allowedHeaders: '*'
             allow-credentials: true
       routes:
+        - id: member-server
+          uri: lb://MEMBER-SERVER
+          predicates:
+            - Path=/member-server/auth/login
+            - Method=POST
+          filters:
+            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
         - id: member-server
           uri: lb://MEMBER-SERVER
           predicates:

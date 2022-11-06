@@ -24,6 +24,12 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
     private final CookieProvider cookieProvider;
 
+    @PostMapping("/login")
+    public ResponseEntity<JsonResult> login() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(JsonResult.OK("okokok"));
+    }
+
     @GetMapping("/reissue")
     public ResponseEntity<JsonResult> refreshToken(@RequestHeader(value = "X-AUTH-TOKEN") String accessToken,
                                                    @CookieValue(value = "refresh-token") String refreshToken) {
