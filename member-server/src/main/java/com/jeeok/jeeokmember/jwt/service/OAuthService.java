@@ -5,13 +5,17 @@ import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
 import com.jeeok.jeeokmember.config.auth.PrincipalDetailService;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.repository.MemberRepository;
+import com.jeeok.jeeokmember.jwt.dto.JwtTokenDto;
 import com.jeeok.jeeokmember.jwt.dto.OAuthAttributeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -29,6 +33,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,6 +46,8 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     private final RefreshTokenService refreshTokenService;
     private final PrincipalDetailService principalDetailService;
     private final CookieProvider cookieProvider;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
     @Transactional

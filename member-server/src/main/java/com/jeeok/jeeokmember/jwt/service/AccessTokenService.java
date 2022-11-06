@@ -14,7 +14,7 @@ public class AccessTokenService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public void checkAccessToken(String authorization) {
-        String token = authorization.replace("Bearer", "");
+        String token = authorization.replace("Bearer ", "");
         if (!jwtTokenProvider.validateJwtToken(token)) {
             throw new AccessTokenNotValidException("Access token is not valid.");
         }

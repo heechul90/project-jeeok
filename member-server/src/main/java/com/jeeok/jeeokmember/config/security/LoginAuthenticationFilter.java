@@ -1,6 +1,7 @@
 package com.jeeok.jeeokmember.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jeeok.jeeokmember.common.dto.LoginRequest;
 import com.jeeok.jeeokmember.common.json.JsonResult;
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
@@ -87,6 +88,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 "expiredTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(expiredTime)
         );
 
-        new ObjectMapper().writeValue(response.getOutputStream(), JsonResult.OK(tokens));
+        //java 8 localDateTime 직렬화 역직렬화 오류 해결 방법
+        new ObjectMapper().registerModule(new JavaTimeModule()).writeValue(response.getOutputStream(), JsonResult.OK(tokens));
     }
 }
