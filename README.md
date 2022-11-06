@@ -1,4 +1,4 @@
-# [Jeeok] 공부한거 적용하기
+# [JEEOK-PROJECT] 공부한거 적용해하기
 
 ## rest api 서버
 | 서버 | 설명 | 설계서 |
