@@ -4,10 +4,7 @@ import com.jeeok.jeeokmember.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokmember.common.json.ErrorCode;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class UpdateMemberRequest {
 
     private String memberName;

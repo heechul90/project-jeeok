@@ -59,9 +59,11 @@
 |===
 
 
-== 멤버
+= 멤버
 
-=== 회원 단건 조회
+== 회원 목록 조회
+
+== 회원 단건 조회
 === 요청
 include::{snippets}/findMember/http-request.adoc[]
 
@@ -69,10 +71,27 @@ include::{snippets}/findMember/http-request.adoc[]
 include::{snippets}/findMember/http-response.adoc[]
 include::{snippets}/findMember/response-fields.adoc[]
 
-=== 회원 저장
+== 회원 저장
 === 요청
 include::{snippets}/saveMember/http-request.adoc[]
 
 === 응답
 include::{snippets}/saveMember/http-response.adoc[]
 include::{snippets}/saveMember/response-fields.adoc[]
+
+== 회원 수정
+=== 요청
+include::{snippets}/updateMember/http-request.adoc[]
+
+=== 응답
+include::{snippets}/updateMember/http-response.adoc[]
+include::{snippets}/updateMember/response-fields.adoc[]
+
+== 회원 삭제
+=== 요청
+include::{snippets}/deleteMember/http-request.adoc[]
+
+=== 응답
+include::{snippets}/deleteMember/http-response.adoc[]
+include::{snippets}/deleteMember/response-fields.adoc[]
+

@@ -2,43 +2,31 @@ package com.jeeok.jeeokmember.core.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeeok.jeeokmember.common.json.Code;
-import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.config.security.SecurityConfig;
-import com.jeeok.jeeokmember.core.MemberTestConfig;
 import com.jeeok.jeeokmember.core.controller.request.SaveMemberRequest;
+import com.jeeok.jeeokmember.core.controller.request.UpdateMemberRequest;
 import com.jeeok.jeeokmember.core.domain.AuthType;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
+import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.service.MemberService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -72,6 +60,13 @@ class MemberControllerTest {
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
+    //REQUEST_URL
+    public static final String API_FIND_MEMBERS = "/api/members";
+    public static final String API_FIND_MEMBER = "/api/members/{memberId}";
+    public static final String API_SAVE_MEMBER = "/api/members";
+    public static final String API_UPDATE_MEMBE = "/api/members/{memberId}";
+    public static final String API_DELETE_MEMBER = "/api/members/{memberId}";
+
     @MockBean MemberService memberService;
 
     @Autowired ObjectMapper objectMapper;
@@ -90,6 +85,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("회원 목록 조회")
     void findMembers() {
         //given
 
@@ -99,13 +95,14 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("회원 단건 조회")
     void findMember() throws Exception {
         //given
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
         given(memberService.findMember(any(Long.class))).willReturn(member);
 
         //expected
-        mockMvc.perform(get("/api/members/{memberId}", 0L))
+        mockMvc.perform(get(API_FIND_MEMBER, 0L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
                 .andExpect(jsonPath("$.message").isEmpty())
@@ -131,10 +128,13 @@ class MemberControllerTest {
                                 fieldWithPath("data.phoneNumber").description("회원 휴대폰번호")
                         )
                 ));
-        //then
+
+        //verify
+        verify(memberService, times(1)).findMember(any(Long.class));
     }
 
     @Test
+    @DisplayName("회원 저장")
     void saveMember() throws Exception {
         //given
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
@@ -149,7 +149,7 @@ class MemberControllerTest {
                 .build();
 
         //expected
-        mockMvc.perform(post("/api/members")
+        mockMvc.perform(post(API_SAVE_MEMBER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -166,28 +166,72 @@ class MemberControllerTest {
                                 fieldWithPath("errors").description("에러"),
                                 fieldWithPath("data.savedMemberId").description("저장된 회원 고유번호")
                         )
-                ))
-        ;
+                ));
 
-        //then
+        //verify
         verify(memberService, times(1)).saveMember(any(Member.class));
     }
 
     @Test
-    void updateMember() {
+    @DisplayName("회원 수정")
+    void updateMember() throws Exception {
         //given
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        given(memberService.findMember(any(Long.class))).willReturn(member);
+
+        UpdateMemberRequest request = UpdateMemberRequest.builder()
+                .memberName(UPDATE_NAME)
+                .phoneNumber(UPDATE_PHONE_NUMBER.fullPhoneNumber())
+                .build();
 
         //when
+        mockMvc.perform(put(API_UPDATE_MEMBE, 0L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
+                .andExpect(jsonPath("$.message").isEmpty())
+                .andExpect(jsonPath("$.errors").isEmpty())
+                .andExpect(jsonPath("$.data.updatedMemberId").hasJsonPath())
+                .andDo(print())
+                .andDo(document("updateMember",
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data.updatedMemberId").description("수정된 회원 고유번호")
+                        )
+                ));
 
-        //then
+        //verify
+        verify(memberService, times(1)).updateMember(any(Long.class), any(UpdateMemberParam.class));
+        verify(memberService, times(1)).findMember(any(Long.class));
     }
 
     @Test
-    void deleteMember() {
+    @DisplayName("회원 삭제")
+    void deleteMember() throws Exception {
         //given
 
         //when
+        mockMvc.perform(delete(API_DELETE_MEMBER, 0L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
+                .andExpect(jsonPath("$.message").isEmpty())
+                .andExpect(jsonPath("$.errors").isEmpty())
+                .andDo(print())
+                .andDo(document("deleteMember",
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data").description("데이터")
+                        )
+                ));
 
-        //then
+        //verify
+        verify(memberService, times(1)).deleteMember(any(Long.class));
     }
 }
