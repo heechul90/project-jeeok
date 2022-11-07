@@ -5,6 +5,8 @@ import com.jeeok.jeeokmember.common.json.Code;
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.config.security.SecurityConfig;
 import com.jeeok.jeeokmember.core.MemberTestConfig;
+import com.jeeok.jeeokmember.core.controller.request.SaveMemberRequest;
+import com.jeeok.jeeokmember.core.domain.AuthType;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
@@ -20,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,6 +36,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
@@ -54,6 +59,7 @@ class MemberControllerTest {
     public static final String PASSWORD = "1234";
     public static final String NAME = "jeeok";
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
+    public static final AuthType AUTH_TYPE = AuthType.JEEOK;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
 
     //UPDATE_MEMBER
@@ -72,12 +78,13 @@ class MemberControllerTest {
 
     @Autowired MockMvc mockMvc;
 
-    private Member getMember(String email, String password, String name, RoleType roleType, PhoneNumber phoneNumber) {
+    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
         return Member.createMember()
                 .email(email)
                 .password(password)
                 .name(name)
                 .roleType(roleType)
+                .authType(authType)
                 .phoneNumber(phoneNumber)
                 .build();
     }
@@ -94,7 +101,7 @@ class MemberControllerTest {
     @Test
     void findMember() throws Exception {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
         given(memberService.findMember(any(Long.class))).willReturn(member);
 
         //expected
@@ -108,9 +115,9 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.data.role").value(ROLE_TYPE.name()))
                 .andExpect(jsonPath("$.data.phoneNumber").value(PHONE_NUMBER.fullPhoneNumber()))
                 .andDo(print())
-                .andDo(document("find-member",
+                .andDo(document("findMember",
                         /*requestHeaders(
-                                headerWithName("member-id").description("회원 단건 조회")
+                                headerWithName("memberId").description("회원 단건 조회")
                         ),*/
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
@@ -128,12 +135,42 @@ class MemberControllerTest {
     }
 
     @Test
-    void saveMember() {
+    void saveMember() throws Exception {
         //given
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        given(memberService.saveMember(any(Member.class))).willReturn(member);
 
-        //when
+        SaveMemberRequest request = SaveMemberRequest.builder()
+                .email(EMAIL)
+                .password(PASSWORD)
+                .memberName(NAME)
+                .role(ROLE_TYPE)
+                .phoneNumber(PHONE_NUMBER.fullPhoneNumber())
+                .build();
+
+        //expected
+        mockMvc.perform(post("/api/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
+                .andExpect(jsonPath("$.message").isEmpty())
+                .andExpect(jsonPath("$.errors").isEmpty())
+                .andExpect(jsonPath("$.data.savedMemberId").hasJsonPath())
+                .andDo(print())
+                .andDo(document("saveMember",
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data.savedMemberId").description("저장된 회원 고유번호")
+                        )
+                ))
+        ;
 
         //then
+        verify(memberService, times(1)).saveMember(any(Member.class));
     }
 
     @Test
