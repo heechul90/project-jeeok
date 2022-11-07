@@ -11,4 +11,20 @@
 | Database | - MariaDB </br> - Redis |
 | Test | - Spring RestDocs </br> - JUnit5 |
 
+## API 문서
+| 서비스 | 설계서 |
+| --- | --- |
+| MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/member-server-API-문서/) |
+
 ## 기능
+
+- 회원
+  - 회원 목록 조회
+  - 회원 단건 조회
+  - 회원 저장
+  - 회원 수정
+  - 회원 삭제
+- 회원 로그인
+  - 로그인
+  - 토큰 조회
+  - 로그아웃
