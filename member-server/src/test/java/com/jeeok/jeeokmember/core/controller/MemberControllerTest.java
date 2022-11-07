@@ -1,5 +1,6 @@
 package com.jeeok.jeeokmember.core.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeeok.jeeokmember.common.json.Code;
 import com.jeeok.jeeokmember.config.security.SecurityConfig;
@@ -9,8 +10,11 @@ import com.jeeok.jeeokmember.core.domain.AuthType;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
+import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
+import com.jeeok.jeeokmember.core.dto.SearchCondition;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.service.MemberService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +24,38 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(
         controllers = MemberController.class,
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}
 )
 @AutoConfigureMockMvc(addFilters = false)
-@AutoConfigureRestDocs(uriHost = "127.0.0.1", uriPort = 8001)
+@AutoConfigureRestDocs(uriHost = "127.0.0.1", uriPort = 11001)
 class MemberControllerTest {
 
     //CREATE MEMBER
@@ -86,12 +102,57 @@ class MemberControllerTest {
 
     @Test
     @DisplayName("회원 목록 조회")
-    void findMembers() {
+    void findMembers() throws Exception {
         //given
+        List<Member> members = new ArrayList<>();
+        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER)));
+        given(memberService.findMembers(any(MemberSearchCondition.class), any(Pageable.class))).willReturn(new PageImpl<>(members));
+
+        MemberSearchCondition condition = new MemberSearchCondition();
+        condition.setSearchCondition(SearchCondition.NAME);
+        condition.setSearchKeyword(NAME);
+
+        PageRequest pageRequest = PageRequest.of(0, 10);
+
+        LinkedMultiValueMap<String, String> conditionParams = new LinkedMultiValueMap<>();
+        conditionParams.setAll(objectMapper.convertValue(condition, new TypeReference<Map<String, String>>() {}));
+
+        LinkedMultiValueMap<String, String> pageRequestParams = new LinkedMultiValueMap<>();
+        pageRequestParams.add("page", String.valueOf(pageRequest.getOffset()));
+        pageRequestParams.add("size", String.valueOf(pageRequest.getPageSize()));
 
         //when
+        mockMvc.perform(get(API_FIND_MEMBERS)
+                        .queryParams(conditionParams)
+                        .queryParams(pageRequestParams))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
+                .andExpect(jsonPath("$.message").isEmpty())
+                .andExpect(jsonPath("$.errors").isEmpty())
+                .andExpect(jsonPath("$.data.length()", Matchers.is(5)))
+                .andDo(print())
+                .andDo(document("findMembers",
+                        requestParameters(
+                                parameterWithName("searchCondition").description("검색 조건"),
+                                parameterWithName("searchKeyword").description("검색 키워드"),
+                                parameterWithName("page").description("검색 페이지"),
+                                parameterWithName("size").description("검색 사이즈")
+                        ),
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data[*].memberId").description("회원 고유번호"),
+                                fieldWithPath("data[*].email").description("이메일"),
+                                fieldWithPath("data[*].memberName").description("회원 이름"),
+                                fieldWithPath("data[*].role").description("회원 권한"),
+                                fieldWithPath("data[*].phoneNumber").description("회원 휴대폰번호")
+                        )
+                ));
 
-        //then
+        //verify
+        verify(memberService, times(1)).findMembers(any(MemberSearchCondition.class), any(Pageable.class));
     }
 
     @Test
@@ -113,16 +174,16 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.data.phoneNumber").value(PHONE_NUMBER.fullPhoneNumber()))
                 .andDo(print())
                 .andDo(document("findMember",
-                        /*requestHeaders(
-                                headerWithName("memberId").description("회원 단건 조회")
-                        ),*/
+                        pathParameters(
+                                parameterWithName("memberId").description("회원 고유 번호")
+                        ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
                                 fieldWithPath("code").description("SUCCESS or ERROR"),
                                 fieldWithPath("message").description("메시지"),
                                 fieldWithPath("errors").description("에러"),
                                 fieldWithPath("data.memberId").description("회원 고유번호"),
-                                fieldWithPath("data.email").description("회원 이메일"),
+                                fieldWithPath("data.email").description("이메일"),
                                 fieldWithPath("data.memberName").description("회원 이름"),
                                 fieldWithPath("data.role").description("회원 권한"),
                                 fieldWithPath("data.phoneNumber").description("회원 휴대폰번호")
@@ -159,6 +220,13 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.data.savedMemberId").hasJsonPath())
                 .andDo(print())
                 .andDo(document("saveMember",
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                                fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름"),
+                                fieldWithPath("role").type(ROLE_TYPE).description("회원 권한"),
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("회원 휴대폰번호")
+                        ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
                                 fieldWithPath("code").description("SUCCESS or ERROR"),
@@ -195,6 +263,13 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.data.updatedMemberId").hasJsonPath())
                 .andDo(print())
                 .andDo(document("updateMember",
+                        pathParameters(
+                                parameterWithName("memberId").description("회원 고유 번호")
+                        ),
+                        requestFields(
+                                fieldWithPath("memberName").description("회원 이름"),
+                                fieldWithPath("phoneNumber").description("회원 휴대폰번호")
+                        ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
                                 fieldWithPath("code").description("SUCCESS or ERROR"),
@@ -214,7 +289,7 @@ class MemberControllerTest {
     void deleteMember() throws Exception {
         //given
 
-        //when
+        //expected
         mockMvc.perform(delete(API_DELETE_MEMBER, 0L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
@@ -222,6 +297,9 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
                 .andDo(document("deleteMember",
+                        pathParameters(
+                                parameterWithName("memberId").description("회원 고유 번호")
+                        ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
                                 fieldWithPath("code").description("SUCCESS or ERROR"),

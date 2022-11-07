@@ -589,7 +589,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/members/0 HTTP/1.1
-Host: 127.0.0.1:8001</code></pre>
+Host: 127.0.0.1:11001</code></pre>
 </div>
 </div>
 </div>
@@ -599,9 +599,9 @@ Host: 127.0.0.1:8001</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 215
+Content-Length: 214
 
-{"transaction_time":"2022-11-07T17:53:19.5299744","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"jeeok@gmail.com","memberName":"jeeok","role":"ROLE_USER","phoneNumber":"01011112222"}}</code></pre>
+{"transaction_time":"2022-11-07T19:32:17.707042","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"jeeok@gmail.com","memberName":"jeeok","role":"ROLE_USER","phoneNumber":"01011112222"}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -646,7 +646,7 @@ Content-Length: 215
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 이메일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.memberName</code></p></td>
@@ -678,7 +678,7 @@ Content-Length: 215
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/members HTTP/1.1
 Content-Type: application/json
 Content-Length: 113
-Host: 127.0.0.1:8001
+Host: 127.0.0.1:11001
 
 {"email":"jeeok@gmail.com","password":"1234","memberName":"jeeok","role":"ROLE_USER","phoneNumber":"01011112222"}</code></pre>
 </div>
@@ -692,7 +692,7 @@ Host: 127.0.0.1:8001
 Content-Type: application/json
 Content-Length: 126
 
-{"transaction_time":"2022-11-07T17:53:19.6819756","code":"SUCCESS","message":null,"errors":null,"data":{"savedMemberId":null}}</code></pre>
+{"transaction_time":"2022-11-07T19:32:17.8610406","code":"SUCCESS","message":null,"errors":null,"data":{"savedMemberId":null}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -749,7 +749,7 @@ Content-Length: 126
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/members/0 HTTP/1.1
 Content-Type: application/json
 Content-Length: 58
-Host: 127.0.0.1:8001
+Host: 127.0.0.1:11001
 
 {"memberName":"update_jeeok","phoneNumber":"010333344444"}</code></pre>
 </div>
@@ -763,7 +763,7 @@ Host: 127.0.0.1:8001
 Content-Type: application/json
 Content-Length: 128
 
-{"transaction_time":"2022-11-07T17:53:19.3419752","code":"SUCCESS","message":null,"errors":null,"data":{"updatedMemberId":null}}</code></pre>
+{"transaction_time":"2022-11-07T19:32:17.5040418","code":"SUCCESS","message":null,"errors":null,"data":{"updatedMemberId":null}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -818,7 +818,7 @@ Content-Length: 128
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/members/0 HTTP/1.1
-Host: 127.0.0.1:8001</code></pre>
+Host: 127.0.0.1:11001</code></pre>
 </div>
 </div>
 </div>
@@ -830,7 +830,7 @@ Host: 127.0.0.1:8001</code></pre>
 Content-Type: application/json
 Content-Length: 108
 
-{"transaction_time":"2022-11-07T17:53:19.4459774","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-07T19:32:17.6260425","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -881,7 +881,7 @@ Content-Length: 108
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-07 17:31:33 +0900
+Last updated 2022-11-07 18:41:05 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

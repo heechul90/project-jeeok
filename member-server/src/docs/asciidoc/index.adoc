@@ -1,4 +1,4 @@
-= heech member API
+= jeeok member API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -58,14 +58,27 @@
 | 클라이언트의 요청이 서버의 상태와 충돌이 발생한 경우.
 |===
 
+= 회원 로그인
 
-= 멤버
+== 로그인
+
+== 로그아웃
+
+= 회원
 
 == 회원 목록 조회
+=== 요청
+include::{snippets}/findMembers/http-request.adoc[]
+include::{snippets}/findMembers/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/findMembers/http-response.adoc[]
+include::{snippets}/findMembers/response-fields.adoc[]
 
 == 회원 단건 조회
 === 요청
 include::{snippets}/findMember/http-request.adoc[]
+include::{snippets}/findMember/path-parameters.adoc[]
 
 === 응답
 include::{snippets}/findMember/http-response.adoc[]
@@ -74,6 +87,7 @@ include::{snippets}/findMember/response-fields.adoc[]
 == 회원 저장
 === 요청
 include::{snippets}/saveMember/http-request.adoc[]
+include::{snippets}/saveMember/request-fields.adoc[]
 
 === 응답
 include::{snippets}/saveMember/http-response.adoc[]
@@ -82,6 +96,8 @@ include::{snippets}/saveMember/response-fields.adoc[]
 == 회원 수정
 === 요청
 include::{snippets}/updateMember/http-request.adoc[]
+include::{snippets}/updateMember/path-parameters.adoc[]
+include::{snippets}/updateMember/request-fields.adoc[]
 
 === 응답
 include::{snippets}/updateMember/http-response.adoc[]
@@ -90,8 +106,8 @@ include::{snippets}/updateMember/response-fields.adoc[]
 == 회원 삭제
 === 요청
 include::{snippets}/deleteMember/http-request.adoc[]
+include::{snippets}/deleteMember/path-parameters.adoc[]
 
 === 응답
 include::{snippets}/deleteMember/http-response.adoc[]
 include::{snippets}/deleteMember/response-fields.adoc[]
-
