@@ -35,8 +35,10 @@ public class PostService {
      * 게시물 단건 조회
      */
     public Post findPost(Long postId) {
-        return postRepository.findById(postId)
+        Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFound(POST, postId.toString()));
+        findPost.hit();
+        return findPost;
     }
 
     /**
