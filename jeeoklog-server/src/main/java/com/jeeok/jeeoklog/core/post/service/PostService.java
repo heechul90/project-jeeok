@@ -42,6 +42,7 @@ public class PostService {
     /**
      * 게시물 저장
      */
+    @Transactional
     public Post savePost(Post post) {
         return postRepository.save(post);
     }
@@ -49,6 +50,7 @@ public class PostService {
     /**
      * 게시물 수정
      */
+    @Transactional
     public void updatePost(Long postId, UpdatePostParam param) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFound(POST, postId.toString()));
@@ -58,6 +60,7 @@ public class PostService {
     /**
      * 게시물 삭제
      */
+    @Transactional
     public void deletePost(Long postId) {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFound(POST, postId.toString()));
