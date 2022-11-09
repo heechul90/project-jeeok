@@ -180,7 +180,7 @@ class MemberServiceTest {
         assertThatThrownBy(() -> memberService.findMember(NOT_FOUND_ID))
                 .isInstanceOf(EntityNotFound.class)
                 .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
-                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH +NOT_FOUND_ID);
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
 
         assertThatThrownBy(() -> memberService.updateMember(NOT_FOUND_ID, any(UpdateMemberParam.class)))
                 .isInstanceOf(EntityNotFound.class)
