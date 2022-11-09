@@ -1,4 +1,4 @@
-package com.jeeok.jeeokmember;
+package com.jeeok.apigatewayserver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-    @Value("${msa.test}")
-    private String TEST;
+    /*@Value("${msa.test}")
+    private String TEST;*/
 
-    @GetMapping("/test")
+    /*@GetMapping("/test")
     public String test() {
         return "hello " + TEST;
-    }
+    }*/
 }

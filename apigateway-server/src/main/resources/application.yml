@@ -1,27 +1,14 @@
 server:
   port: 11000
 
-#actuator config
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
 spring:
   application:
     name: apigateway-server
   profiles:
     active: dev
   config:
-    import: optional:configserver:http://localhost:10000
+    import: optional:configserver:http://localhost:10000/
+
   cloud:
     config:
       name: bootstrap
@@ -73,6 +60,23 @@ spring:
             - Path=/jeeokshop-store-server/**
           filters:
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
+
+#actuator config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+  endpoint:
+    gateway:
+      enabled: false #/actuator/gateway/routes 경로로 routes 보기
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
 
 token:
   access-expired-time: 3600000
