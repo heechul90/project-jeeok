@@ -67,6 +67,13 @@ spring:
           filters:
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
+        - id: jeeokshop-store-server
+          uri: lb://JEEOKSHOP-STORE-SERVER
+          predicates:
+            - Path=/jeeokshop-store-server/**
+          filters:
+            - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
+
 token:
   access-expired-time: 3600000
   refresh-expired-time: 604800000
