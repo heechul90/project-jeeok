@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-    @Value("${msa.test}")
+    /*@Value("${msa.test}")
     private String TEST;
 
     @GetMapping("/test")
     public String test() {
         return "hello " + TEST;
-    }
+    }*/
 }

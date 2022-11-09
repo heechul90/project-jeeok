@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     /*@Value("${msa.test}")
-    private String TEST;*/
+    private String TEST;
 
-    /*@GetMapping("/test")
+    @GetMapping("/test")
     public String test() {
         return "hello " + TEST;
     }*/
