@@ -51,8 +51,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-
-
     public String getUserId(String token) {
         return getClaimsFromJwtToken(token).getSubject();
     }

@@ -21,14 +21,14 @@ public class SignupMemberRequest {
 
     private String email;
     private String password;
-    private String name;
+    private String memberName;
     private String phoneNumber;
 
     public Member toMember() {
         return Member.createMember()
                 .email(this.email)
                 .password(this.password)
-                .name(this.name)
+                .name(this.memberName)
                 .roleType(RoleType.ROLE_USER)
                 .authType(AuthType.JEEOK)
                 .phoneNumber(new PhoneNumber(phoneNumber.substring(0, 3), phoneNumber.substring(3, 7), phoneNumber.substring(7, 11)))

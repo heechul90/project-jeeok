@@ -66,13 +66,16 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        String userId = user.getUsername();
+        String memberId = user.getUsername();
 
-        String jwtAccessToken = jwtTokenProvider.createJwtAccessToken(userId, request.getRequestURI(), roles);
+        String jwtAccessToken = jwtTokenProvider.createJwtAccessToken(memberId, request.getRequestURI(), roles);
         Date expiredTime = jwtTokenProvider.getExpiredTime(jwtAccessToken);
         String jwtRefreshToken = jwtTokenProvider.createJwtRefreshToken();
 
-        refreshTokenService.updateRefreshToken(Long.valueOf(userId), jwtTokenProvider.getRefreshTokenId(jwtRefreshToken));
+        refreshTokenService.updateRefreshToken(Long.valueOf(memberId), jwtTokenProvider.getRefreshTokenId(jwtRefreshToken));
+
+        log.info("accessToken = {}", jwtAccessToken);
+        log.info("refreshToken = {}", jwtRefreshToken);
 
         //쿠키 설정
         ResponseCookie responseCookie = cookieProvider.createRefreshTokenCookie(jwtRefreshToken);

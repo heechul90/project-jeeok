@@ -11,6 +11,7 @@ import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
 import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
+import com.jeeok.jeeokmember.core.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.dto.SearchCondition;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.service.MemberService;
@@ -28,7 +29,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -77,11 +77,11 @@ class MemberControllerTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     //REQUEST_URL
-    public static final String API_FIND_MEMBERS = "/api/members";
-    public static final String API_FIND_MEMBER = "/api/members/{memberId}";
-    public static final String API_SAVE_MEMBER = "/api/members";
-    public static final String API_UPDATE_MEMBE = "/api/members/{memberId}";
-    public static final String API_DELETE_MEMBER = "/api/members/{memberId}";
+    public static final String API_FIND_MEMBERS = "/api/admin/members";
+    public static final String API_FIND_MEMBER = "/api/admin/members/{memberId}";
+    public static final String API_SAVE_MEMBER = "/api/admin/members";
+    public static final String API_UPDATE_MEMBE = "/api/admin/members/{memberId}";
+    public static final String API_DELETE_MEMBER = "/api/admin/members/{memberId}";
 
     @MockBean MemberService memberService;
 
@@ -199,7 +199,7 @@ class MemberControllerTest {
     void saveMember() throws Exception {
         //given
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
-        given(memberService.saveMember(any(Member.class))).willReturn(member);
+        given(memberService.saveMember(any(SaveMemberParam.class))).willReturn(member);
 
         SaveMemberRequest request = SaveMemberRequest.builder()
                 .email(EMAIL)
@@ -237,7 +237,7 @@ class MemberControllerTest {
                 ));
 
         //verify
-        verify(memberService, times(1)).saveMember(any(Member.class));
+        verify(memberService, times(1)).saveMember(any(SaveMemberParam.class));
     }
 
     @Test

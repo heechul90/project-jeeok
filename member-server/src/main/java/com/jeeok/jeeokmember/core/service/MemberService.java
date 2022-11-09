@@ -3,6 +3,7 @@ package com.jeeok.jeeokmember.core.service;
 import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
+import com.jeeok.jeeokmember.core.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.repository.MemberRepository;
@@ -43,7 +44,15 @@ public class MemberService {
      * 멤버 저장
      */
     @Transactional
-    public Member saveMember(Member member) {
+    public Member saveMember(SaveMemberParam param) {
+        Member member = Member.createMember()
+                .email(param.getEmail())
+                .password(param.getPassword())
+                .name(param.getName())
+                .roleType(param.getRoleType())
+                .authType(param.getAuthType())
+                .phoneNumber(param.getPhoneNumber())
+                .build();
         return memberRepository.save(member);
     }
 

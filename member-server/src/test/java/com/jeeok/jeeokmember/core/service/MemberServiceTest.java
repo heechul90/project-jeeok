@@ -1,10 +1,12 @@
 package com.jeeok.jeeokmember.core.service;
 
 import com.jeeok.jeeokmember.common.exception.EntityNotFound;
+import com.jeeok.jeeokmember.core.domain.AuthType;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
 import com.jeeok.jeeokmember.core.dto.MemberSearchCondition;
+import com.jeeok.jeeokmember.core.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.repository.MemberRepository;
@@ -39,6 +41,7 @@ class MemberServiceTest {
     public static final String PASSWORD = "1234";
     public static final String NAME = "jeeok";
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
+    public static final AuthType AUTH_TYPE = AuthType.JEEOK;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
 
     //UPDATE_MEMBER
@@ -114,8 +117,17 @@ class MemberServiceTest {
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, PHONE_NUMBER);
         given(memberRepository.save(any(Member.class))).willReturn(member);
 
+        SaveMemberParam param = SaveMemberParam.builder()
+                .email(EMAIL)
+                .password(PASSWORD)
+                .name(NAME)
+                .roleType(ROLE_TYPE)
+                .authType(AUTH_TYPE)
+                .phoneNumber(PHONE_NUMBER)
+                .build();
+
         //when
-        Member savedMember = memberService.saveMember(member);
+        Member savedMember = memberService.saveMember(param);
 
         //then
         assertThat(savedMember.getEmail()).isEqualTo(EMAIL);
@@ -180,7 +192,7 @@ class MemberServiceTest {
         assertThatThrownBy(() -> memberService.findMember(NOT_FOUND_ID))
                 .isInstanceOf(EntityNotFound.class)
                 .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
-                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH +NOT_FOUND_ID);
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
 
         assertThatThrownBy(() -> memberService.updateMember(NOT_FOUND_ID, any(UpdateMemberParam.class)))
                 .isInstanceOf(EntityNotFound.class)

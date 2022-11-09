@@ -6,6 +6,7 @@ import com.jeeok.jeeokmember.core.domain.AuthType;
 import com.jeeok.jeeokmember.core.domain.Member;
 import com.jeeok.jeeokmember.core.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.domain.RoleType;
+import com.jeeok.jeeokmember.core.dto.SaveMemberParam;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class SaveMemberRequest {
         }
     }
 
-    public Member toMember() {
-        return Member.createMember()
+    public SaveMemberParam toParam() {
+        return SaveMemberParam.builder()
                 .email(this.email)
                 .password(this.password)
                 .name(this.memberName)
