@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
-public abstract class BaseEntity {
+public abstract class BaseEntity extends BaseTimeEntity {
 
     /** 등록자 */
     @CreatedBy

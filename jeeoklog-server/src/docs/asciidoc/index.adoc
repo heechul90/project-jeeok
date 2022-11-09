@@ -1,0 +1,106 @@
+= jeeoklog post API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[overview]]
+= 개요
+
+[[overview-http-verbs]]
+== Http 동사
+본 REST API에서 사용하는 HTTP 동사(verbs)는 가능한 표준 HTTP 와 REST 규약을 따릅니다.
+|===
+| 동사 | 용례
+
+| `GET`
+| 리소스를 가져올 때 사용
+
+| `POST`
+| 새 리소스를 만들 때 사용
+
+| `PUT`
+| 기존 리소스를 수정할 때 사용
+
+| `PATCH`
+| 기존 리소스의 일부를 수정할 때 사용
+
+| `DELETE`
+| 기존 리소스를 삭제할 떄 사용
+|===
+
+[[overview-http-status-codes]]
+== HTTP 상태 코드
+
+본 REST API에서 사용하는 HTTP 상태 코드는 가능한 표준 HTTP와 REST 규약을 따릅니다.
+
+|===
+| 상태 코드 | 용례
+
+| `200 OK`
+| 요청을 성공적으로 처리함
+
+| `201 Created`
+| 새 리소스를 성공적으로 생성함. 응답의 `Location` 헤더에 해당 리소스의 URI가 담겨있다.
+
+| `204 No Content`
+| 기존 리소스를 성공적으로 수정함.
+
+| `400 Bad Request`
+| 잘못된 요청을 보낸 경우. 응답 본문에 더 오류에 대한 정보가 담겨있다.
+
+| `404 Not Found`
+| 요청한 리소스가 없음.
+
+| `409 Conflict`
+| 클라이언트의 요청이 서버의 상태와 충돌이 발생한 경우.
+|===
+
+= 게시물
+== 게시물 목록 조회
+=== 요청
+include::{snippets}/findPosts/http-request.adoc[]
+include::{snippets}/findPosts/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/findPosts/http-response.adoc[]
+include::{snippets}/findPosts/response-fields.adoc[]
+
+== 게시물 단건 조회
+=== 요청
+include::{snippets}/findPost/http-request.adoc[]
+include::{snippets}/findPost/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/findPost/http-response.adoc[]
+include::{snippets}/findPost/response-fields.adoc[]
+
+== 게시물 저장
+=== 요청
+include::{snippets}/savePost/http-request.adoc[]
+include::{snippets}/savePost/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/savePost/http-response.adoc[]
+include::{snippets}/savePost/response-fields.adoc[]
+
+== 게시물 수정
+=== 요청
+include::{snippets}/updatePost/http-request.adoc[]
+include::{snippets}/updatePost/path-parameters.adoc[]
+include::{snippets}/updatePost/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/updatePost/http-response.adoc[]
+include::{snippets}/updatePost/response-fields.adoc[]
+
+== 게시물 삭제
+=== 요청
+include::{snippets}/deletePost/http-request.adoc[]
+include::{snippets}/deletePost/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/deletePost/http-response.adoc[]
+include::{snippets}/deletePost/response-fields.adoc[]
