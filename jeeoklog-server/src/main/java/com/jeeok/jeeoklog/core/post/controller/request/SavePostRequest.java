@@ -3,10 +3,7 @@ package com.jeeok.jeeoklog.core.post.controller.request;
 import com.jeeok.jeeoklog.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeoklog.common.json.ErrorCode;
 import com.jeeok.jeeoklog.core.post.domain.Post;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class SavePostRequest {
 
     private String postTitle;
