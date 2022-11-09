@@ -62,13 +62,6 @@ public class StoreService {
     public void updateStore(Long storeId, UpdateStoreParam param) {
         Store findStore = storeRepository.findById(storeId)
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
-
-
-        //작성자 check
-        if (!findStore.getMemberId().equals(param.getMemberId())) {
-            throw new MemberNotEqual();
-        }
-
         findStore.updateStore(param);
     }
 

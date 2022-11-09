@@ -51,6 +51,7 @@ public class StoreQueryRepository {
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(store.id.desc())
                 .fetch();
     }
 
