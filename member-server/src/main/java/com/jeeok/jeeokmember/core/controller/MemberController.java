@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/members")
+@RequestMapping("/api/admin/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -60,7 +60,7 @@ public class MemberController {
         //validate
         request.validate();
 
-        Member savedMember = memberService.saveMember(request.toMember());
+        Member savedMember = memberService.saveMember(request.toParam());
 
         return JsonResult.OK(new SaveMemberResponse(savedMember.getId()));
     }
