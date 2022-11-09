@@ -7,11 +7,14 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -39,23 +42,21 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
             }
 
-            String authorizationHeader = headers.get(HttpHeaders.AUTHORIZATION).get(0);
-
             // JWT 토큰 판별
-            String token = authorizationHeader.replace("Bearer ", "");
+            String accessToken = headers.get(HttpHeaders.AUTHORIZATION).get(0).replace("Bearer ", "");
 
-            jwtTokenProvider.validateJwtToken(token);
+            jwtTokenProvider.validateJwtToken(accessToken);
 
-            String subject = jwtTokenProvider.getUserId(token);
+            String memberId = jwtTokenProvider.getUserId(accessToken);
 
-            if (subject.equals("feign")) return chain.filter(exchange);
+            //if (subject.equals("feign")) return chain.filter(exchange);
 
-            if (false == jwtTokenProvider.getRoles(token).contains("ROLE_USER")) {
-                return onError(exchange, "권한 없음", HttpStatus.UNAUTHORIZED);
+            if (false == jwtTokenProvider.getRoles(accessToken).contains("ROLE_ADMIN")) {
+                return onError(exchange, "관리자 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
             }
 
             ServerHttpRequest newRequest = request.mutate()
-                    .header("user-id", subject)
+                    .header("member-id", memberId)
                     .build();
 
             return chain.filter(exchange.mutate().request(newRequest).build());

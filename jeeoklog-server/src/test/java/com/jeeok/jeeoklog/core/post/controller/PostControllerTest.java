@@ -65,11 +65,11 @@ class PostControllerTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     //REQUEST_URL
-    public static final String API_FIND_POSTS = "/api/posts";
-    public static final String API_FIND_POST = "/api/posts/{postId}";
-    public static final String API_SAVE_POST = "/api/posts";
-    public static final String API_UPDATE_POST = "/api/posts/{postId}";
-    public static final String API_DELETE_POST = "/api/posts/{postId}";
+    public static final String API_FIND_POSTS = "/api/admin/posts";
+    public static final String API_FIND_POST = "/api/admin/posts/{postId}";
+    public static final String API_SAVE_POST = "/api/admin/posts";
+    public static final String API_UPDATE_POST = "/api/admin/posts/{postId}";
+    public static final String API_DELETE_POST = "/api/admin/posts/{postId}";
 
     @MockBean PostService postService;
 

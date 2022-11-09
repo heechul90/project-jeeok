@@ -33,31 +33,63 @@ spring:
             allowedHeaders: '*'
             allow-credentials: true
       routes:
+        #회원 관리자
         - id: member-server
-          uri: lb://MEMBER-SERVER
+          uri: lb://MEMBER-SERVER/api/admin
+          predicates:
+            - Path=/member-server/api/admin/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
+        #로그인
+        - id: member-server
+          uri: lb://MEMBER-SERVER/login
           predicates:
             - Path=/member-server/login
             - Method=POST
           filters:
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
+        #회원가입, 재발행, 로그아웃, 토큰 조회
         - id: member-server
-          uri: lb://MEMBER-SERVER
+          uri: lb://MEMBER-SERVER/auth
           predicates:
-            - Path=/member-server/**
+            - Path=/member-server/auth/**
           filters:
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
+        #지옥로그 관리자
         - id: jeeoklog-server
-          uri: lb://JEEOKLOG-SERVER
+          uri: lb://JEEOKLOG-SERVER/api/admin
           predicates:
-            - Path=/jeeoklog-server/**
+            - Path=/jeeoklog-server/api/admin/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
+
+        #지옥로그 프론트
+        - id: jeeoklog-server
+          uri: lb://JEEOKLOG-SERVER/api/front
+          predicates:
+            - Path=/jeeoklog-server/api/front/**
           filters:
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
+        #지록숍 스토어 관리자
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER
+          uri: lb://JEEOKSHOP-STORE-SERVER/api/admin
           predicates:
-            - Path=/jeeokshop-store-server/**
+            - Path=/jeeokshop-store-server/api/admin/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
+
+        #지옥숍 스토어 프론트
+        - id: jeeokshop-store-server
+          uri: lb://JEEOKSHOP-STORE-SERVER/api/front
+          predicates:
+            - Path=/jeeokshop-store-server/api/front/**
           filters:
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 

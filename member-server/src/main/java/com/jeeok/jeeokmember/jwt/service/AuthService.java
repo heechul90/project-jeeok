@@ -39,34 +39,4 @@ public class AuthService {
         return memberRepository.save(member);
     }
 
-    /**
-     * 로그인
-     */
-    public JwtTokenDto login(String email, String password) {
-        //email, password 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
-
-        //실제로 검증(email, password check)이 이루어지는 부분
-        //authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
-        Authentication authenticate = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        Member findMember = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("회원 없음"));
-
-        List<String> roles = authenticationToken.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-
-        String jwtAccessToken = jwtTokenProvider.createJwtAccessToken(String.valueOf(findMember.getId()), "temp", roles);
-        Date expiredTime = jwtTokenProvider.getExpiredTime(jwtAccessToken);
-        String jwtRefreshToken = jwtTokenProvider.createJwtRefreshToken();
-
-
-        return JwtTokenDto.builder()
-                .accessToken(jwtAccessToken)
-                .refreshToken(jwtRefreshToken)
-                .accessTokenExpiredDate(expiredTime)
-                .build();
-    }
 }

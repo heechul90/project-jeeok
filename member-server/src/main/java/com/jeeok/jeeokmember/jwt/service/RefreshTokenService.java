@@ -50,7 +50,7 @@ public class RefreshTokenService {
 
         //refresh token 검증
         String findRefreshTokenId = findRefreshToken.getRefreshTokenId();
-        if (!jwtTokenProvider.validateJwtToken(findRefreshTokenId)) {
+        if (!jwtTokenProvider.validateJwtToken(accessToken)) {
             refreshTokenRedisRepository.delete(findRefreshToken);
             throw new RefreshTokenNotValidException("Not validate jwt token, toekn = " + refreshToken);
         }
