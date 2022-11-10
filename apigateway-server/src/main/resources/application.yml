@@ -33,23 +33,6 @@ spring:
             allowedHeaders: '*'
             allow-credentials: true
       routes:
-        #회원 관리자
-        - id: member-server
-          uri: lb://MEMBER-SERVER/api/admin
-          predicates:
-            - Path=/member-server/api/admin/**
-          filters:
-            - AuthorizationHeaderFilter
-            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
-
-        #회원 프론트
-        - id: member-server
-          uri: lb://MEMBER-SERVER/api/front
-          predicates:
-            - Path=/member-server/api/front/**
-          filters:
-            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
-
         #로그인
         - id: member-server
           uri: lb://MEMBER-SERVER/login
@@ -67,13 +50,31 @@ spring:
           filters:
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
+        #회원 관리자
+        - id: member-server
+          uri: lb://MEMBER-SERVER/api/admin
+          predicates:
+            - Path=/member-server/api/admin/**
+          filters:
+            - AdminAuthorizationHeaderFilter
+            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
+        #회원 프론트
+        - id: member-server
+          uri: lb://MEMBER-SERVER/api/front
+          predicates:
+            - Path=/member-server/api/front/**
+          filters:
+            - FrontAuthorizationHeaderFilter
+            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
         #지옥로그 관리자
         - id: jeeoklog-server
           uri: lb://JEEOKLOG-SERVER/api/admin
           predicates:
             - Path=/jeeoklog-server/api/admin/**
           filters:
-            - AuthorizationHeaderFilter
+            - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
         #지옥로그 프론트
@@ -82,6 +83,7 @@ spring:
           predicates:
             - Path=/jeeoklog-server/api/front/**
           filters:
+            - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
         #지록숍 스토어 관리자
@@ -90,7 +92,7 @@ spring:
           predicates:
             - Path=/jeeokshop-store-server/api/admin/**
           filters:
-            - AuthorizationHeaderFilter
+            - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
         #지옥숍 스토어 프론트
@@ -99,6 +101,7 @@ spring:
           predicates:
             - Path=/jeeokshop-store-server/api/front/**
           filters:
+            - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
 #actuator config

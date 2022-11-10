@@ -17,6 +17,17 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
         super(Config.class);
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static class Config {
+        private String baseMessage;
+        private boolean preLogger;
+        private boolean postLogger;
+    }
+
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
@@ -40,16 +51,5 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
                 }
             }));
         };
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    @AllArgsConstructor
-    @Builder
-    public static class Config {
-        private String baseMessage;
-        private boolean preLogger;
-        private boolean postLogger;
     }
 }
