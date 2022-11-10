@@ -2,8 +2,8 @@ package com.jeeok.jeeokmember.config.security;
 
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
-import com.jeeok.jeeokmember.jwt.service.OAuthService;
-import com.jeeok.jeeokmember.jwt.service.RefreshTokenService;
+import com.jeeok.jeeokmember.core.auth.service.OAuthService;
+import com.jeeok.jeeokmember.core.auth.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

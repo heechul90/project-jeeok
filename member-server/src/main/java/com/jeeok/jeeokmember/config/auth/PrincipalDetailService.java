@@ -1,7 +1,7 @@
 package com.jeeok.jeeokmember.config.auth;
 
-import com.jeeok.jeeokmember.core.domain.Member;
-import com.jeeok.jeeokmember.core.repository.MemberRepository;
+import com.jeeok.jeeokmember.core.member.domain.Member;
+import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

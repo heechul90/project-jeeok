@@ -6,7 +6,7 @@ import com.jeeok.jeeokmember.common.dto.LoginRequest;
 import com.jeeok.jeeokmember.common.json.JsonResult;
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
-import com.jeeok.jeeokmember.jwt.service.RefreshTokenService;
+import com.jeeok.jeeokmember.core.auth.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
