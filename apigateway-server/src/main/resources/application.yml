@@ -42,6 +42,14 @@ spring:
             - AuthorizationHeaderFilter
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
+        #회원 프론트
+        - id: member-server
+          uri: lb://MEMBER-SERVER/api/front
+          predicates:
+            - Path=/member-server/api/front/**
+          filters:
+            - RewritePath=/member-server/(?<segment>.*),/$\{segment}
+
         #로그인
         - id: member-server
           uri: lb://MEMBER-SERVER/login
