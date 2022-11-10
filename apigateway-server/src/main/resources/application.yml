@@ -52,54 +52,54 @@ spring:
 
         #회원 관리자
         - id: member-server
-          uri: lb://MEMBER-SERVER/api/admin
+          uri: lb://MEMBER-SERVER/admin
           predicates:
-            - Path=/member-server/api/admin/**
+            - Path=/member-server/admin/**
           filters:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
         #회원 프론트
         - id: member-server
-          uri: lb://MEMBER-SERVER/api/front
+          uri: lb://MEMBER-SERVER/front
           predicates:
-            - Path=/member-server/api/front/**
+            - Path=/member-server/front/**
           filters:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
         #지옥로그 관리자
         - id: jeeoklog-server
-          uri: lb://JEEOKLOG-SERVER/api/admin
+          uri: lb://JEEOKLOG-SERVER/admin
           predicates:
-            - Path=/jeeoklog-server/api/admin/**
+            - Path=/jeeoklog-server/admin/**
           filters:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
         #지옥로그 프론트
         - id: jeeoklog-server
-          uri: lb://JEEOKLOG-SERVER/api/front
+          uri: lb://JEEOKLOG-SERVER/front
           predicates:
-            - Path=/jeeoklog-server/api/front/**
+            - Path=/jeeoklog-server/front/**
           filters:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
         #지록숍 스토어 관리자
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER/api/admin
+          uri: lb://JEEOKSHOP-STORE-SERVER/admin
           predicates:
-            - Path=/jeeokshop-store-server/api/admin/**
+            - Path=/jeeokshop-store-server/admin/**
           filters:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
         #지옥숍 스토어 프론트
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER/api/front
+          uri: lb://JEEOKSHOP-STORE-SERVER/front
           predicates:
-            - Path=/jeeokshop-store-server/api/front/**
+            - Path=/jeeokshop-store-server/front/**
           filters:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
