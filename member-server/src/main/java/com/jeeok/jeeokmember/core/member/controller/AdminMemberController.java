@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/members")
+@RequestMapping("/admin/members")
 public class AdminMemberController {
 
     private final MemberService memberService;

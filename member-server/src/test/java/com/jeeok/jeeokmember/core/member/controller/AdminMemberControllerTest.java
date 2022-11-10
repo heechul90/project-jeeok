@@ -55,8 +55,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}
 )
 @AutoConfigureMockMvc(addFilters = false)
-@AutoConfigureRestDocs(uriHost = "127.0.0.1", uriPort = 12000)
-class MemberControllerTest {
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "member.jeeok.com", uriPort = 443)
+class AdminMemberControllerTest {
 
     //CREATE MEMBER
     public static final String EMAIL = "jeeok@gmail.com";
@@ -76,12 +76,12 @@ class MemberControllerTest {
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
-    //REQUEST_URL
-    public static final String API_FIND_MEMBERS = "/api/admin/members";
-    public static final String API_FIND_MEMBER = "/api/admin/members/{memberId}";
-    public static final String API_SAVE_MEMBER = "/api/admin/members";
-    public static final String API_UPDATE_MEMBE = "/api/admin/members/{memberId}";
-    public static final String API_DELETE_MEMBER = "/api/admin/members/{memberId}";
+    //REQUEST_INFO
+    public static final String API_FIND_MEMBERS = "/admin/members";
+    public static final String API_FIND_MEMBER = "/admin/members/{memberId}";
+    public static final String API_SAVE_MEMBER = "/admin/members";
+    public static final String API_UPDATE_MEMBE = "/admin/members/{memberId}";
+    public static final String API_DELETE_MEMBER = "/admin/members/{memberId}";
 
     @MockBean MemberService memberService;
 
@@ -267,7 +267,7 @@ class MemberControllerTest {
                 .andDo(print())
                 .andDo(document("updateMember",
                         pathParameters(
-                                parameterWithName("memberId").description("회원 고유 번호")
+                                parameterWithName("memberId").description("회원 고유번호")
                         ),
                         requestFields(
                                 fieldWithPath("memberName").description("회원 이름"),
@@ -301,7 +301,7 @@ class MemberControllerTest {
                 .andDo(print())
                 .andDo(document("deleteMember",
                         pathParameters(
-                                parameterWithName("memberId").description("회원 고유 번호")
+                                parameterWithName("memberId").description("회원 고유번호")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
