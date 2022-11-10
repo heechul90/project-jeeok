@@ -1,4 +1,4 @@
-package com.jeeok.jeeokmember.core;
+package com.jeeok.jeeokmember;
 
 import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;

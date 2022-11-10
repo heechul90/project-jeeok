@@ -1,6 +1,6 @@
 package com.jeeok.jeeokmember.core.member.service;
 
-import com.jeeok.jeeokmember.core.MemberTestConfig;
+import com.jeeok.jeeokmember.MemberTestConfig;
 import com.jeeok.jeeokmember.core.member.domain.AuthType;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;

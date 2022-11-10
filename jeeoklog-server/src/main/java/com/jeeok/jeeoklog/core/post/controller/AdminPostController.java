@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/posts")
-public class PostController {
+@RequestMapping("/admin/posts")
+public class AdminPostController {
 
     private final PostService postService;
 

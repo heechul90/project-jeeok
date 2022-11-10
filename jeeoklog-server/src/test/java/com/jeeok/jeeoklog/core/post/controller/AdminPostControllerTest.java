@@ -23,7 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,10 +43,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = PostController.class)
+@WebMvcTest(controllers = AdminPostController.class)
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(uriHost = "127.0.0.1", uriPort = 11002)
-class PostControllerTest {
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "jeeoklog.jeeok.com", uriPort = 443)
+class AdminPostControllerTest {
 
     //CREATE_POST
     public static final String TITLE = "title";
@@ -65,11 +64,11 @@ class PostControllerTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     //REQUEST_URL
-    public static final String API_FIND_POSTS = "/api/admin/posts";
-    public static final String API_FIND_POST = "/api/admin/posts/{postId}";
-    public static final String API_SAVE_POST = "/api/admin/posts";
-    public static final String API_UPDATE_POST = "/api/admin/posts/{postId}";
-    public static final String API_DELETE_POST = "/api/admin/posts/{postId}";
+    public static final String API_FIND_POSTS = "/admin/posts";
+    public static final String API_FIND_POST = "/admin/posts/{postId}";
+    public static final String API_SAVE_POST = "/admin/posts";
+    public static final String API_UPDATE_POST = "/admin/posts/{postId}";
+    public static final String API_DELETE_POST = "/admin/posts/{postId}";
 
     @MockBean PostService postService;
 
