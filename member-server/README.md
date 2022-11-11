@@ -14,7 +14,7 @@
 ## API 문서
 | 서비스 | 설계서 |
 | --- | --- |
-| MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/member-server-API-문서/) |
+| MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/member-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 기능
 
