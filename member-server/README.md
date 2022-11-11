@@ -17,14 +17,17 @@
 | MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/member-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 기능
-
+- 회원 로그인
+  - 회원가입
+  - 로그인/로그아웃
+  - 토큰 재발행
+  - 토큰 조회
 - 회원
+  - 내 정보 조회
+  - 내 정보 수정
+- 회원 관리(관리자 권한)
   - 회원 목록 조회
   - 회원 단건 조회
   - 회원 저장
   - 회원 수정
   - 회원 삭제
-- 회원 로그인
-  - 로그인
-  - 토큰 조회
-  - 로그아웃
