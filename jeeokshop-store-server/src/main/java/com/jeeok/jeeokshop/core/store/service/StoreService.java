@@ -1,11 +1,11 @@
 package com.jeeok.jeeokshop.core.store.service;
 
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
+import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
-import com.jeeok.jeeokshop.core.store.exception.MemberNotEqual;
 import com.jeeok.jeeokshop.core.store.repository.StoreQueryRepository;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StoreService {
 
     public static final String STORE = "Store";
+
     private StoreQueryRepository storeQueryRepository;
     private StoreRepository storeRepository;
 
@@ -51,6 +54,14 @@ public class StoreService {
                 .phoneNumber(param.getPhoneNumber())
                 .address(param.getAddress())
                 .memberId(param.getMemberId())
+                .categories(
+                        param.getStoreCategories().stream()
+                                .map(storeCategoryParam -> Category.createCategory()
+                                        .name(storeCategoryParam.getName())
+                                        .order(storeCategoryParam.getOrder())
+                                        .build()
+                                ).collect(Collectors.toList())
+                )
                 .build();
         return storeRepository.save(store);
     }

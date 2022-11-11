@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,7 +28,17 @@ public class SaveStoreRequest {
     private String zipcode;
     private String address;
 
-    private List<StoreCategory> storeCategories;
+    private List<StoreCategoryRequest> storeCategories;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static class StoreCategoryRequest {
+        private String categoryName;
+        private Integer categoryOrder;
+    }
 
     //validate
     public void validate() {
@@ -44,6 +55,13 @@ public class SaveStoreRequest {
                 .businessHours(new BusinessHours(this.businessOpeningHours, this.businessClosingHours))
                 .phoneNumber(new PhoneNumber(this.phoneNumber.substring(0, 3), this.phoneNumber.substring(3, 7), this.phoneNumber.substring(7, 11)))
                 .memberId(null)
+                .storeCategories(this.storeCategories.stream()
+                        .map(category -> SaveStoreParam.StoreCategoryParam.builder()
+                                .name(category.getCategoryName())
+                                .order(category.getCategoryOrder())
+                                .build()
+                        ).collect(Collectors.toList())
+                )
                 .build();
     }
 

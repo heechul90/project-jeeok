@@ -5,6 +5,8 @@ import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -18,4 +20,15 @@ public class SaveStoreParam {
     private Address address;
     private Long memberId;
 
+    private List<StoreCategoryParam> storeCategories;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static class StoreCategoryParam {
+        private String name;
+        private Integer order;
+    }
 }

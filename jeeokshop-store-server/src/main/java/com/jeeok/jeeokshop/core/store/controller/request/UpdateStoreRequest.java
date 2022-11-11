@@ -1,5 +1,6 @@
 package com.jeeok.jeeokshop.core.store.controller.request;
 
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
@@ -42,7 +43,7 @@ public class UpdateStoreRequest {
                 .name(this.storeName)
                 .businessHours(new BusinessHours(this.businessOpeningHours, this.businessClosingHours))
                 .phoneNumber(new PhoneNumber(this.phoneNumber.substring(0, 3), this.phoneNumber.substring(3, 7), this.phoneNumber.substring(7, 11)))
-                .memberId(null)
+                .address(new Address(this.zipcode, this.address))
                 .build();
     }
 }

@@ -16,6 +16,5 @@ public class UpdateStoreParam {
     private BusinessHours businessHours;
     private PhoneNumber phoneNumber;
     private Address address;
-    private Long memberId;
 
 }

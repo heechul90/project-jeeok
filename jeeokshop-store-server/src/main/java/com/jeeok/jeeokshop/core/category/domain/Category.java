@@ -43,4 +43,9 @@ public class Category extends BaseEntity {
         this.name = param.getName();
         this.order = param.getOrder();
     }
+
+    //===연관관계 편의 메서드===//
+    public void addStore(Store store) {
+        this.store = store;
+    }
 }

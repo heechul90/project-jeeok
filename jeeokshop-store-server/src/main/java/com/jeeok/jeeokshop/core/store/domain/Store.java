@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.store.domain;
 
 import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
+import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -34,15 +37,22 @@ public class Store extends BaseEntity {
 
     private Long memberId;
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
+
     //===생성===//
     //Store 생성
     @Builder(builderMethodName = "createStore")
-    public Store(String name, BusinessHours businessHours, PhoneNumber phoneNumber, Address address, Long memberId) {
+    public Store(String name, BusinessHours businessHours, PhoneNumber phoneNumber, Address address, Long memberId, List<Category> categories) {
         this.name = name;
         this.businessHours = businessHours;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.memberId = memberId;
+        this.categories = categories;
+        this.categories.forEach(category -> {
+            category.addStore(this);
+        });
     }
 
     //===수정===//
