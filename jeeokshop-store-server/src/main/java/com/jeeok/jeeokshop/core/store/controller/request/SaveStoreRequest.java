@@ -27,6 +27,8 @@ public class SaveStoreRequest {
     private String zipcode;
     private String address;
 
+    private List<StoreCategory> storeCategories;
+
     //validate
     public void validate() {
         List<ErrorCode> errorCodes = new ArrayList<>();

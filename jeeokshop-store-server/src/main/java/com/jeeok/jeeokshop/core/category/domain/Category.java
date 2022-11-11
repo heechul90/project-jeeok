@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.core.category.domain;
 
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
+import com.jeeok.jeeokshop.core.category.dto.UpdateCategoryParam;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,4 +37,8 @@ public class Category extends BaseEntity {
     }
 
     //===수정===//
+    public void updateCategory(UpdateCategoryParam param) {
+        this.name = param.getName();
+        this.order = param.getOrder();
+    }
 }
