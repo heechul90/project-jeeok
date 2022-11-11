@@ -34,7 +34,7 @@ public class AdminMemberController {
     @GetMapping
     public JsonResult findMembers(MemberSearchCondition condition, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<Member> content = memberService.findMembers(condition, pageable);
-        List<Object> members = content.stream()
+        List<MemberDto> members = content.stream()
                 .map(MemberDto::new)
                 .collect(Collectors.toList());
 

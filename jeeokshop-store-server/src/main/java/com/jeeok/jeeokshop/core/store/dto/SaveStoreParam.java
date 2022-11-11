@@ -20,10 +20,9 @@ public class SaveStoreParam {
     private Address address;
     private Long memberId;
 
-    private List<StoreCategoryParam> storeCategories;
+    private List<StoreCategoryParam> storeCategoryParams;
 
     @Getter
-    @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
     @Builder

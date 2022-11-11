@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.store.service;
 
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.category.domain.Category;
+import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
@@ -25,8 +26,9 @@ public class StoreService {
 
     public static final String STORE = "Store";
 
-    private StoreQueryRepository storeQueryRepository;
-    private StoreRepository storeRepository;
+    private final StoreQueryRepository storeQueryRepository;
+    private final StoreRepository storeRepository;
+    private final CategoryRepository categoryRepository;
 
     /**
      * 스토어 목록 조회
@@ -55,7 +57,7 @@ public class StoreService {
                 .address(param.getAddress())
                 .memberId(param.getMemberId())
                 .categories(
-                        param.getStoreCategories().stream()
+                        param.getStoreCategoryParams().stream()
                                 .map(storeCategoryParam -> Category.createCategory()
                                         .name(storeCategoryParam.getName())
                                         .order(storeCategoryParam.getOrder())
@@ -74,6 +76,21 @@ public class StoreService {
         Store findStore = storeRepository.findById(storeId)
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
         findStore.updateStore(param);
+
+        //TODO 여기 수정해야함 객체지향적으로
+        //새로들어온것만 저장(categoryId가 없는거)
+        param.getStoreCategoryParams().forEach(storeCategoryParam -> {
+            if (storeCategoryParam.getCategoryId() == null) {
+                categoryRepository.save(Category.createCategory()
+                        .name(storeCategoryParam.getName())
+                        .order(storeCategoryParam.getOrder())
+                        .store(findStore)
+                        .build());
+            }
+        });
+
+
+
     }
 
     /**

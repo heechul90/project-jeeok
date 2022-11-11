@@ -34,3 +34,8 @@ eureka:
     register-with-eureka: true
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    root: debug
+    org.hibernate.SQL: debug

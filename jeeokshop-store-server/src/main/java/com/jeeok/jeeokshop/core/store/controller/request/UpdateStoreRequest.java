@@ -11,6 +11,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -29,6 +30,19 @@ public class UpdateStoreRequest {
     private String zipcode;
     private String address;
 
+    private List<UpdateStoreCategory> storeCategories;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static class UpdateStoreCategory {
+        private Long categoryId;
+        private String categoryName;
+        private Integer categoryOrder;
+    }
+
     //validate
     public void validate() {
         List<ErrorCode> errorCodes = new ArrayList<>();
@@ -44,6 +58,15 @@ public class UpdateStoreRequest {
                 .businessHours(new BusinessHours(this.businessOpeningHours, this.businessClosingHours))
                 .phoneNumber(new PhoneNumber(this.phoneNumber.substring(0, 3), this.phoneNumber.substring(3, 7), this.phoneNumber.substring(7, 11)))
                 .address(new Address(this.zipcode, this.address))
+                .storeCategoryParams(
+                        this.storeCategories.stream()
+                                .map(catetory -> UpdateStoreParam.StoreCategoryParam.builder()
+                                        .categoryId(catetory.getCategoryId())
+                                        .name(catetory.getCategoryName())
+                                        .order(catetory.getCategoryOrder())
+                                        .build()
+                                ).collect(Collectors.toList())
+                )
                 .build();
     }
 }

@@ -133,7 +133,7 @@ class StoreServiceTest {
                 .businessHours(BUSINESS_HOURS)
                 .phoneNumber(PHONE_NUMBER)
                 .address(ADDRESS)
-                .storeCategories(storeCategories)
+                .storeCategoryParams(storeCategories)
                 .build();
 
         //when

@@ -31,10 +31,10 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            ServerHttpRequest request = exchange.getRequest(); // reactive포함된거로 import
+            ServerHttpRequest request = exchange.getRequest(); //reactive 포함된거로 import
             ServerHttpResponse response = exchange.getResponse();
 
-            log.info("Global com.example.scg.filter baseMessgae: {}", config.getBaseMessage());
+            log.info("Global com.example.scg.filter baseMessage: {}", config.getBaseMessage());
 
             // Global pre Filter
             if (config.isPreLogger()){
@@ -42,12 +42,12 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
                 log.info("Global Filter Start: request path -> {}" , request.getPath());
             }
 
-            // Global Post Filter
-            //Mono는 webflux에서 단일값 전송할때 Mono값으로 전송
+            //Global Post Filter
+            //Mono 는 webflux 에서 단일값 전송할때 Mono 값으로 전송
             return chain.filter(exchange).then(Mono.fromRunnable(()->{
 
                 if (config.isPostLogger()){
-                    log.info("Global Filter End: response statuscode -> {}" , response.getStatusCode());
+                    log.info("Global Filter End: response statusCode -> {}" , response.getStatusCode());
                 }
             }));
         };

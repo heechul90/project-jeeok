@@ -83,7 +83,7 @@ public class AdminStoreController {
      * 스토어 삭제
      */
     @DeleteMapping("/{storeId}")
-    public JsonResult deleteStore(@PathVariable("storeid") Long storeId) {
+    public JsonResult deleteStore(@PathVariable("storeId") Long storeId) {
 
         storeService.deleteStore(storeId);
 
