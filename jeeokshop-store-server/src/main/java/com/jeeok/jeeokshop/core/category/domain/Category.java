@@ -4,6 +4,7 @@ import com.jeeok.jeeokshop.common.entity.BaseEntity;
 import com.jeeok.jeeokshop.core.category.dto.UpdateCategoryParam;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,7 @@ public class Category extends BaseEntity {
     public Store store;
 
     //===생성===//
+    @Builder(builderMethodName = "createCategory")
     public Category(String name, Integer order, Store store) {
         this.name = name;
         this.order = order;
