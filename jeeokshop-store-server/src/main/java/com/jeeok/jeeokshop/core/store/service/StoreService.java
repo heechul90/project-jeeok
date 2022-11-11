@@ -88,9 +88,6 @@ public class StoreService {
                         .build());
             }
         });
-
-
-
     }
 
     /**
@@ -100,7 +97,6 @@ public class StoreService {
     public void deleteStore(Long storeId) {
         Store findStore = storeRepository.findById(storeId)
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
-
-        storeRepository.delete(findStore);
+        findStore.deleteStore();
     }
 }

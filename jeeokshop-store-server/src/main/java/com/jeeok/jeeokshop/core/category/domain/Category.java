@@ -36,6 +36,7 @@ public class Category extends BaseEntity {
         this.name = name;
         this.order = order;
         this.store = store;
+        if (this.store != null) this.store.getCategories().add(this);
     }
 
     //===수정===//

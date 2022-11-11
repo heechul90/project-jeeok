@@ -3,6 +3,7 @@ package com.jeeok.jeeokshop.core.store.domain;
 import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
 import com.jeeok.jeeokshop.core.category.domain.Category;
+import com.jeeok.jeeokshop.core.item.domain.Yn;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,6 +39,10 @@ public class Store extends BaseEntity {
 
     private Long memberId;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "char(1)")
+    private Yn deleteYn;
+
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
@@ -63,5 +68,10 @@ public class Store extends BaseEntity {
         this.businessHours = param.getBusinessHours();
         this.phoneNumber = param.getPhoneNumber();
         this.address = param.getAddress();
+    }
+
+    //Store 삭제 업데이트
+    public void deleteStore() {
+        this.deleteYn = Yn.Y;
     }
 }
