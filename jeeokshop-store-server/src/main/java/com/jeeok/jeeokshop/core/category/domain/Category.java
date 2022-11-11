@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.core.category.domain;
 
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
+import com.jeeok.jeeokshop.core.store.domain.Store;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,19 @@ public class Category extends BaseEntity {
     @Column(name = "category_name")
     private String name;
 
+    @Column(name = "category_order")
+    private Integer order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    public Store store;
+
+    //===생성===//
+    public Category(String name, Integer order, Store store) {
+        this.name = name;
+        this.order = order;
+        this.store = store;
+    }
+
+    //===수정===//
 }

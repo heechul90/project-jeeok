@@ -47,7 +47,7 @@ public class PostQueryRepository {
                 .select(post)
                 .from(post)
                 .where(
-                        searchCondition(condition.getSearchCondition(), condition.getSearchKeyword())
+                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -62,14 +62,14 @@ public class PostQueryRepository {
                 .select(post.count())
                 .from(post)
                 .where(
-                        searchCondition(condition.getSearchCondition(), condition.getSearchKeyword())
+                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword())
                 );
     }
 
     /**
      * where searchCondition like '%searchKeyword%'
      */
-    private BooleanExpression searchCondition(SearchCondition searchCondition, String searchKeyword) {
+    private BooleanExpression searchConditionContains(SearchCondition searchCondition, String searchKeyword) {
         if (searchCondition == null || !hasText(searchKeyword)) {
             return null;
         }

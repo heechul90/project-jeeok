@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/stores")
-public class StoreController {
+@RequestMapping("/admin/stores")
+public class AdminStoreController {
 
     private final StoreService storeService;
 
