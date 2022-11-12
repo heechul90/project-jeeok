@@ -3,6 +3,7 @@ package com.jeeok.jeeokshop.core.store.repository;
 import com.jeeok.jeeokshop.common.dto.SearchCondition;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -47,7 +48,8 @@ public class StoreQueryRepository {
                 .select(store)
                 .from(store)
                 .where(
-                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword())
+                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword()),
+                        searchMemberIdEq(condition.getSearchMemberId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -63,7 +65,8 @@ public class StoreQueryRepository {
                 .select(store.count())
                 .from(store)
                 .where(
-                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword())
+                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword()),
+                        searchMemberIdEq(condition.getSearchMemberId())
                 );
     }
 
@@ -80,5 +83,12 @@ public class StoreQueryRepository {
         }
 
         return null;
+    }
+
+    /**
+     * where memberId == searchMemberId
+     */
+    private BooleanExpression searchMemberIdEq(Long searchMemberId) {
+        return searchMemberId == null ? null : store.memberId.eq(searchMemberId);
     }
 }

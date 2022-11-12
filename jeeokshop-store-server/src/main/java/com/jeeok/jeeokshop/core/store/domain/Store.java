@@ -43,7 +43,7 @@ public class Store extends BaseEntity {
     @Column(columnDefinition = "char(1)")
     private Yn deleteYn;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();
 
     //===생성===//

@@ -38,7 +38,6 @@ public class Category extends BaseEntity {
 
         if (store != null) {
             this.store = store;
-            this.store.getCategories().add(this);
         }
     }
 
