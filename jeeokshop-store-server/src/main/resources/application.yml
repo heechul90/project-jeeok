@@ -37,5 +37,5 @@ eureka:
 
 logging:
   level:
-    root: debug
+    root: info
     org.hibernate.SQL: debug

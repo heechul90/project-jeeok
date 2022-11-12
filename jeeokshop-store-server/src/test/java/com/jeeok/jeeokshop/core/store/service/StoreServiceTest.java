@@ -1,7 +1,10 @@
 package com.jeeok.jeeokshop.core.store.service;
 
 import com.jeeok.jeeokshop.common.entity.Address;
+import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.category.domain.Category;
+import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
+import com.jeeok.jeeokshop.core.item.domain.Yn;
 import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import com.jeeok.jeeokshop.core.store.domain.Store;
@@ -11,6 +14,7 @@ import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import com.jeeok.jeeokshop.core.store.repository.StoreQueryRepository;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,8 +28,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.jeeok.jeeokshop.core.item.domain.Yn.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -50,11 +56,21 @@ class StoreServiceTest {
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "8765", "4321");
     public static final Address UPDATE_ADDRESS = new Address("54321", "세종시");
 
+    //ERROR_MESSAGE
+    public static final String STORE = "Store";
+    public static final String CATEGORY = "Category";
+    public static final Long NOT_FOUND_STORE_ID = 1L;
+    public static final Long NOT_FOUND_CATEGORY_ID = 1L;
+    public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
+    public static final String HAS_MESSAGE_ENDING_WITH = "id=";
+
     @InjectMocks StoreService storeService;
 
     @Mock StoreQueryRepository storeQueryRepository;
 
     @Mock StoreRepository storeRepository;
+
+    @Mock CategoryRepository categoryRepository;
 
     private Store getStore(String name, BusinessHours businessHours, PhoneNumber phoneNumber, Address address, Long memberId, List<Category> categories) {
         return Store.createStore()
@@ -84,6 +100,7 @@ class StoreServiceTest {
     }
 
     @Test
+    @DisplayName("스토어 목록 조회")
     void findStores() {
         //given
         List<Store> stores = new ArrayList<>();
@@ -105,6 +122,7 @@ class StoreServiceTest {
     }
 
     @Test
+    @DisplayName("스토어 단건 조회")
     void findStore() {
         //given
         given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
@@ -122,6 +140,7 @@ class StoreServiceTest {
     }
 
     @Test
+    @DisplayName("스토어 저장")
     void saveStore() {
         //given
         given(storeRepository.save(any(Store.class))).willReturn(store);
@@ -150,19 +169,31 @@ class StoreServiceTest {
         verify(storeRepository, times(1)).save(any(Store.class));
     }
 
-
-
-
     @Test
+    @DisplayName("스토어 수정")
     void updateStore() {
         //given
         given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
+
+        /*Category willFindCategory = getCategory(CATEGORY_NAME, ORDER);
+        given(categoryRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(willFindCategory));
+
+        Category willNewCategory = getCategory("new" + CATEGORY_NAME, ORDER);
+        given(categoryRepository.save(any(Category.class))).willReturn(willNewCategory);*/
+
+        List<UpdateStoreParam.StoreCategoryParam> storeCategoryParams = new ArrayList<>();
+        storeCategoryParams.add(
+                UpdateStoreParam.StoreCategoryParam.builder()
+                        .name("new" + CATEGORY_NAME)
+                        .order(ORDER + 5)
+                        .build());
 
         UpdateStoreParam param = UpdateStoreParam.builder()
                 .name(UPDATE_STORE_NAME)
                 .businessHours(UPDATE_BUSINESS_HOURS)
                 .phoneNumber(UPDATE_PHONE_NUMBER)
                 .address(UPDATE_ADDRESS)
+                .storeCategoryParams(storeCategoryParams)
                 .build();
 
         //when
@@ -173,12 +204,16 @@ class StoreServiceTest {
         assertThat(store.getBusinessHours()).isEqualTo(UPDATE_BUSINESS_HOURS);
         assertThat(store.getPhoneNumber()).isEqualTo(UPDATE_PHONE_NUMBER);
         assertThat(store.getAddress()).isEqualTo(UPDATE_ADDRESS);
+        assertThat(store.getCategories().size()).isEqualTo(4);
 
         //verify
         verify(storeRepository, times(1)).findById(any(Long.class));
+        verify(categoryRepository, times(0)).findById(any(Long.class));
+        verify(categoryRepository, times(1)).save(any(Category.class));
     }
 
     @Test
+    @DisplayName("스토어 삭제")
     void deleteStore() {
         //given
         given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
@@ -187,9 +222,30 @@ class StoreServiceTest {
         storeService.deleteStore(0L);
 
         //then
+        assertThat(store.getDeleteYn()).isEqualTo(Y);
 
         //verify
         verify(storeRepository, times(1)).findById(any(Long.class));
-        verify(storeRepository, times(1)).delete(any(Store.class));
+    }
+
+    @Test
+    @DisplayName("findById_예외")
+    void findById_exception() {
+        //given
+        given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, NOT_FOUND_STORE_ID.toString()));
+
+        //when
+        assertThatThrownBy(() -> storeService.findStore(NOT_FOUND_STORE_ID))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + STORE)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_STORE_ID);
+
+        assertThatThrownBy(() -> storeService.updateStore(NOT_FOUND_STORE_ID, any(UpdateStoreParam.class)))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + STORE)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_STORE_ID);
+
+        //then
+        verify(storeRepository, times(2)).findById(any(Long.class));
     }
 }

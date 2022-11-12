@@ -56,6 +56,7 @@ public class Store extends BaseEntity {
         this.address = address;
         this.memberId = memberId;
         this.categories = categories;
+
         this.categories.forEach(category -> {
             category.addStore(this);
         });

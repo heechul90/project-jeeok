@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.store.service;
 
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.category.domain.Category;
+import com.jeeok.jeeokshop.core.category.dto.UpdateCategoryParam;
 import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class StoreService {
 
     public static final String STORE = "Store";
+    public static final String CATEGORY = "Category";
 
     private final StoreQueryRepository storeQueryRepository;
     private final StoreRepository storeRepository;
@@ -50,20 +53,20 @@ public class StoreService {
      */
     @Transactional
     public Store saveStore(SaveStoreParam param) {
+        List<Category> categories = param.getStoreCategoryParams().stream()
+                .map(category -> Category.createCategory()
+                        .name(category.getName())
+                        .order(category.getOrder())
+                        .build()
+                ).collect(Collectors.toList());
+
         Store store = Store.createStore()
                 .name(param.getName())
                 .businessHours(param.getBusinessHours())
                 .phoneNumber(param.getPhoneNumber())
                 .address(param.getAddress())
                 .memberId(param.getMemberId())
-                .categories(
-                        param.getStoreCategoryParams().stream()
-                                .map(storeCategoryParam -> Category.createCategory()
-                                        .name(storeCategoryParam.getName())
-                                        .order(storeCategoryParam.getOrder())
-                                        .build()
-                                ).collect(Collectors.toList())
-                )
+                .categories(categories)
                 .build();
         return storeRepository.save(store);
     }
@@ -77,15 +80,25 @@ public class StoreService {
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
         findStore.updateStore(param);
 
-        //TODO 여기 수정해야함 객체지향적으로
-        //새로들어온것만 저장(categoryId가 없는거)
-        param.getStoreCategoryParams().forEach(storeCategoryParam -> {
-            if (storeCategoryParam.getCategoryId() == null) {
-                categoryRepository.save(Category.createCategory()
-                        .name(storeCategoryParam.getName())
-                        .order(storeCategoryParam.getOrder())
-                        .store(findStore)
-                        .build());
+        //categoryId 가 있으면 업데이트 없으면 생성
+        param.getStoreCategoryParams().forEach(category -> {
+            if (category.getCategoryId() != null) {
+                Category findCategory = categoryRepository.findById(category.getCategoryId())
+                        .orElseThrow(() -> new EntityNotFound(CATEGORY, category.getCategoryId().toString()));
+                findCategory.updateCategory(
+                        UpdateCategoryParam.builder()
+                                .name(category.getName())
+                                .order(category.getOrder())
+                                .build()
+                );
+            } else {
+                categoryRepository.save(
+                        Category.createCategory()
+                                .name(category.getName())
+                                .order(category.getOrder())
+                                .store(findStore)
+                                .build()
+                );
             }
         });
     }

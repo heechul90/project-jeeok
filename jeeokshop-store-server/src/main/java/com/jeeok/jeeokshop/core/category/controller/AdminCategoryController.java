@@ -54,7 +54,7 @@ public class AdminCategoryController {
     /**
      * 카테고리 저장
      */
-    /*@PostMapping
+    @PostMapping
     public JsonResult saveCategory(@RequestBody @Validated SaveCategoryRequest request) {
 
         //validate
@@ -63,12 +63,12 @@ public class AdminCategoryController {
         Category savedCategory = categoryService.saveCategory(request.getStoreId(), request.toParam());
 
         return JsonResult.OK(new SaveCategoryResponse(savedCategory.getId()));
-    }*/
+    }
 
     /**
      * 카테고리 수정
      */
-    /*@PutMapping("/{categoryId}")
+    @PutMapping("/{categoryId}")
     public JsonResult updateCategory(@PathVariable("categoryId") Long categoryId, @RequestBody @Validated UpdateCategoryRequest request) {
 
         //validate
@@ -78,7 +78,7 @@ public class AdminCategoryController {
         Category updatedCategory = categoryService.findCategory(categoryId);
 
         return JsonResult.OK(new UpdateCategoryResponse(updatedCategory.getId()));
-    }*/
+    }
 
     /**
      * 카테고리 삭제

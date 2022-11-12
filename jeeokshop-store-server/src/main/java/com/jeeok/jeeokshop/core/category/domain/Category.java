@@ -32,11 +32,14 @@ public class Category extends BaseEntity {
 
     //===생성===//
     @Builder(builderMethodName = "createCategory")
-    public Category(String name, Integer order, Store store) {
+    public Category (String name, Integer order, Store store) {
         this.name = name;
         this.order = order;
-        this.store = store;
-        if (this.store != null) this.store.getCategories().add(this);
+
+        if (store != null) {
+            this.store = store;
+            this.store.getCategories().add(this);
+        }
     }
 
     //===수정===//

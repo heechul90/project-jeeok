@@ -3,23 +3,19 @@ package com.jeeok.jeeokshop.core.store.domain;
 import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -69,49 +65,5 @@ class StoreTest {
         assertThat(findStore.getCategories()).extracting("order")
                 .containsExactly(1, 2, 3);
         assertThat(findStore.getCategories().get(0).getStore().getName()).isEqualTo(STORE_NAME);
-    }
-
-    @Test
-    @DisplayName("Store Entity Update Test")
-    void updateStore() {
-        //given
-        List<Category> categories = new ArrayList<>();
-        IntStream.range(0, 3).forEach(i -> categories.add(Category.createCategory().name(CATEGORY_NAME + i).order(ORDER + i).build()));
-
-        Store store = Store.createStore()
-                .name(STORE_NAME)
-                .businessHours(BUSINESS_HOURS)
-                .phoneNumber(PHONE_NUMBER)
-                .address(ADDRESS)
-                .categories(categories)
-                .build();
-        em.persist(store);
-        em.flush();
-        em.clear();
-
-        //when
-
-
-        //then
-
-    }
-
-    @Test
-    @DisplayName("Store Repository Test")
-    void test02() {
-        //given
-        List<Category> categories = new ArrayList<>();
-        IntStream.range(0, 3).forEach(i -> categories.add(Category.createCategory().name(CATEGORY_NAME + i).order(ORDER + i).build()));
-
-        Store store = Store.createStore()
-                .name(STORE_NAME)
-                .businessHours(BUSINESS_HOURS)
-                .phoneNumber(PHONE_NUMBER)
-                .address(ADDRESS)
-                .categories(categories)
-                .build();
-
-        Store savedStore = storeRepository.save(store);
-        System.out.println("savedStore.getId() = " + savedStore.getId());
     }
 }
