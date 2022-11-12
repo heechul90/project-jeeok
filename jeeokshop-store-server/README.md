@@ -1,4 +1,4 @@
-# JEEOKLOG-SERVER
+# JEEOKSHOP-STORE-SERVER
 
 ## 프로젝트 환경
 | 기술 | 개발환경 |
@@ -13,12 +13,14 @@
 ## API 문서
 | 서비스 | 설계서 |
 | --- | --- |
-| MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeoklog-server-API-%EB%AC%B8%EC%84%9C/index.html) |
+| JEEOKSHOP-STORE-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/store-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 기능
-- 게시물 관리(관리자 권한)
-  - 게시물 목록 조회
-  - 게시물 단건 조회
-  - 게시물 저장
-  - 게시물 수정
-  - 게시물 삭제
+- 스토어(일반 유저)
+  - 
+- 스토어 관리(관리자, 매니저 유저)
+  - 스토어 목록 조회
+  - 스토어 단건 조회
+  - 스토어 저장
+  - 스토어 수정
+  - 스토어 삭제

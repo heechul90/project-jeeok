@@ -20,7 +20,7 @@
 | --- | --- |
 | [MEMBER-SERVER](https://github.com/heechul90/project-jeeok/tree/main/member-server) | JWT 토큰을 이용한 로그인/로그아웃, 회원가입 및 회원 관리 |
 | [JEEOKLOG-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeoklog-server) | 게시물 CRUD 개발 |
-| [JEEOKSHOP-STORE-SERVER]() | 열심히 작업중 |
+| [JEEOKSHOP-STORE-SERVER]() | 관리자 및 매니저 스토어 등록 기능 개발 <br/> 유저 스토어 목록 확인 및 찜하기 등록 기능 개발중 |
 
 ## 아키텍처 요약
 | 기술스택 | 개발환경 |
