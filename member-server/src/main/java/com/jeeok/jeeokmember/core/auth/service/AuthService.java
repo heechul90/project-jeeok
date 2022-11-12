@@ -1,11 +1,9 @@
 package com.jeeok.jeeokmember.core.auth.service;
 
-import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final MemberRepository memberRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 회원가입
