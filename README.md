@@ -1,4 +1,4 @@
-# [JEEOK-PROJECT] 공부한거 적용해하기
+# [JEEOK-PROJECT] 공부한 내용 프로젝트에 적용하기
 
 ## Client Server
 | 서버 | 설명 |
