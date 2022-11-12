@@ -4,11 +4,14 @@ import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import com.jeeok.jeeokmember.core.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
 @TestConfiguration
 public class MemberTestConfig {
@@ -27,4 +30,10 @@ public class MemberTestConfig {
         return new MemberQueryRepository(em);
     }
 
+    @Bean
+    public RestDocsMockMvcConfigurationCustomizer restDocsMockMvcConfigurationCustomizer() {
+        return configurer -> configurer.operationPreprocessors()
+                .withRequestDefaults(prettyPrint())
+                .withResponseDefaults(prettyPrint());
+    }
 }

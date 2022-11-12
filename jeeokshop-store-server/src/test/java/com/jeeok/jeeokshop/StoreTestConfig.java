@@ -5,11 +5,14 @@ import com.jeeok.jeeokshop.core.store.repository.StoreQueryRepository;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
 import com.jeeok.jeeokshop.core.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
 @TestConfiguration
 public class StoreTestConfig {
@@ -28,5 +31,12 @@ public class StoreTestConfig {
     @Bean
     public StoreQueryRepository storeQueryRepository() {
         return new StoreQueryRepository(em);
+    }
+
+    @Bean
+    public RestDocsMockMvcConfigurationCustomizer restDocsMockMvcConfigurationCustomizer() {
+        return configurer -> configurer.operationPreprocessors()
+                .withRequestDefaults(prettyPrint())
+                .withResponseDefaults(prettyPrint());
     }
 }
