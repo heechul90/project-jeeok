@@ -6,7 +6,6 @@ import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
-import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class UpdateStoreRequest {
+public class ResisterStoreRequest {
 
     private String storeName;
 
@@ -30,15 +29,14 @@ public class UpdateStoreRequest {
     private String zipcode;
     private String address;
 
-    private List<UpdateStoreRequest.UpdateStoreCategory> storeCategories;
+    private List<SaveStoreRequest.StoreCategoryRequest> storeCategories;
 
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
     @Builder
-    public static class UpdateStoreCategory {
-        private Long categoryId;
+    public static class StoreCategoryRequest {
         private String categoryName;
         private Integer categoryOrder;
     }
@@ -52,18 +50,18 @@ public class UpdateStoreRequest {
         }
     }
 
-    public UpdateStoreParam toParam() {
-        return UpdateStoreParam.builder()
+    public SaveStoreParam toParam(Long memberId) {
+        return SaveStoreParam.builder()
                 .name(this.storeName)
                 .businessHours(new BusinessHours(this.businessOpeningHours, this.businessClosingHours))
                 .phoneNumber(new PhoneNumber(this.phoneNumber.substring(0, 3), this.phoneNumber.substring(3, 7), this.phoneNumber.substring(7, 11)))
                 .address(new Address(this.zipcode, this.address))
+                .memberId(memberId)
                 .storeCategoryParams(
                         this.storeCategories.stream()
-                                .map(catetory -> UpdateStoreParam.StoreCategoryParam.builder()
-                                        .categoryId(catetory.getCategoryId())
-                                        .name(catetory.getCategoryName())
-                                        .order(catetory.getCategoryOrder())
+                                .map(category -> SaveStoreParam.StoreCategoryParam.builder()
+                                        .name(category.getCategoryName())
+                                        .order(category.getCategoryOrder())
                                         .build()
                                 ).collect(Collectors.toList())
                 )

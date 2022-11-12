@@ -173,13 +173,10 @@ class StoreServiceTest {
     @DisplayName("스토어 수정")
     void updateStore() {
         //given
+        Category category = getCategory("new" + CATEGORY_NAME, ORDER + 5);
+        store.getCategories().add(category);
+
         given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
-
-        /*Category willFindCategory = getCategory(CATEGORY_NAME, ORDER);
-        given(categoryRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(willFindCategory));
-
-        Category willNewCategory = getCategory("new" + CATEGORY_NAME, ORDER);
-        given(categoryRepository.save(any(Category.class))).willReturn(willNewCategory);*/
 
         List<UpdateStoreParam.StoreCategoryParam> storeCategoryParams = new ArrayList<>();
         storeCategoryParams.add(

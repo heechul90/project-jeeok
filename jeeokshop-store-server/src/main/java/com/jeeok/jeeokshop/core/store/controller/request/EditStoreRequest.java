@@ -5,7 +5,6 @@ import com.jeeok.jeeokshop.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
-import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.*;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class UpdateStoreRequest {
+public class EditStoreRequest {
 
     private String storeName;
 
@@ -30,7 +29,7 @@ public class UpdateStoreRequest {
     private String zipcode;
     private String address;
 
-    private List<UpdateStoreRequest.UpdateStoreCategory> storeCategories;
+    private List<EditStoreRequest.UpdateStoreCategory> storeCategories;
 
     @Getter
     @Setter
