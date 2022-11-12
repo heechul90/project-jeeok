@@ -23,7 +23,7 @@ repositories {
 ext {
     asciidocVersion = "2.0.6.RELEASE"
     snippetsDir = file('build/generated-snippets')
-    set('springCloudVersion', "2021.0.4")
+    set('springCloudVersion', "2021.0.5")
 }
 
 dependencies {
@@ -62,6 +62,9 @@ dependencies {
     //spring rest docs
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${asciidocVersion}"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${asciidocVersion}"
+
+    //logging
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
 
     //database
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'

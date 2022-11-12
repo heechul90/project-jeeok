@@ -22,9 +22,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.payload.PayloadDocumentation;
-import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 
@@ -39,6 +36,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -115,23 +114,23 @@ class AdminPostControllerTest {
                 .andExpect(jsonPath("$.data.length()", Matchers.is(5)))
                 .andDo(print())
                 .andDo(document("findPosts",
-                        RequestDocumentation.requestParameters(
-                                RequestDocumentation.parameterWithName("searchCondition").description("검색 조건"),
-                                RequestDocumentation.parameterWithName("searchKeyword").description("검색 키워드"),
-                                RequestDocumentation.parameterWithName("page").description("검색 페이지"),
-                                RequestDocumentation.parameterWithName("size").description("검색 사이즈")
+                        requestParameters(
+                                parameterWithName("searchCondition").description("검색 조건"),
+                                parameterWithName("searchKeyword").description("검색 키워드"),
+                                parameterWithName("page").description("검색 페이지"),
+                                parameterWithName("size").description("검색 사이즈")
                         ),
-                        PayloadDocumentation.responseFields(
-                                PayloadDocumentation.fieldWithPath("transaction_time").description("api 요청 시간"),
-                                PayloadDocumentation.fieldWithPath("code").description("SUCCESS or ERROR"),
-                                PayloadDocumentation.fieldWithPath("message").description("메시지"),
-                                PayloadDocumentation.fieldWithPath("errors").description("에러"),
-                                PayloadDocumentation.fieldWithPath("data[*].postId").description("게시물 고유번호"),
-                                PayloadDocumentation.fieldWithPath("data[*].postTitle").description("게시물 제목"),
-                                PayloadDocumentation.fieldWithPath("data[*].postContent").description("게시물 내용"),
-                                PayloadDocumentation.fieldWithPath("data[*].hits").description("조회수"),
-                                PayloadDocumentation.fieldWithPath("data[*].createdDate").description("등록일"),
-                                PayloadDocumentation.fieldWithPath("data[*].createdBy").description("등록자")
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data[*].postId").description("게시물 고유번호"),
+                                fieldWithPath("data[*].postTitle").description("게시물 제목"),
+                                fieldWithPath("data[*].postContent").description("게시물 내용"),
+                                fieldWithPath("data[*].hits").description("조회수"),
+                                fieldWithPath("data[*].createdDate").description("등록일"),
+                                fieldWithPath("data[*].createdBy").description("등록자")
                         )
                 ))
         ;
@@ -157,21 +156,21 @@ class AdminPostControllerTest {
                 .andExpect(jsonPath("$.data.postContent").value(CONTENT))
                 .andExpect(jsonPath("$.data.hits").value(HITS))
                 .andDo(print())
-                .andDo(MockMvcRestDocumentation.document("findPost",
-                        RequestDocumentation.pathParameters(
-                                RequestDocumentation.parameterWithName("postId").description("게시물 고유번호")
+                .andDo(document("findPost",
+                        pathParameters(
+                                parameterWithName("postId").description("게시물 고유번호")
                         ),
-                        PayloadDocumentation.responseFields(
-                                PayloadDocumentation.fieldWithPath("transaction_time").description("api 요청 시간"),
-                                PayloadDocumentation.fieldWithPath("code").description("SUCCESS or ERROR"),
-                                PayloadDocumentation.fieldWithPath("message").description("메시지"),
-                                PayloadDocumentation.fieldWithPath("errors").description("에러"),
-                                PayloadDocumentation.fieldWithPath("data.postId").description("게시물 고유번호"),
-                                PayloadDocumentation.fieldWithPath("data.postTitle").description("게시물 제목"),
-                                PayloadDocumentation.fieldWithPath("data.postContent").description("게시물 내용"),
-                                PayloadDocumentation.fieldWithPath("data.hits").description("조회수"),
-                                PayloadDocumentation.fieldWithPath("data.createdDate").description("등록일"),
-                                PayloadDocumentation.fieldWithPath("data.createdBy").description("등록자")
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data.postId").description("게시물 고유번호"),
+                                fieldWithPath("data.postTitle").description("게시물 제목"),
+                                fieldWithPath("data.postContent").description("게시물 내용"),
+                                fieldWithPath("data.hits").description("조회수"),
+                                fieldWithPath("data.createdDate").description("등록일"),
+                                fieldWithPath("data.createdBy").description("등록자")
                         )
                 ))
         ;
@@ -202,17 +201,17 @@ class AdminPostControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.savedPostId").hasJsonPath())
                 .andDo(print())
-                .andDo(MockMvcRestDocumentation.document("savePost",
-                        PayloadDocumentation.requestFields(
-                                PayloadDocumentation.fieldWithPath("postTitle").description("게시물 제목"),
-                                PayloadDocumentation.fieldWithPath("postContent").description("게시물 내용")
+                .andDo(document("savePost",
+                        requestFields(
+                                fieldWithPath("postTitle").description("게시물 제목"),
+                                fieldWithPath("postContent").description("게시물 내용")
                         ),
-                        PayloadDocumentation.responseFields(
-                                PayloadDocumentation.fieldWithPath("transaction_time").description("api 요청 시간"),
-                                PayloadDocumentation.fieldWithPath("code").description("SUCCESS or ERROR"),
-                                PayloadDocumentation.fieldWithPath("message").description("메시지"),
-                                PayloadDocumentation.fieldWithPath("errors").description("에러"),
-                                PayloadDocumentation.fieldWithPath("data.savedPostId").description("저장된 게시물 고유번호")
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data.savedPostId").description("저장된 게시물 고유번호")
                         )
                 ))
         ;
@@ -243,21 +242,21 @@ class AdminPostControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.updatedPostId").hasJsonPath())
                 .andDo(print())
-                .andDo(MockMvcRestDocumentation.document("updatePost",
-                        RequestDocumentation.pathParameters(
-                                RequestDocumentation.parameterWithName("postId").description("게시물 고유번호")
+                .andDo(document("updatePost",
+                        pathParameters(
+                                parameterWithName("postId").description("게시물 고유번호")
                         ),
-                        PayloadDocumentation.requestFields(
-                                PayloadDocumentation.fieldWithPath("postTitle").description("게시물 제목"),
-                                PayloadDocumentation.fieldWithPath("postContent").description("게시물 내용")
+                        requestFields(
+                                fieldWithPath("postTitle").description("게시물 제목"),
+                                fieldWithPath("postContent").description("게시물 내용")
 
                         ),
-                        PayloadDocumentation.responseFields(
-                                PayloadDocumentation.fieldWithPath("transaction_time").description("api 요청 시간"),
-                                PayloadDocumentation.fieldWithPath("code").description("SUCCESS or ERROR"),
-                                PayloadDocumentation.fieldWithPath("message").description("메시지"),
-                                PayloadDocumentation.fieldWithPath("errors").description("에러"),
-                                PayloadDocumentation.fieldWithPath("data.updatedPostId").description("수정된 게시물 고유번호")
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data.updatedPostId").description("수정된 게시물 고유번호")
                         )
                 ))
         ;
@@ -279,16 +278,16 @@ class AdminPostControllerTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(MockMvcRestDocumentation.document("deletePost",
-                        RequestDocumentation.pathParameters(
-                                RequestDocumentation.parameterWithName("postId").description("게시물 고유번호")
+                .andDo(document("deletePost",
+                        pathParameters(
+                                parameterWithName("postId").description("게시물 고유번호")
                         ),
-                        PayloadDocumentation.responseFields(
-                                PayloadDocumentation.fieldWithPath("transaction_time").description("api 요청 시간"),
-                                PayloadDocumentation.fieldWithPath("code").description("SUCCESS or ERROR"),
-                                PayloadDocumentation.fieldWithPath("message").description("메시지"),
-                                PayloadDocumentation.fieldWithPath("errors").description("에러"),
-                                PayloadDocumentation.fieldWithPath("data").description("데이터")
+                        responseFields(
+                                fieldWithPath("transaction_time").description("api 요청 시간"),
+                                fieldWithPath("code").description("SUCCESS or ERROR"),
+                                fieldWithPath("message").description("메시지"),
+                                fieldWithPath("errors").description("에러"),
+                                fieldWithPath("data").description("데이터")
                         )
                 ))
         ;

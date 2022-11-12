@@ -80,7 +80,7 @@ class AdminMemberControllerTest {
     public static final String API_FIND_MEMBERS = "/admin/members";
     public static final String API_FIND_MEMBER = "/admin/members/{memberId}";
     public static final String API_SAVE_MEMBER = "/admin/members";
-    public static final String API_UPDATE_MEMBE = "/admin/members/{memberId}";
+    public static final String API_UPDATE_MEMBER = "/admin/members/{memberId}";
     public static final String API_DELETE_MEMBER = "/admin/members/{memberId}";
 
     @MockBean MemberService memberService;
@@ -256,7 +256,7 @@ class AdminMemberControllerTest {
                 .build();
 
         //when
-        mockMvc.perform(put(API_UPDATE_MEMBE, 0L)
+        mockMvc.perform(put(API_UPDATE_MEMBER, 0L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
