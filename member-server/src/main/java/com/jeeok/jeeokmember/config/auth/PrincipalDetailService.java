@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 시큐리티 설정에서 .loginProcessingUrl("/login")
@@ -30,8 +32,12 @@ public class PrincipalDetailService implements UserDetailsService {
         Member findMember = memberRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Member not found in the database"));
 
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(findMember.getRoleType().name()));
+        //Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        //authorities.add(new SimpleGrantedAuthority(findMember.getRoleType().name()));
+
+        List<SimpleGrantedAuthority> authorities = findMember.getRoleType().getRoles().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
         return new User(
                 findMember.getId().toString(),

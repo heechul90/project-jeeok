@@ -3,14 +3,13 @@ package com.jeeok.jeeokmember.core.auth.service;
 import com.jeeok.jeeokmember.common.utils.CookieProvider;
 import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
 import com.jeeok.jeeokmember.config.auth.PrincipalDetailService;
+import com.jeeok.jeeokmember.core.auth.dto.OAuthAttributeDto;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
-import com.jeeok.jeeokmember.core.auth.dto.OAuthAttributeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -42,8 +41,6 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     private final RefreshTokenService refreshTokenService;
     private final PrincipalDetailService principalDetailService;
     private final CookieProvider cookieProvider;
-
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
     @Transactional
@@ -90,6 +87,8 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.addCookie(cookie);
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         //body 설정
         String jwtAccessToken = jwtTokenProvider.createJwtAccessToken(memberId.toString(), request.getRequestURI(), authentication.getAuthorities().stream()

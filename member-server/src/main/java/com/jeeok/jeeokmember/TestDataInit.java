@@ -53,6 +53,14 @@ public class TestDataInit {
                     AuthType.JEEOK,
                     new PhoneNumber("010", "1111", "2222")
             );
+            Member managerMember = getMember(
+                    "manager",
+                    "1234",
+                    "매니저",
+                    RoleType.ROLE_MANAGER,
+                    AuthType.JEEOK,
+                    new PhoneNumber("010", "1111", "2222")
+            );
             Member adminMember = getMember(
                     "admin",
                     "1234",
@@ -62,6 +70,7 @@ public class TestDataInit {
                     new PhoneNumber("010", "1111", "2222")
             );
             em.persist(springMember);
+            em.persist(managerMember);
             em.persist(adminMember);
         }
     }

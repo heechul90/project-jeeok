@@ -86,16 +86,16 @@ spring:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
-        #지록숍 스토어 관리자
+        #지록숍 스토어 매니저
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER/admin
+          uri: lb://JEEOKSHOP-STORE-SERVER/manager
           predicates:
-            - Path=/jeeokshop-store-server/admin/**
+            - Path=/jeeokshop-store-server/manager/**
           filters:
-            - AdminAuthorizationHeaderFilter
+            - ManagerAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
-        #지옥숍 스토어 프론트
+        #지옥숍 스토어
         - id: jeeokshop-store-server
           uri: lb://JEEOKSHOP-STORE-SERVER/front
           predicates:
