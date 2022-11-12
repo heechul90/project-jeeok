@@ -48,11 +48,6 @@ public class ManagerAuthorizationHeaderFilter extends AbstractGatewayFilterFacto
 
             String memberId = jwtTokenProvider.getUserId(accessToken);
 
-            List<String> roles = jwtTokenProvider.getRoles(accessToken);
-            for (String role : roles) {
-                System.out.println("role = " + role);
-            }
-
             //권한 check
             if (!jwtTokenProvider.getRoles(accessToken).contains("ROLE_MANAGER")) {
                 return onError(exchange, "매니저 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
