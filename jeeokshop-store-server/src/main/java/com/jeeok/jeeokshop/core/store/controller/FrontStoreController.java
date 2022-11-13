@@ -29,14 +29,10 @@ public class FrontStoreController {
     private final StoreService storeService;
 
     /**
-     * 내 스토어 목록 조회
+     * 스토어 목록 조회(스토어 목록)
      */
     @GetMapping
-    public JsonResult findMyStores(@RequestHeader(value = "member-id") Long memberId,
-                                           StoreSearchCondition condition,
-                                           @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        condition.setSearchMemberId(memberId);
-
+    public JsonResult findMyStores(StoreSearchCondition condition, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<Store> content = storeService.findStores(condition, pageable);
         List<StoreDto> stores = content.stream()
                 .map(StoreDto::new)
@@ -46,53 +42,12 @@ public class FrontStoreController {
     }
 
     /**
-     * 내 스토어 단건 조회
+     * 스토어 단건 조회(상세 화면)
      */
     @GetMapping("/{storeId}")
     public JsonResult findMyStore(@PathVariable("storeId") Long storeId) {
         Store findStore = storeService.findStore(storeId);
         StoreDto store = new StoreDto(findStore);
         return JsonResult.OK(store);
-    }
-
-    /**
-     * 내 스토어 등록
-     */
-    @PostMapping
-    public JsonResult registerStore(@RequestHeader(value = "member-id") Long memberId, @RequestBody @Validated ResisterStoreRequest request) {
-
-        //validate
-        request.validate();
-
-        Store registeredStore = storeService.saveStore(request.toParam(memberId));
-
-        return JsonResult.OK(new ResisterStoreResponse(registeredStore.getId()));
-    }
-
-    /**
-     * 내 스토어 수정
-     */
-    @PutMapping("/{storeId}")
-    public JsonResult editStore(@PathVariable("storeId") Long storeId,
-                                @RequestBody @Validated EditStoreRequest request) {
-
-        //validate
-        request.validate();
-
-        storeService.updateStore(storeId, request.toParam());
-        Store findStore = storeService.findStore(storeId);
-
-        return JsonResult.OK(new EditStoreResponse(findStore.getId()));
-    }
-
-    /**
-     * 내 스토어 삭제
-     */
-    @DeleteMapping("/{storeId}")
-    public JsonResult deleteStore(@PathVariable("storeId") Long storeId) {
-
-        storeService.deleteStore(storeId);
-
-        return JsonResult.OK();
     }
 }

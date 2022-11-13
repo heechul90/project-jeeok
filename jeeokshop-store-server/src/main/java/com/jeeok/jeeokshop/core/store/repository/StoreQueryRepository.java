@@ -3,7 +3,6 @@ package com.jeeok.jeeokshop.core.store.repository;
 import com.jeeok.jeeokshop.common.dto.SearchCondition;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
