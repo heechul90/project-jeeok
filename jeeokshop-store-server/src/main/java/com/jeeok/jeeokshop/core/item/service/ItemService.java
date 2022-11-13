@@ -39,20 +39,16 @@ public class ItemService {
     /**
      * 상품 목록 조회
      */
-    public List<ItemDto> findItems(ItemSearchCondition condition, Pageable pageable) {
-        Page<Item> content = itemQueryRepository.findItems(condition, pageable);
-        return content.stream()
-                .map(ItemDto::new)
-                .collect(Collectors.toList());
+    public Page<Item> findItems(ItemSearchCondition condition, Pageable pageable) {
+        return itemQueryRepository.findItems(condition, pageable);
     }
 
     /**
      * 상품 단거 조회
      */
-    public ItemDto findItem(Long itemId) {
-        Item findItem = itemRepository.findById(itemId)
+    public Item findItem(Long itemId) {
+        return itemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));
-        return new ItemDto(findItem);
     }
 
     /**
