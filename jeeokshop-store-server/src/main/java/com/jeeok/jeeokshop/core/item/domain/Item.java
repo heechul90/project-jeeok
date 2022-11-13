@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.item.domain;
 
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
 import com.jeeok.jeeokshop.common.entity.Photo;
+import com.jeeok.jeeokshop.common.entity.Yn;
 import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import lombok.Getter;

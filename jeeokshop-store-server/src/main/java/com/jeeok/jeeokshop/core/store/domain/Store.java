@@ -3,7 +3,7 @@ package com.jeeok.jeeokshop.core.store.domain;
 import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
 import com.jeeok.jeeokshop.core.category.domain.Category;
-import com.jeeok.jeeokshop.core.item.domain.Yn;
+import com.jeeok.jeeokshop.common.entity.Yn;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table
