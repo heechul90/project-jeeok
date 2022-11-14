@@ -19,4 +19,8 @@ public class Photo {
 
     @Column(name = "photo_name")
     private String name;
+
+    public String path() {
+        return this.path + "/" + this.name;
+    }
 }

@@ -19,7 +19,7 @@ public class UpdateItemRequest {
 
     private String itemName;
     private Yn salesYn;
-    private int price;
+    private int itemPrice;
     private String photoPath;
     private String photoName;
 
@@ -36,7 +36,7 @@ public class UpdateItemRequest {
         return UpdateItemParam.builder()
                 .name(this.itemName)
                 .yn(this.salesYn)
-                .price(this.price)
+                .price(this.itemPrice)
                 .photo(new Photo(this.photoPath, this.photoName))
                 .build();
     }

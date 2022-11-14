@@ -31,6 +31,7 @@ public class ItemQueryRepository {
      * 상품 목록 조회
      */
     public Page<Item> findItems(ItemSearchCondition condition, Pageable pageable) {
+
         List<Item> content = getItemList(condition, pageable);
 
         JPAQuery<Long> count = getItemListCount(condition);

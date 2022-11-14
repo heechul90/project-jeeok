@@ -78,9 +78,11 @@ Host : store.jeeokshop.jeeok.com
 |===
 
 [[api-rest-docs]]
-= 스토어 관리
+= 관리자 모드
 
 관리자, 매니저 회원만 권한이 부여됩니다.
+
+== 스토어
 
 == 스토어 목록 조회
 === 요청
@@ -129,3 +131,51 @@ include::{snippets}/deleteStore/path-parameters.adoc[]
 === 응답
 include::{snippets}/deleteStore/http-response.adoc[]
 include::{snippets}/deleteStore/response-fields.adoc[]
+
+== 상품
+
+== 상품 목록 조회
+=== 요청
+include::{snippets}/findItems/http-request.adoc[]
+include::{snippets}/findItems/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/findItems/http-response.adoc[]
+include::{snippets}/findItems/response-fields.adoc[]
+
+== 스토어 단건 조회
+=== 요청
+include::{snippets}/findItem/http-request.adoc[]
+include::{snippets}/findItem/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/findItem/http-response.adoc[]
+include::{snippets}/findItem/response-fields.adoc[]
+
+== 스토어 저장
+=== 요청
+include::{snippets}/saveItem/http-request.adoc[]
+include::{snippets}/saveItem/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/saveItem/http-response.adoc[]
+include::{snippets}/saveItem/response-fields.adoc[]
+
+== 스토어 수정
+=== 요청
+include::{snippets}/updateItem/http-request.adoc[]
+include::{snippets}/updateItem/path-parameters.adoc[]
+include::{snippets}/updateItem/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/updateItem/http-response.adoc[]
+include::{snippets}/updateItem/response-fields.adoc[]
+
+== 스토어 삭제
+=== 요청
+include::{snippets}/deleteItem/http-request.adoc[]
+include::{snippets}/deleteItem/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/deleteItem/http-response.adoc[]
+include::{snippets}/deleteItem/response-fields.adoc[]
