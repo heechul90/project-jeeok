@@ -41,7 +41,7 @@ public class FrontFavoriteStoreController {
     }
 
     /**
-     * 호감 스토어 단건 조회
+     * 내 호감 스토어 단건 조회
      */
     @GetMapping("/{favoriteStoreiId}")
     public JsonResult findFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
@@ -52,6 +52,9 @@ public class FrontFavoriteStoreController {
         return JsonResult.OK(favoriteStore);
     }
 
+    /**
+     * 내 호감 스토어 추가
+     */
     @PostMapping("/{storeId}")
     public JsonResult addFavoriteStore(@RequestHeader("member-id") Long memberId,
                                        @PathVariable("storeId") Long storeId) {
