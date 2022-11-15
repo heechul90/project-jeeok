@@ -44,7 +44,7 @@ public class FavoriteStoreQueryRepository {
         return queryFactory
                 .select(favoriteStore)
                 .from(favoriteStore)
-                .leftJoin(favoriteStore.store, store)
+                .join(favoriteStore.store, store)
                 .where(
                         searchMemberIdEq(condition.getSearchMemberId())
                 )
