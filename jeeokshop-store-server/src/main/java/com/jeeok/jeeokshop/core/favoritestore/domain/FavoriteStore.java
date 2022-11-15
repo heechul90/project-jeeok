@@ -3,6 +3,7 @@ package com.jeeok.jeeokshop.core.favoritestore.domain;
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,9 @@ public class FavoriteStore extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @Builder(builderMethodName = "createFavoriteStore")
+    public FavoriteStore(Long memberId, Store store) {
+        this.memberId = memberId;
+        this.store = store;
+    }
 }

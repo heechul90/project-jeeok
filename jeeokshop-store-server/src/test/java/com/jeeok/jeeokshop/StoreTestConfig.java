@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop;
 
 import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
+import com.jeeok.jeeokshop.core.favoritestore.repository.FavoriteStoreQueryRepository;
 import com.jeeok.jeeokshop.core.item.repository.ItemQueryRepository;
 import com.jeeok.jeeokshop.core.item.repository.ItemRepository;
 import com.jeeok.jeeokshop.core.store.repository.StoreQueryRepository;
@@ -25,7 +26,7 @@ public class StoreTestConfig {
 
     @Autowired CategoryRepository categoryRepository;
 
-    @Autowired ItemRepository itemRepository;
+
 
     @Bean
     public StoreService storeService() {
@@ -40,6 +41,11 @@ public class StoreTestConfig {
     @Bean
     public ItemQueryRepository itemQueryRepository() {
         return new ItemQueryRepository(em);
+    }
+
+    @Bean
+    public FavoriteStoreQueryRepository favoriteStoreQueryRepository() {
+        return new FavoriteStoreQueryRepository(em);
     }
 
     @Bean

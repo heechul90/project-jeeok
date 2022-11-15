@@ -51,10 +51,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ManagerStoreController.class)
+@WebMvcTest(AdminStoreController.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "store.jeeokshop.jeeok.com", uriPort = 443)
-class ManagerStoreControllerTest {
+class AdminStoreControllerTest {
 
     //CREATE_STORE
     public static final String CATEGORY_NAME = "category";
@@ -82,11 +82,11 @@ class ManagerStoreControllerTest {
     //REQUEST_INFO
     public static final String HEADER_NAME = "member-id";
     public static final Long STORE_ID = 1L;
-    public static final String API_FIND_STORES = "/manager/stores";
-    public static final String API_FIND_STORE = "/manager/stores/{storeId}";
-    public static final String API_SAVE_STORE = "/manager/stores";
-    public static final String API_UPDATE_STORE = "/manager/stores/{storeId}";
-    public static final String API_DELETE_STORE = "/manager/stores/{storeId}";
+    public static final String API_FIND_STORES = "/admin/stores";
+    public static final String API_FIND_STORE = "/admin/stores/{storeId}";
+    public static final String API_SAVE_STORE = "/admin/stores";
+    public static final String API_UPDATE_STORE = "/admin/stores/{storeId}";
+    public static final String API_DELETE_STORE = "/admin/stores/{storeId}";
 
     @MockBean StoreService storeService;
 
