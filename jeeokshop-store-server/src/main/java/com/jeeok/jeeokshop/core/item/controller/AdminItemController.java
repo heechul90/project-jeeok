@@ -59,9 +59,9 @@ public class AdminItemController {
         //validate
         request.validate();
 
-        Long savedItemId = itemService.saveItem(request.toParam(), request.getStoreId(), request.getCategoryId());
+        Item savedItem = itemService.saveItem(request.toParam(), request.getStoreId(), request.getCategoryId());
 
-        return JsonResult.OK(new SaveItemResponse(savedItemId));
+        return JsonResult.OK(new SaveItemResponse(savedItem.getId()));
     }
 
     /**

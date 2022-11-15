@@ -4,7 +4,6 @@ import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
 import com.jeeok.jeeokshop.core.item.domain.Item;
-import com.jeeok.jeeokshop.core.item.dto.ItemDto;
 import com.jeeok.jeeokshop.core.item.dto.ItemSearchCondition;
 import com.jeeok.jeeokshop.core.item.dto.SaveItemParam;
 import com.jeeok.jeeokshop.core.item.dto.UpdateItemParam;
@@ -18,9 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -54,7 +50,7 @@ public class ItemService {
     /**
      * 상품 저장
      */
-    public Long saveItem(SaveItemParam param, Long storeId, Long categoryId) {
+    public Item saveItem(SaveItemParam param, Long storeId, Long categoryId) {
         Store findStore = storeRepository.findById(storeId)
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
 
@@ -69,7 +65,7 @@ public class ItemService {
                 .category(findCategory)
                 .build();
 
-        return itemRepository.save(item).getId();
+        return itemRepository.save(item);
     }
 
     /**
