@@ -27,7 +27,7 @@ public class FrontFavoriteStoreController {
      * 내 호감 스토어 목록 조회
      */
     @GetMapping
-    public JsonResult findMyFavoriteStore(@RequestHeader("member-id") Long memberId,
+    public JsonResult findMyFavoriteStores(@RequestHeader("member-id") Long memberId,
                                           FavoriteStoreSearchCondition condition,
                                           @PageableDefault(page = 0, size = 10) Pageable pageable) {
         condition.setSearchMemberId(memberId);
@@ -43,12 +43,20 @@ public class FrontFavoriteStoreController {
     /**
      * 호감 스토어 단건 조회
      */
-    @GetMapping("/{favoriteStoreid}")
+    @GetMapping("/{favoriteStoreiId}")
     public JsonResult findFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
 
         FavoriteStore findFavoriteStore = favoriteStoreService.findFavoriteStore(favoriteStoreId);
         FavoriteStoreDto favoriteStore = new FavoriteStoreDto(findFavoriteStore);
 
         return JsonResult.OK(favoriteStore);
+    }
+
+    @PostMapping("/{storeId}")
+    public JsonResult addFavoriteStore(@RequestHeader("member-id") Long memberId,
+                                       @PathVariable("storeId") Long storeId) {
+
+        FavoriteStore savedFavoriteStore = favoriteStoreService.saveFavoriteStore(memberId, storeId);
+        return JsonResult.OK();
     }
 }

@@ -71,7 +71,6 @@ class FavoriteStoreRepositoryTest extends RepositoryTest {
 
         @Test
         @DisplayName("호감 스토어 목록 조회")
-        @Rollback(value = false)
         void findFavoriteStores() {
             //given
             getFavoriteStore(10L);

@@ -78,7 +78,6 @@ class ItemRepositoryTest extends RepositoryTest {
 
         @Test
         @DisplayName("상품 목록 조회")
-        @Rollback(value = false)
         void findItems() {
             //given
             IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, PHOTO)));
