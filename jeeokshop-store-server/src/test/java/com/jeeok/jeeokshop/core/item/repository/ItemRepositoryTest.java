@@ -59,6 +59,8 @@ class ItemRepositoryTest extends RepositoryTest {
                 .memberId(1L)
                 .categories(List.of(category))
                 .build();
+
+        em.persist(store);
     }
 
     private Item getItem(String name, int price, Photo photo) {
