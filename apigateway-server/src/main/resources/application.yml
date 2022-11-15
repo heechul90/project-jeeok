@@ -88,11 +88,11 @@ spring:
 
         #지록숍 스토어 매니저
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER/manager
+          uri: lb://JEEOKSHOP-STORE-SERVER/admin
           predicates:
-            - Path=/jeeokshop-store-server/manager/**
+            - Path=/jeeokshop-store-server/admin/**
           filters:
-            - ManagerAuthorizationHeaderFilter
+            - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
         #지옥숍 스토어

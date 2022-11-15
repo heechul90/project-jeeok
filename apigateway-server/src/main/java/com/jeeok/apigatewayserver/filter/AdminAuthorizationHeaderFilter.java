@@ -51,7 +51,7 @@ public class AdminAuthorizationHeaderFilter extends AbstractGatewayFilterFactory
             //if (subject.equals("feign")) return chain.filter(exchange);
 
             //권한 check
-            if (!jwtTokenProvider.getRoles(accessToken).contains("ROLE_ADMIN")) {
+            if (!jwtTokenProvider.getRoles(accessToken).contains("ROLE_MANAGER")) {
                 return onError(exchange, "관리자 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
             }
 
