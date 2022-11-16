@@ -30,8 +30,6 @@ public class TestDataInit {
 
         //BHC치킨
         initService.bhcInit();
-
-
     }
 
     @Component
@@ -39,7 +37,7 @@ public class TestDataInit {
     @RequiredArgsConstructor
     static class InitService {
 
-        @PersistenceContext protected EntityManager em;
+        @PersistenceContext public final EntityManager em;
 
         private Category getCategory(String name, int order) {
             return Category.createCategory()
@@ -80,7 +78,6 @@ public class TestDataInit {
             em.persist(kyochon);
 
             Item kombo = getItem("교촌콤보", 19000, 100, kyochon, kyochonSeries);
-
             Item original = getItem("교촌오리지날", 16000, 150, kyochon, kyochonSeries);
             em.persist(kombo);
             em.persist(original);
@@ -102,6 +99,7 @@ public class TestDataInit {
             Category category3 = getCategory("싸이순살", 3);
             categories.add(category1);
             categories.add(category2);
+            categories.add(category3);
 
             Store bhc = getStore("BHC치킨", new BusinessHours("1800", "2400"), new Address("12864", "서울시 강북구"), 4L, categories);
             em.persist(bhc);
