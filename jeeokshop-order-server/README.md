@@ -1,0 +1,23 @@
+# JEEOKSHOP-ORDER-SERVER
+주문 서버는 스토어에 있는 상품을 확인하고 사용자가 상품을 주문 할 수 있는 Rest APi 서버입니다.
+
+## 프로젝트 환경
+| 기술 | 개발환경 |
+| --- | --- |
+| Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
+| Spring Data | - String Data JPA |
+| Spring Cloud | - Eureka Client </br> - Config |
+| ORM | - JPA </br> - Querydsl |
+| Database | - MariaDB |
+| Test | - Spring RestDocs </br> - JUnit5 |
+
+## API 문서
+| 서비스 | 설계서 |
+| --- | --- |
+| JEEOKSHOP-ORDER-SERVER | [[링크]]() |
+
+## 기능
+- 사용자 모드
+  - 
+- 관리자 모드
+  -
