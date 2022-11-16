@@ -46,6 +46,7 @@ class FavoriteStoreServiceTest extends MockTest {
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
     public static final String STORE = "Store";
+
     @Mock protected FavoriteStoreQueryRepository favoriteStoreQueryRepository;
 
     @Mock protected FavoriteStoreRepository favoriteStoreRepository;

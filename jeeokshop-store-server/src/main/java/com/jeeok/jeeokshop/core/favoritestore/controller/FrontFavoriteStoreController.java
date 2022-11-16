@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.core.favoritestore.controller;
 
 import com.jeeok.jeeokshop.common.json.JsonResult;
+import com.jeeok.jeeokshop.core.favoritestore.controller.response.AddFavoriteStoreResponse;
 import com.jeeok.jeeokshop.core.favoritestore.domain.FavoriteStore;
 import com.jeeok.jeeokshop.core.favoritestore.dto.FavoriteStoreDto;
 import com.jeeok.jeeokshop.core.favoritestore.dto.FavoriteStoreSearchCondition;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/front/favoriteStores")
 public class FrontFavoriteStoreController {
 
-    private FavoriteStoreService favoriteStoreService;
+    private final FavoriteStoreService favoriteStoreService;
 
     /**
      * 내 호감 스토어 목록 조회
@@ -43,7 +44,7 @@ public class FrontFavoriteStoreController {
     /**
      * 내 호감 스토어 단건 조회
      */
-    @GetMapping("/{favoriteStoreiId}")
+    @GetMapping("/{favoriteStoreId}")
     public JsonResult findFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
 
         FavoriteStore findFavoriteStore = favoriteStoreService.findFavoriteStore(favoriteStoreId);
@@ -55,11 +56,11 @@ public class FrontFavoriteStoreController {
     /**
      * 내 호감 스토어 추가
      */
-    @PostMapping("/{storeId}")
+    @PostMapping("/stores/{storeId}")
     public JsonResult addFavoriteStore(@RequestHeader("member-id") Long memberId,
                                        @PathVariable("storeId") Long storeId) {
 
         FavoriteStore savedFavoriteStore = favoriteStoreService.saveFavoriteStore(memberId, storeId);
-        return JsonResult.OK();
+        return JsonResult.OK(new AddFavoriteStoreResponse(savedFavoriteStore.getId()));
     }
 }
