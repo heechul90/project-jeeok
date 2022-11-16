@@ -101,7 +101,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
     class SuccessfulTest {
 
         @Test
-        @DisplayName("내 호감 스토어 목록 조회")
+        @DisplayName("내 호감 스토어 목록")
         void findMyFavoriteStores() throws Exception {
             //given
             IntStream.range(0, 16).forEach(i -> em.persist(getFavoriteStore(i % 2 == 0 ? MEMBER_ID_10 : MEMBER_ID_20)));
@@ -150,8 +150,8 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
         }
 
         @Test
-        @DisplayName("내 호감 스토어 단건 조회")
-        void findFavoriteStore() throws Exception {
+        @DisplayName("내 호감 스토어")
+        void findMyFavoriteStore() throws Exception {
             //given
             FavoriteStore favoriteStore = getFavoriteStore(MEMBER_ID_10);
             em.persist(favoriteStore);
@@ -169,7 +169,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.data.storeId").value(store.getId()))
                     .andExpect(jsonPath("$.data.storeName").value(store.getName()))
                     .andDo(print())
-                    .andDo(document("front-findFavoriteStore",
+                    .andDo(document("front-findMyFavoriteStore",
                             pathParameters(
                                     parameterWithName("favoriteStoreId").description("호감 스토어 고유번호")
                             ),
@@ -187,7 +187,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
 
         @Test
         @DisplayName("내 호감 스토어 추가")
-        void addFavoriteStore() throws Exception {
+        void addMyFavoriteStore() throws Exception {
             //given
 
             //when
@@ -201,7 +201,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.message").isEmpty())
                     .andExpect(jsonPath("$.errors").isEmpty())
                     .andDo(print())
-                    .andDo(document("front-addFavoriteStore",
+                    .andDo(document("front-addMyFavoriteStore",
                             pathParameters(
                                     parameterWithName("storeId").description("스토어 고유번호")
                             ),

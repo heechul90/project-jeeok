@@ -84,6 +84,52 @@ Host : store.jeeokshop.jeeok.com
 
 == 스토어
 
+== 스토어 목록 조회
+=== 요청
+include::{snippets}/front-findStores/http-request.adoc[]
+include::{snippets}/front-findStores/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-findStores/http-response.adoc[]
+include::{snippets}/front-findStores/response-fields.adoc[]
+
+== 스토어 단건 조회
+=== 요청
+include::{snippets}/front-findStore/http-request.adoc[]
+include::{snippets}/front-findStore/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-findStore/http-response.adoc[]
+include::{snippets}/front-findStore/response-fields.adoc[]
+
+== 호감 스토어
+
+== 내 호감 스토어 목록
+=== 요청
+include::{snippets}/front-findMyFavoriteStores/http-request.adoc[]
+include::{snippets}/front-findMyFavoriteStores/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-findMyFavoriteStores/http-response.adoc[]
+include::{snippets}/front-findMyFavoriteStores/response-fields.adoc[]
+
+== 내 호감 스토어
+=== 요청
+include::{snippets}/front-findMyFavoriteStore/http-request.adoc[]
+include::{snippets}/front-findMyFavoriteStore/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-findMyFavoriteStore/http-response.adoc[]
+include::{snippets}/front-findMyFavoriteStore/response-fields.adoc[]
+
+== 내 호감 스토어 추가
+=== 요청
+include::{snippets}/front-addMyFavoriteStore/path-parameters.adoc[]
+include::{snippets}/front-addMyFavoriteStore/http-request.adoc[]
+
+=== 응답
+include::{snippets}/front-addMyFavoriteStore/http-response.adoc[]
+include::{snippets}/front-addMyFavoriteStore/response-fields.adoc[]
 
 == 호감 스토어
 
@@ -95,7 +141,6 @@ Host : store.jeeokshop.jeeok.com
 
 == 스토어 목록 조회
 === 요청
-include::{snippets}/findStores/request-headers.adoc[]
 include::{snippets}/findStores/http-request.adoc[]
 include::{snippets}/findStores/request-parameters.adoc[]
 

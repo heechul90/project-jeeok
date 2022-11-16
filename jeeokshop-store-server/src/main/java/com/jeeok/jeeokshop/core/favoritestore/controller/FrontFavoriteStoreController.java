@@ -25,7 +25,7 @@ public class FrontFavoriteStoreController {
     private final FavoriteStoreService favoriteStoreService;
 
     /**
-     * 내 호감 스토어 목록 조회
+     * 내 호감 스토어 목록
      */
     @GetMapping
     public JsonResult findMyFavoriteStores(@RequestHeader("member-id") Long memberId,
@@ -42,10 +42,10 @@ public class FrontFavoriteStoreController {
     }
 
     /**
-     * 내 호감 스토어 단건 조회
+     * 내 호감 스토어
      */
     @GetMapping("/{favoriteStoreId}")
-    public JsonResult findFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
+    public JsonResult findMyFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
 
         FavoriteStore findFavoriteStore = favoriteStoreService.findFavoriteStore(favoriteStoreId);
         FavoriteStoreDto favoriteStore = new FavoriteStoreDto(findFavoriteStore);
@@ -57,7 +57,7 @@ public class FrontFavoriteStoreController {
      * 내 호감 스토어 추가
      */
     @PostMapping("/stores/{storeId}")
-    public JsonResult addFavoriteStore(@RequestHeader("member-id") Long memberId,
+    public JsonResult addMyFavoriteStore(@RequestHeader("member-id") Long memberId,
                                        @PathVariable("storeId") Long storeId) {
 
         FavoriteStore savedFavoriteStore = favoriteStoreService.saveFavoriteStore(memberId, storeId);
