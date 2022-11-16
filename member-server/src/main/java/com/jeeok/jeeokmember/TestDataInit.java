@@ -45,21 +45,37 @@ public class TestDataInit {
         }
 
         public void memberInit() {
-            Member springMember = getMember(
-                    "spring",
+            Member springMember1 = getMember(
+                    "spring1",
                     "1234",
-                    "스프링",
+                    "스프링1",
                     RoleType.ROLE_USER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "1111", "2222")
+                    new PhoneNumber("010", "2397", "6591")
             );
-            Member managerMember = getMember(
-                    "manager",
+            Member springMember2 = getMember(
+                    "spring2",
                     "1234",
-                    "매니저",
+                    "스프링2",
+                    RoleType.ROLE_USER,
+                    AuthType.JEEOK,
+                    new PhoneNumber("010", "4422", "6242")
+            );
+            Member managerMember1 = getMember(
+                    "manager1",
+                    "1234",
+                    "교촌치킨 매니저",
                     RoleType.ROLE_MANAGER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "1111", "2222")
+                    new PhoneNumber("010", "5678", "2345")
+            );
+            Member managerMember2 = getMember(
+                    "manager2",
+                    "1234",
+                    "BHC치킨 매니저",
+                    RoleType.ROLE_MANAGER,
+                    AuthType.JEEOK,
+                    new PhoneNumber("010", "3432", "2356")
             );
             Member adminMember = getMember(
                     "admin",
@@ -69,8 +85,10 @@ public class TestDataInit {
                     AuthType.JEEOK,
                     new PhoneNumber("010", "1111", "2222")
             );
-            em.persist(springMember);
-            em.persist(managerMember);
+            em.persist(springMember1);
+            em.persist(springMember2);
+            em.persist(managerMember1);
+            em.persist(managerMember2);
             em.persist(adminMember);
         }
     }
