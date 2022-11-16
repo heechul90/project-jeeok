@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,7 +24,7 @@ public class Order extends BaseEntity {
 
     private Long memberId;
 
-    private LocalDateTime orderTime;
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -40,7 +39,7 @@ public class Order extends BaseEntity {
     @Builder(builderMethodName = "createOrder")
     public Order(Long memberId, List<OrderItem> orderItems) {
         this.memberId = memberId;
-        this.orderTime = LocalDateTime.now();
+        this.orderDate = LocalDateTime.now();
         this.orderStatus = OrderStatus.ORDER;
 
         //최소 한개의 item 을 주문(controller 에서 check 할 것)

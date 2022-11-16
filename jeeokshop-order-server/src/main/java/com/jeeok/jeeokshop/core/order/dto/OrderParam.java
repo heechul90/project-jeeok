@@ -8,9 +8,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class SaveOrderParam {
+public class OrderParam {
 
-    private List<SaveOrderParam.Item> items;
+    private List<OrderParam.Item> items;
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,7 +18,7 @@ public class SaveOrderParam {
     @Builder
     public static class Item {
         private Long itemId;
-        private int price
+        private int price;
         private int count;
     }
 }

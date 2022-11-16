@@ -3,7 +3,7 @@ package com.jeeok.jeeokshop.core.order.service;
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.order.domain.Order;
 import com.jeeok.jeeokshop.core.order.dto.OrderSearchCondition;
-import com.jeeok.jeeokshop.core.order.dto.SaveOrderParam;
+import com.jeeok.jeeokshop.core.order.dto.OrderParam;
 import com.jeeok.jeeokshop.core.order.repository.OrderQueryRepository;
 import com.jeeok.jeeokshop.core.order.repository.OrderRepository;
 import com.jeeok.jeeokshop.core.orderItem.domain.OrderItem;
@@ -47,7 +47,7 @@ public class OrderService {
      * 주문 저장
      */
     @Transactional
-    public Order saveOrder(Long memberId, SaveOrderParam param) {
+    public Order saveOrder(Long memberId, OrderParam param) {
 
         List<OrderItem> orderItems = param.getItems().stream()
                 .map(item -> OrderItem.of(item.getItemId(), item.getPrice(), item.getCount()))
