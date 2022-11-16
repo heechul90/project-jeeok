@@ -54,6 +54,7 @@ public class Store extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.memberId = memberId;
+        this.deleteYn = Yn.N;
         this.categories = categories;
 
         this.categories.forEach(category -> {

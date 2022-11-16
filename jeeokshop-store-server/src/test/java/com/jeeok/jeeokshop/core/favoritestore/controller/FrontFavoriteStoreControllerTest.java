@@ -131,7 +131,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.errors").isEmpty())
                     .andExpect(jsonPath("$.data.length()", Matchers.is(8)))
                     .andDo(print())
-                    .andDo(document("findMyFavoriteStores",
+                    .andDo(document("front-findMyFavoriteStores",
                             requestParameters(
                                     parameterWithName("searchMemberId").ignored(),
                                     parameterWithName("page").description("검색 페이지"),
@@ -169,7 +169,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.data.storeId").value(store.getId()))
                     .andExpect(jsonPath("$.data.storeName").value(store.getName()))
                     .andDo(print())
-                    .andDo(document("findFavoriteStore",
+                    .andDo(document("front-findFavoriteStore",
                             pathParameters(
                                     parameterWithName("favoriteStoreId").description("호감 스토어 고유번호")
                             ),
@@ -201,7 +201,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.message").isEmpty())
                     .andExpect(jsonPath("$.errors").isEmpty())
                     .andDo(print())
-                    .andDo(document("addFavoriteStore",
+                    .andDo(document("front-addFavoriteStore",
                             pathParameters(
                                     parameterWithName("storeId").description("스토어 고유번호")
                             ),

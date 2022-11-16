@@ -157,9 +157,6 @@ class AdminStoreControllerTest {
                 .andExpect(jsonPath("$.data.length()", Matchers.is(5)))
                 .andDo(print())
                 .andDo(document("findStores",
-                        requestHeaders(
-                                headerWithName("member-id").description("멤버 고유번호")
-                        ),
                         requestParameters(
                                 parameterWithName("searchCondition").description("검색 조건"),
                                 parameterWithName("searchKeyword").description("검색 키워드"),
