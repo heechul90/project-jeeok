@@ -20,7 +20,9 @@ public class OrderItem extends BaseEntity {
 
     private Long itemId;
 
-    private int orderPrice; //주문 가격
+    @Column(name = "orderPrice")
+    private int price; //주문 가격
+    @Column(name = "orderCount")
     private int count; //주문 수량
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,10 +36,10 @@ public class OrderItem extends BaseEntity {
     }
 
     //===생성 메서드===//
-    public static OrderItem of(Long itemId, int orderPrice, int count) {
+    public static OrderItem of(Long itemId, int price, int count) {
         OrderItem orderItem = new OrderItem();
         orderItem.itemId = itemId;
-        orderItem.orderPrice = orderPrice;
+        orderItem.price = price;
         orderItem.count = count;
         return orderItem;
     }

@@ -38,7 +38,7 @@ public class Order extends BaseEntity {
 
     //===생성===//
     @Builder(builderMethodName = "createOrder")
-    public Order(Long memberId, OrderStatus orderStatus, List<OrderItem> orderItems) {
+    public Order(Long memberId, List<OrderItem> orderItems) {
         this.memberId = memberId;
         this.orderTime = LocalDateTime.now();
         this.orderStatus = OrderStatus.ORDER;
