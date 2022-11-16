@@ -86,7 +86,7 @@ spring:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
-        #지록숍 스토어 매니저
+        #지록숍 스토어 관리자
         - id: jeeokshop-store-server
           uri: lb://JEEOKSHOP-STORE-SERVER/admin
           predicates:
@@ -95,7 +95,7 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
-        #지옥숍 스토어
+        #지옥숍 스토어 사용자
         - id: jeeokshop-store-server
           uri: lb://JEEOKSHOP-STORE-SERVER/front
           predicates:
@@ -103,6 +103,24 @@ spring:
           filters:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
+
+        #지록숍 주문 관리자
+        - id: jeeokshop-order-server
+          uri: lb://JEEOKSHOP-ORDER-SERVER/admin
+          predicates:
+            - Path=/jeeokshop-order-server/admin/**
+          filters:
+            - AdminAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
+
+        #지옥숍 주문 사용자
+        - id: jeeokshop-order-server
+          uri: lb://JEEOKSHOP-ORDER-SERVER/front
+          predicates:
+            - Path=/jeeokshop-order-server/front/**
+          filters:
+            - FrontAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
 
 #actuator config
 management:
