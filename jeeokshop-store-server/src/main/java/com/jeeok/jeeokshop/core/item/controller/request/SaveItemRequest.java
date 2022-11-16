@@ -18,6 +18,7 @@ public class SaveItemRequest {
 
     private String itemName;
     private int itemPrice;
+    private int stockQuantity;
     private String photoPath;
     private String photoName;
 
@@ -37,6 +38,7 @@ public class SaveItemRequest {
         return SaveItemParam.builder()
                 .name(this.itemName)
                 .price(this.itemPrice)
+                .stockQuantity(this.stockQuantity)
                 .photo(new Photo(this.photoPath, this.photoName))
                 .build();
     }

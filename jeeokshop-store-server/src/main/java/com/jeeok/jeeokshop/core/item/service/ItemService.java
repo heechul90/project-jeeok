@@ -50,9 +50,15 @@ public class ItemService {
     /**
      * 상품 저장
      */
+    @Transactional
     public Item saveItem(SaveItemParam param, Long storeId, Long categoryId) {
         Store findStore = storeRepository.findById(storeId)
                 .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+
+        /*findStore.getCategories().stream()
+                .filter(category -> category.getId() == categoryId)
+                .findAny()
+                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));*/
 
         Category findCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));
@@ -71,6 +77,7 @@ public class ItemService {
     /**
      * 상품 수정
      */
+    @Transactional
     public void updateItem(Long itemId, UpdateItemParam param) {
         Item findItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));
@@ -80,6 +87,7 @@ public class ItemService {
     /**
      * 상품 삭제
      */
+    @Transactional
     public void deleteItem(Long itemId) {
         Item findItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));

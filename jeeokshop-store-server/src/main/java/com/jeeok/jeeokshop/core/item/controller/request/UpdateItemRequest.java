@@ -20,6 +20,7 @@ public class UpdateItemRequest {
     private String itemName;
     private Yn salesYn;
     private int itemPrice;
+    private int stockQuantity;
     private String photoPath;
     private String photoName;
 
@@ -37,6 +38,7 @@ public class UpdateItemRequest {
                 .name(this.itemName)
                 .yn(this.salesYn)
                 .price(this.itemPrice)
+                .stockQuantity(this.stockQuantity)
                 .photo(new Photo(this.photoPath, this.photoName))
                 .build();
     }

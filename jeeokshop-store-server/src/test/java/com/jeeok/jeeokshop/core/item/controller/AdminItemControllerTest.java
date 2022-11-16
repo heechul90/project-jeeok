@@ -49,6 +49,7 @@ class AdminItemControllerTest extends IntegrationTest {
     //CREATE_ITEM
     public static final String ITEM_NAME = "item_name";
     public static final int PRICE = 10000;
+    public static final int STOCK_QUANTITY = 100;
     public static final Photo PHOTO = new Photo("photo_path", "photo_name");
     public static final Yn SALES_YN = Yn.Y;
 
@@ -89,10 +90,11 @@ class AdminItemControllerTest extends IntegrationTest {
         em.persist(store);
     }
 
-    private Item getItem(String name, int price, Photo photo) {
+    private Item getItem(String name, int price, int stockQuantity, Photo photo) {
         Item item = Item.createItem()
                 .name(name)
                 .price(price)
+                .stockQuantity(stockQuantity)
                 .photo(photo)
                 .store(store)
                 .category(category)
@@ -104,7 +106,7 @@ class AdminItemControllerTest extends IntegrationTest {
     @DisplayName("상품 목록 조회")
     void findItems() throws Exception {
         //given
-        IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, PHOTO)));
+        IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, STOCK_QUANTITY, PHOTO)));
 
         ItemSearchCondition condition = new ItemSearchCondition();
         condition.setSearchCondition(SearchCondition.NAME);
@@ -148,6 +150,7 @@ class AdminItemControllerTest extends IntegrationTest {
                                 fieldWithPath("data[*].itemName").description("상품 이름"),
                                 fieldWithPath("data[*].salesYn").description("판매여부"),
                                 fieldWithPath("data[*].price").description("상품 가격"),
+                                fieldWithPath("data[*].stockQuantity").description("재고수량"),
                                 fieldWithPath("data[*].photo").description("상품 이미지")
                         )
                 ));
@@ -158,7 +161,7 @@ class AdminItemControllerTest extends IntegrationTest {
     @DisplayName("상품 단건 조회")
     void findItem() throws Exception {
         //given
-        Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+        Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
         //when
@@ -189,6 +192,7 @@ class AdminItemControllerTest extends IntegrationTest {
                                 fieldWithPath("data.itemName").description("상품 이름"),
                                 fieldWithPath("data.salesYn").description("판매여부"),
                                 fieldWithPath("data.price").description("상품 가격"),
+                                fieldWithPath("data.stockQuantity").description("재고수량"),
                                 fieldWithPath("data.photo").description("상품 이미지")
                         )
                 ));
@@ -201,6 +205,7 @@ class AdminItemControllerTest extends IntegrationTest {
         SaveItemRequest request = SaveItemRequest.builder()
                 .itemName(ITEM_NAME)
                 .itemPrice(PRICE)
+                .stockQuantity(STOCK_QUANTITY)
                 .photoPath(PHOTO.getPath())
                 .photoName(PHOTO.getName())
                 .storeId(store.getId())
@@ -223,6 +228,7 @@ class AdminItemControllerTest extends IntegrationTest {
                         requestFields(
                                 fieldWithPath("itemName").description("상품 이름"),
                                 fieldWithPath("itemPrice").description("상품 가격"),
+                                fieldWithPath("stockQuantity").description("재고수량"),
                                 fieldWithPath("photoPath").description("이미지 주소"),
                                 fieldWithPath("photoName").description("이미지 이름"),
                                 fieldWithPath("storeId").description("스토어 고유번호"),
@@ -242,13 +248,14 @@ class AdminItemControllerTest extends IntegrationTest {
     @DisplayName("상품 수정")
     void updateItem() throws Exception {
         //given
-        Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+        Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
         UpdateItemRequest request = UpdateItemRequest.builder()
                 .itemName(ITEM_NAME)
                 .salesYn(SALES_YN)
                 .itemPrice(PRICE)
+                .stockQuantity(STOCK_QUANTITY)
                 .photoPath(PHOTO.getPath())
                 .photoName(PHOTO.getName())
                 .build();
@@ -274,6 +281,7 @@ class AdminItemControllerTest extends IntegrationTest {
                                 fieldWithPath("itemName").description("상품 이름"),
                                 fieldWithPath("salesYn").description("판매 여부"),
                                 fieldWithPath("itemPrice").description("상품 가격"),
+                                fieldWithPath("stockQuantity").description("재고수량"),
                                 fieldWithPath("photoPath").description("이미지 주소"),
                                 fieldWithPath("photoName").description("이미지 이름")
                         ),
@@ -291,7 +299,7 @@ class AdminItemControllerTest extends IntegrationTest {
     @DisplayName("상품 삭제")
     void deleteItem() throws Exception {
         //given
-        Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+        Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
         //when

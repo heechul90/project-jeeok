@@ -46,6 +46,7 @@ class ItemServiceTest extends MockTest {
     //CREATE_ITEM
     public static final String ITEM_NAME = "item_name";
     public static final int PRICE = 10000;
+    public static final int STOCK_QUANTITY = 100;
     public static final Photo PHOTO = new Photo("photo_path", "photo_name");
     public static final Yn SALES_YN = Yn.Y;
     public static final long ITEM_ID = 1L;
@@ -56,6 +57,7 @@ class ItemServiceTest extends MockTest {
     public static final String UPDATE_ITEM_NAME = "update_item_name";
     public static final Yn UPDATE_SALES_YN = Yn.N;
     public static final int UPDATE_PRICE = 20000;
+    public static final int UPDATE_STOCK_QUANTITY = 50;
     public static final Photo UPDATE_PHOTO = new Photo("/image", "photo_name");
 
     //ERROR_MESSAGE
@@ -96,10 +98,11 @@ class ItemServiceTest extends MockTest {
                 .build();
     }
 
-    private Item getItem(String name, int price, Photo photo) {
+    private Item getItem(String name, int price, int stockQuantity, Photo photo) {
         return Item.createItem()
                 .name(name)
                 .price(price)
+                .stockQuantity(stockQuantity)
                 .photo(photo)
                 .store(store)
                 .category(category)
@@ -114,7 +117,7 @@ class ItemServiceTest extends MockTest {
         void findItems() {
             //given
             List<Item> items = new ArrayList<>();
-            IntStream.range(0, 5).forEach(i -> items.add(getItem(ITEM_NAME + i, PRICE, PHOTO)));
+            IntStream.range(0, 5).forEach(i -> items.add(getItem(ITEM_NAME + i, PRICE, STOCK_QUANTITY, PHOTO)));
             given(itemQueryRepository.findItems(any(ItemSearchCondition.class), any(Pageable.class))).willReturn(new PageImpl<>(items));
 
             ItemSearchCondition condition = new ItemSearchCondition();
@@ -138,7 +141,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("상품 단건 조회")
         void findItem() {
             //given
-            Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+            Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
             given(itemRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(item));
 
             //when
@@ -148,6 +151,7 @@ class ItemServiceTest extends MockTest {
             assertThat(findItem.getName()).isEqualTo(ITEM_NAME);
             assertThat(findItem.getSalesYn()).isEqualTo(SALES_YN);
             assertThat(findItem.getPrice()).isEqualTo(PRICE);
+            assertThat(findItem.getStockQuantity()).isEqualTo(STOCK_QUANTITY);
             assertThat(findItem.getPhoto()).isEqualTo(PHOTO);
             assertThat(findItem.getCategory()).isEqualTo(category);
             assertThat(findItem.getStore()).isEqualTo(store);
@@ -160,7 +164,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("상품 저장")
         void saveItem() {
             //given
-            Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+            Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
             given(itemRepository.save(any(Item.class))).willReturn(item);
             given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
             given(categoryRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(category));
@@ -178,6 +182,7 @@ class ItemServiceTest extends MockTest {
             assertThat(savedItem.getName()).isEqualTo(ITEM_NAME);
             assertThat(savedItem.getSalesYn()).isEqualTo(SALES_YN);
             assertThat(savedItem.getPrice()).isEqualTo(PRICE);
+            assertThat(savedItem.getStockQuantity()).isEqualTo(STOCK_QUANTITY);
             assertThat(savedItem.getPhoto()).isEqualTo(PHOTO);
             assertThat(savedItem.getStore()).isEqualTo(store);
             assertThat(savedItem.getCategory()).isEqualTo(category);
@@ -192,13 +197,14 @@ class ItemServiceTest extends MockTest {
         @DisplayName("상품 수정")
         void updateItem() {
             //given
-            Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+            Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
             given(itemRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(item));
 
             UpdateItemParam param = UpdateItemParam.builder()
                     .name(UPDATE_ITEM_NAME)
                     .yn(UPDATE_SALES_YN)
                     .price(UPDATE_PRICE)
+                    .stockQuantity(UPDATE_STOCK_QUANTITY)
                     .photo(UPDATE_PHOTO)
                     .build();
 
@@ -209,6 +215,7 @@ class ItemServiceTest extends MockTest {
             assertThat(item.getName()).isEqualTo(UPDATE_ITEM_NAME);
             assertThat(item.getSalesYn()).isEqualTo(UPDATE_SALES_YN);
             assertThat(item.getPrice()).isEqualTo(UPDATE_PRICE);
+            assertThat(item.getStockQuantity()).isEqualTo(UPDATE_STOCK_QUANTITY);
             assertThat(item.getPhoto()).isEqualTo(UPDATE_PHOTO);
 
             //verify
@@ -219,7 +226,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("상품 삭제")
         void deleteItem() {
             //given
-            Item item = getItem(ITEM_NAME, PRICE, PHOTO);
+            Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
             given(itemRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(item));
 
             //when

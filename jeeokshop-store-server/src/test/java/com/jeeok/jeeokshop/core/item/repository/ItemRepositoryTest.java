@@ -32,6 +32,7 @@ class ItemRepositoryTest extends RepositoryTest {
     //CREATE_ITEM
     public static final String ITEM_NAME = "item_name";
     public static final int PRICE = 10000;
+    public static final int STOCK_QUANTITY = 100;
     public static final Photo PHOTO = new Photo("photo_path", "photo_name");
     public static final Yn SALES_YN = Yn.Y;
 
@@ -63,10 +64,11 @@ class ItemRepositoryTest extends RepositoryTest {
         em.persist(store);
     }
 
-    private Item getItem(String name, int price, Photo photo) {
+    private Item getItem(String name, int price, int stockQuantity, Photo photo) {
         return Item.createItem()
                 .name(name)
                 .price(price)
+                .stockQuantity(stockQuantity)
                 .photo(photo)
                 .store(store)
                 .category(category)
@@ -80,7 +82,7 @@ class ItemRepositoryTest extends RepositoryTest {
         @DisplayName("상품 목록 조회")
         void findItems() {
             //given
-            IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, PHOTO)));
+            IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, STOCK_QUANTITY, PHOTO)));
 
             ItemSearchCondition condition = new ItemSearchCondition();
             condition.setSearchCondition(SearchCondition.NAME);

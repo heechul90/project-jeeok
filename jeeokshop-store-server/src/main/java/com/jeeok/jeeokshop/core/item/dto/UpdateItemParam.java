@@ -13,5 +13,6 @@ public class UpdateItemParam {
     private String name;
     private Yn yn;
     private int price;
+    private int stockQuantity;
     private Photo photo;
 }

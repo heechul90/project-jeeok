@@ -29,6 +29,7 @@ public class Item extends BaseEntity {
     private Yn salesYn;
 
     private int price;
+    private int stockQuantity;
 
     @Embedded
     private Photo photo;
@@ -43,10 +44,11 @@ public class Item extends BaseEntity {
 
     //===생성===//
     @Builder(builderMethodName = "createItem")
-    public Item(String name, int price, Photo photo, Store store, Category category) {
+    public Item(String name, int price, int stockQuantity, Photo photo, Store store, Category category) {
         this.name = name;
         this.salesYn = Yn.Y;
         this.price = price;
+        this.stockQuantity = stockQuantity;
         this.photo = photo;
         this.store = store;
         this.category = category;
@@ -56,6 +58,7 @@ public class Item extends BaseEntity {
     public void updateItem(UpdateItemParam param) {
         this.name = param.getName();
         this.salesYn = param.getYn();
+        this.stockQuantity = param.getStockQuantity();
         this.price = param.getPrice();
         this.photo = param.getPhoto();
     }
