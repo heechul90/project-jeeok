@@ -39,3 +39,7 @@ logging:
   level:
     root: info
     org.hibernate.SQL: debug
+
+kafka:
+  host: 127.0.0.1
+  port: 9092
