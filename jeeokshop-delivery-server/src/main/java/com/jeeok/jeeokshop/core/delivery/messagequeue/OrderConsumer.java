@@ -30,8 +30,20 @@ public class OrderConsumer {
 
         Delivery delivery = Delivery.createDelivery()
                 .address(null)
+                .memberId(kafkaSendOrderDto.getMemberId())
                 .orderId(kafkaSendOrderDto.getOrderId())
                 .build();
         deliveryService.saveDelivery(delivery);
+    }
+
+    @Transactional
+    @KafkaListener(topics = "cancel")
+    public void cancel(String kafkaMessage) throws JsonProcessingException {
+        log.info("## OrderConsumer.cancel");
+        log.info("#### kafka message = {}", kafkaMessage);
+
+        KafkaSendOrderDto kafkaSendOrderDto = objectMapper.readValue(kafkaMessage, KafkaSendOrderDto.class);
+
+        deliveryService.cancel(kafkaSendOrderDto.getMemberId(), kafkaSendOrderDto.getOrderId());
     }
 }

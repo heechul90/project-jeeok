@@ -9,7 +9,8 @@ public enum DeliveryStatus {
 
     READY("배송준비"),
     DELIVERY("배송중"),
-    COMPLETE("배송완료");
+    COMPLETE("배송완료"),
+    CANCEL("취소");
 
     private final String description;
 }

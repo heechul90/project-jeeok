@@ -25,13 +25,15 @@ public class Delivery {
     @Column(name = "delivery_status")
     private DeliveryStatus status;
 
+    private Long memberId;
     private Long orderId;
 
     //===생성 메서드===//
     @Builder(builderMethodName = "createDelivery")
-    public Delivery(Address address, Long orderId) {
+    public Delivery(Address address, Long memberId, Long orderId) {
         this.address = address;
         this.status = DeliveryStatus.READY;
+        this.memberId = memberId;
         this.orderId = orderId;
     }
 
@@ -49,5 +51,10 @@ public class Delivery {
     /** 배달완료 */
     public void complete() {
         this.status = DeliveryStatus.COMPLETE;
+    }
+
+    /** 배달취소 */
+    public void cancel() {
+        this.status = DeliveryStatus.CANCEL;
     }
 }

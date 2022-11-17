@@ -78,6 +78,16 @@ public class DeliveryService {
     }
 
     /**
+     * 배달취소
+     */
+    @Transactional
+    public void cancel(Long memberId, Long orderId) {
+        Delivery findDelivery = deliveryRepository.findByMemberIdAndOrderId(memberId, orderId)
+                .orElseThrow(() -> new IllegalArgumentException("없음."));
+        findDelivery.cancel();
+    }
+
+    /**
      * 배송 삭제
      */
     @Transactional
