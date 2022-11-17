@@ -27,7 +27,8 @@ public class Order extends BaseEntity {
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    @Column(name = "order_status")
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -40,7 +41,7 @@ public class Order extends BaseEntity {
     public Order(Long memberId, List<OrderItem> orderItems) {
         this.memberId = memberId;
         this.orderDate = LocalDateTime.now();
-        this.orderStatus = OrderStatus.ORDER;
+        this.status = OrderStatus.ORDER;
         this.orderItems = orderItems;
 
         //최소 한개의 item 을 주문(controller 에서 check 할 것)
@@ -50,7 +51,7 @@ public class Order extends BaseEntity {
     //===비즈니스 로직===//
     /** 주문취소 */
     public void cancel() {
-        this.orderStatus = OrderStatus.CANCEL;
+        this.status = OrderStatus.CANCEL;
         this.orderItems.forEach(OrderItem::cancel);
     }
 }

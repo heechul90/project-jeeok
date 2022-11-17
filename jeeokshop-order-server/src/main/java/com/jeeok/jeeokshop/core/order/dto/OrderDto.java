@@ -22,7 +22,7 @@ public class OrderDto {
     public OrderDto(Order order) {
         this.orderId = order.getId();
         this.orderDate = order.getOrderDate();
-        this.orderStatus = order.getOrderStatus().getDescription();
+        this.orderStatus = order.getStatus().getDescription();
 
         this.orderItems = order.getOrderItems().stream()
                 .map(OrderItemDto::new)
