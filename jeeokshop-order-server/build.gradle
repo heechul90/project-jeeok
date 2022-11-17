@@ -33,6 +33,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+    //message
+    implementation 'org.springframework.kafka:spring-kafka'
+
     //jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -60,6 +63,7 @@ dependencies {
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.h2database:h2'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {
