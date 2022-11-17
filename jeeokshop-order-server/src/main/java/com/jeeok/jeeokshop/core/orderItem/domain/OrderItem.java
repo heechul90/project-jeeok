@@ -32,7 +32,7 @@ public class OrderItem extends BaseEntity {
     //===연관과계 편의 메서드===//
     public void addOrder(Order order) {
         this.order = order;
-        order.getOrderItems().add(this);
+//        order.getOrderItems().add(this);
     }
 
     //===생성 메서드===//

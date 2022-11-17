@@ -54,6 +54,7 @@ public class FrontOrderController {
     /**
      * 주문
      */
+    @PostMapping
     public JsonResult order(@RequestHeader("member-id") Long memberId, @RequestBody @Validated OrderRequest request) {
 
         //validate

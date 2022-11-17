@@ -41,6 +41,7 @@ public class Order extends BaseEntity {
         this.memberId = memberId;
         this.orderDate = LocalDateTime.now();
         this.orderStatus = OrderStatus.ORDER;
+        this.orderItems = orderItems;
 
         //최소 한개의 item 을 주문(controller 에서 check 할 것)
         this.orderItems.forEach(orderItem -> orderItem.addOrder(this));
