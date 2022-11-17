@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
+import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 
 @Slf4j
@@ -14,6 +15,10 @@ public class OrderListener {
     @Lazy
     private OrderSender orderSender;
 
+    /**
+     * INSERT 이후 호출
+     */
+    @PostPersist
     @PostUpdate
     public void postUpdate(Order order) {
         OrderStatus status = order.getStatus();

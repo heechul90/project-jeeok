@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
+@EntityListeners(OrderListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 

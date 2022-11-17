@@ -1,4 +1,4 @@
-package com.jeeok.jeeokshop.common;
+package com.jeeok.jeeokshop.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -24,6 +24,7 @@ public class KafkaConfig {
 
     public KafkaConfig(@Value("${kafka.host}") String kafkaServerHost,
                        @Value("${kafka.port}") String kafkaServerPort) {
+        System.out.println("kafkaServerHost = " + kafkaServerHost);
         this.kafkaServerHost = kafkaServerHost;
         this.kafkaServerPort = kafkaServerPort;
     }
@@ -34,7 +35,7 @@ public class KafkaConfig {
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServerHost + ":" + kafkaServerPort);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        properties.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 5000);
+//        properties.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 5000);
 
         return new DefaultKafkaProducerFactory<>(properties);
     }

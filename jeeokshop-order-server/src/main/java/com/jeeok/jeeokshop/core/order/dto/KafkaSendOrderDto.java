@@ -23,7 +23,7 @@ public class KafkaSendOrderDto {
                 .memberId(order.getMemberId())
                 .itemIds(
                         order.getOrderItems().stream()
-                        .map(OrderItem::getId)
+                        .map(OrderItem::getItemId)
                         .collect(Collectors.toList())
                 )
                 .build();
