@@ -122,6 +122,24 @@ spring:
             - FrontAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
 
+        #지록숍 배달 관리자
+        - id: jeeokshop-delivery-server
+          uri: lb://JEEOKSHOP-DELIVERY-SERVER/admin
+          predicates:
+            - Path=/jeeokshop-delivery-server/admin/**
+          filters:
+            - AdminAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-delivery-server/(?<segment>.*),/$\{segment}
+
+        #지옥숍 배달 사용자
+        - id: jeeokshop-delivery-server
+          uri: lb://JEEOKSHOP-DELIVERY-SERVER/front
+          predicates:
+            - Path=/jeeokshop-delivery-server/front/**
+          filters:
+            - FrontAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-delivery-server/(?<segment>.*),/$\{segment}
+
 #actuator config
 management:
   endpoints:
