@@ -14,7 +14,7 @@
 ## API 문서
 | 서비스 | 설계서 |
 | --- | --- |
-| JEEOKSHOP-ORDER-SERVER | [[링크]]() |
+| JEEOKSHOP-ORDER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/order-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 기능
 - 사용자 모드
