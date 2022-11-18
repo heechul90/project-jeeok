@@ -4,22 +4,19 @@ import com.jeeok.jeeokshop.core.order.RepositoryTest;
 import com.jeeok.jeeokshop.core.order.domain.Order;
 import com.jeeok.jeeokshop.core.order.dto.OrderSearchCondition;
 import com.jeeok.jeeokshop.core.orderItem.domain.OrderItem;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class OrderRepositoryTest extends RepositoryTest {
 
@@ -47,7 +44,7 @@ class OrderRepositoryTest extends RepositoryTest {
                 .build();
     }
 
-    @Test
+    //@Test
     @DisplayName("주문 목록 조회")
     void findOrders() {
         //given
