@@ -101,7 +101,7 @@ public class AdminDeliveryController {
      */
     @PutMapping("/{deliveryId}/cancel")
     public JsonResult cancel(@PathVariable("deliveryId") Long deliveryId) {
-        deliveryService.cancel(deliveryId);
+        deliveryService.cancelByDeliveryId(deliveryId);
         return JsonResult.OK();
     }
 

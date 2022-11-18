@@ -77,18 +77,21 @@ public class DeliveryService {
         findDelivery.complete();
     }
 
+    /**
+     * 배달취소 by deliveryId
+     */
     @Transactional
-    public void cancel(Long deliveryId) {
+    public void cancelByDeliveryId(Long deliveryId) {
         Delivery findDelivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new EntityNotFound(DELIVERY, deliveryId));
-        deliveryRepository.delete(findDelivery);
+        findDelivery.cancel();
     }
 
     /**
      * 배달취소 by memberId and orderId
      */
     @Transactional
-    public void cancel(Long memberId, Long orderId) {
+    public void cancelByMemberIdAndOrderId(Long memberId, Long orderId) {
         Delivery findDelivery = deliveryRepository.findByMemberIdAndOrderId(memberId, orderId)
                 .orElseThrow(() -> new IllegalArgumentException("없음."));
         findDelivery.cancel();

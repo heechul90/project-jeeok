@@ -5,7 +5,6 @@ import com.jeeok.jeeokshop.core.delivery.domain.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DeliveryRepositoryTest extends RepositoryTest {
 
@@ -39,7 +38,7 @@ class DeliveryRepositoryTest extends RepositoryTest {
     }
 
     @Nested
-    class successfulTest {
+    class SuccessfulTest {
 
         @Test
         @DisplayName("배송 목록 조회")

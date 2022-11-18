@@ -44,6 +44,6 @@ public class OrderConsumer {
 
         KafkaSendOrderDto kafkaSendOrderDto = objectMapper.readValue(kafkaMessage, KafkaSendOrderDto.class);
 
-        deliveryService.cancel(kafkaSendOrderDto.getMemberId(), kafkaSendOrderDto.getOrderId());
+        deliveryService.cancelByMemberIdAndOrderId(kafkaSendOrderDto.getMemberId(), kafkaSendOrderDto.getOrderId());
     }
 }

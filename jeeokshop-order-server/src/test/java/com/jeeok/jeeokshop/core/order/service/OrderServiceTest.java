@@ -34,7 +34,7 @@ public class OrderServiceTest extends MockTest {
     public static final Long ORDER_ID_1 = 1L;
     public static final OrderStatus ORDER_STATUS = OrderStatus.ORDER;
 
-    //ERORR_MESSAGE
+    //ERROR_MESSAGE
     public static final String ORDER = "Order";
     public static final Long NOT_FOUND_ORDER_ID_0 = 0L;
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
