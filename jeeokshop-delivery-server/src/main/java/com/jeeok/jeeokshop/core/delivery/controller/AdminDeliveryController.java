@@ -2,7 +2,9 @@ package com.jeeok.jeeokshop.core.delivery.controller;
 
 import com.jeeok.jeeokshop.common.json.JsonResult;
 import com.jeeok.jeeokshop.core.delivery.controller.request.SaveDeliveryRequest;
+import com.jeeok.jeeokshop.core.delivery.controller.request.UpdateDeliveryRequest;
 import com.jeeok.jeeokshop.core.delivery.controller.response.SaveDeliveryResponse;
+import com.jeeok.jeeokshop.core.delivery.controller.response.UpdateDeliveryResponse;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliveryDto;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
@@ -58,6 +60,22 @@ public class AdminDeliveryController {
 
         Delivery savedDelivery = deliveryService.saveDelivery(request.toDelivery());
         return JsonResult.OK(new SaveDeliveryResponse(savedDelivery.getId()));
+    }
+
+    /**
+     * 배송 수정
+     */
+    @PutMapping("/{deliveryId}")
+    public JsonResult updateDelivery(@PathVariable("deliveryId") Long deliveryId,
+                                     @RequestBody @Validated UpdateDeliveryRequest request) {
+
+        //validate
+        request.validate();
+
+        deliveryService.updateDelivery(deliveryId, request.toParam());
+        Delivery updatedDelivery = deliveryService.findDelivery(deliveryId);
+
+        return JsonResult.OK(new UpdateDeliveryResponse(updatedDelivery.getId()));
     }
 
     /**
