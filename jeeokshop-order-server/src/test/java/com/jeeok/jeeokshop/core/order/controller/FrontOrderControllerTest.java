@@ -159,7 +159,7 @@ class FrontOrderControllerTest extends IntegrationTest {
             em.persist(order);
 
             //when
-            ResultActions resultActions = mockMvc.perform(get(FRONT_FIND_ORDER, ORDER_ID_1));
+            ResultActions resultActions = mockMvc.perform(get(FRONT_FIND_ORDER, order.getId()));
 
             //then
             resultActions
@@ -243,7 +243,7 @@ class FrontOrderControllerTest extends IntegrationTest {
             em.persist(order);
 
             //when
-            ResultActions resultActions = mockMvc.perform(put(FRONT_CANCEL_ORDER, ORDER_ID_1));
+            ResultActions resultActions = mockMvc.perform(put(FRONT_CANCEL_ORDER, order.getId()));
 
             //then
             resultActions
@@ -273,7 +273,7 @@ class FrontOrderControllerTest extends IntegrationTest {
             em.persist(order);
 
             //when
-            ResultActions resultActions = mockMvc.perform(delete(FRONT_DELETE_ORDER, ORDER_ID_1));
+            ResultActions resultActions = mockMvc.perform(delete(FRONT_DELETE_ORDER, order.getId()));
 
             //then
             resultActions
