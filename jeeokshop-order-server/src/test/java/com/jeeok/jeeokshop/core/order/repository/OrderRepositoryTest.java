@@ -1,11 +1,10 @@
 package com.jeeok.jeeokshop.core.order.repository;
 
-import com.jeeok.jeeokshop.core.order.RepositoryTest;
+import com.jeeok.jeeokshop.core.RepositoryTest;
 import com.jeeok.jeeokshop.core.order.domain.Order;
 import com.jeeok.jeeokshop.core.order.dto.OrderSearchCondition;
 import com.jeeok.jeeokshop.core.orderItem.domain.OrderItem;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

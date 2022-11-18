@@ -1,4 +1,4 @@
-package com.jeeok.jeeokshop.core.order;
+package com.jeeok.jeeokshop.core;
 
 import com.jeeok.jeeokshop.OrderTestConfig;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

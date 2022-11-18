@@ -1,7 +1,7 @@
 package com.jeeok.jeeokshop.core.order.service;
 
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
-import com.jeeok.jeeokshop.core.order.MockTest;
+import com.jeeok.jeeokshop.core.MockTest;
 import com.jeeok.jeeokshop.core.order.domain.Order;
 import com.jeeok.jeeokshop.core.order.domain.OrderStatus;
 import com.jeeok.jeeokshop.core.order.dto.OrderParam;

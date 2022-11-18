@@ -1,4 +1,4 @@
-package com.jeeok.jeeokshop.core.order;
+package com.jeeok.jeeokshop.core;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
