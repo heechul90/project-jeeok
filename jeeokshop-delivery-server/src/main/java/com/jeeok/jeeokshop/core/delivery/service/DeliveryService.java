@@ -43,8 +43,8 @@ public class DeliveryService {
      * 배송 저장
      */
     @Transactional
-    public Long saveDelivery(Delivery delivery) {
-        return deliveryRepository.save(delivery).getId();
+    public Delivery saveDelivery(Delivery delivery) {
+        return deliveryRepository.save(delivery);
     }
 
     /**
@@ -77,8 +77,15 @@ public class DeliveryService {
         findDelivery.complete();
     }
 
+    @Transactional
+    public void cancel(Long deliveryId) {
+        Delivery findDelivery = deliveryRepository.findById(deliveryId)
+                .orElseThrow(() -> new EntityNotFound(DELIVERY, deliveryId));
+        deliveryRepository.delete(findDelivery);
+    }
+
     /**
-     * 배달취소
+     * 배달취소 by memberId and orderId
      */
     @Transactional
     public void cancel(Long memberId, Long orderId) {
