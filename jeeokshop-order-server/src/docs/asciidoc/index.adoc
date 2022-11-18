@@ -84,16 +84,16 @@ Host : https://order.jeeokshop.jeeok.com
 
 == 주문
 
-== 스토어 목록
+== 내 주문 목록
 === 요청
-// include::{snippets}/front-findStores/http-request.adoc[]
-// include::{snippets}/front-findStores/request-parameters.adoc[]
+include::{snippets}/front-findOrders/http-request.adoc[]
+include::{snippets}/front-findOrders/request-parameters.adoc[]
 
 === 응답
-// include::{snippets}/front-findStores/http-response.adoc[]
-// include::{snippets}/front-findStores/response-fields.adoc[]
+include::{snippets}/front-findOrders/http-response.adoc[]
+include::{snippets}/front-findOrders/response-fields.adoc[]
 
-== 주문 상세
+== 내 주문 상세
 === 요청
 include::{snippets}/front-findOrder/http-request.adoc[]
 include::{snippets}/front-findOrder/path-parameters.adoc[]
@@ -102,3 +102,28 @@ include::{snippets}/front-findOrder/path-parameters.adoc[]
 include::{snippets}/front-findOrder/http-response.adoc[]
 include::{snippets}/front-findOrder/response-fields.adoc[]
 
+== 주문
+include::{snippets}/front-order/http-request.adoc[]
+include::{snippets}/front-order/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/front-order/http-response.adoc[]
+include::{snippets}/front-order/response-fields.adoc[]
+
+== 주문 취소
+=== 요청
+include::{snippets}/front-orderCancel/http-request.adoc[]
+include::{snippets}/front-orderCancel/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-orderCancel/http-response.adoc[]
+include::{snippets}/front-orderCancel/response-fields.adoc[]
+
+== 주문 삭제
+=== 요청
+include::{snippets}/front-deleteOrder/http-request.adoc[]
+include::{snippets}/front-deleteOrder/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/front-deleteOrder/http-response.adoc[]
+include::{snippets}/front-deleteOrder/response-fields.adoc[]
