@@ -33,7 +33,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-    //rest call
+    //http client binder
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     //redis

@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OrderConsumer {
 
-    private final DeliveryService deliveryService;
     private final ObjectMapper objectMapper;
+    private final DeliveryService deliveryService;
 
     @Transactional
     @KafkaListener(topics = "order")
