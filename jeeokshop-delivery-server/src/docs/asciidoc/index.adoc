@@ -78,9 +78,9 @@ Host : https://delivery.jeeokshop.jeeok.com
 |===
 
 [[api-rest-docs]]
-= 사용자 모드
+= 관리자 모드
 
-사용자 화면에 사용됩니다.
+관리자 권한만 사용할 수 있습니다.
 
 == 배송
 
