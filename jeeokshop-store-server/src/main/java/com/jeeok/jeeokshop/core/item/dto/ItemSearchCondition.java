@@ -7,4 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ItemSearchCondition extends CommonSearchCondition {
+
+    private Long searchStoreId;
 }

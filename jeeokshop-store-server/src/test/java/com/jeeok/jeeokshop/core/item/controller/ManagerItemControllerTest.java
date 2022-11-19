@@ -9,8 +9,8 @@ import com.jeeok.jeeokshop.common.entity.Yn;
 import com.jeeok.jeeokshop.common.json.Code;
 import com.jeeok.jeeokshop.core.IntegrationTest;
 import com.jeeok.jeeokshop.core.category.domain.Category;
-import com.jeeok.jeeokshop.core.item.controller.request.SaveItemRequest;
-import com.jeeok.jeeokshop.core.item.controller.request.UpdateItemRequest;
+import com.jeeok.jeeokshop.core.item.controller.request.EditItemRequest;
+import com.jeeok.jeeokshop.core.item.controller.request.RegisterItemRequest;
 import com.jeeok.jeeokshop.core.item.domain.Item;
 import com.jeeok.jeeokshop.core.item.dto.ItemSearchCondition;
 import com.jeeok.jeeokshop.core.item.service.ItemService;
@@ -22,8 +22,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AdminItemControllerTest extends IntegrationTest {
+class ManagerItemControllerTest extends IntegrationTest {
 
     //CREATE_ITEM
     public static final String ITEM_NAME = "교촌오리지날";
@@ -52,11 +52,11 @@ class AdminItemControllerTest extends IntegrationTest {
     public static final Yn SALES_YN = Yn.Y;
 
     //REQUEST_INFO
-    public static final String API_FIND_ITEMS = "/admin/items";
-    public static final String API_FIND_ITEM = "/admin/items/{itemId}";
-    public static final String API_SAVE_ITEM = "/admin/items";
-    public static final String API_UPDATE_ITEM = "/admin/items/{itemId}";
-    public static final String API_DELETE_ITEM = "/admin/items/{itemId}";
+    public static final String API_FIND_ITEMS = "/manager/stores/{storeId}/items";
+    public static final String API_FIND_ITEM = "/manager/stores/{storeId}/items/{itemId}";
+    public static final String API_REGISTER_ITEM = "/manager/stores/{storeId}/items";
+    public static final String API_EDIT_ITEM = "/manager/stores/{storeId}/items/{itemId}";
+    public static final String API_DELETE_ITEM = "/manager/stores/{storeId}/items/{itemId}";
 
     @Autowired protected MockMvc mockMvc;
 
@@ -101,7 +101,7 @@ class AdminItemControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상품 목록 조회")
+    @DisplayName("내 스토어 상품 목록")
     void findItems() throws Exception {
         //given
         IntStream.range(0, 15).forEach(i -> em.persist(getItem(ITEM_NAME + i, PRICE, STOCK_QUANTITY, PHOTO)));
@@ -110,19 +110,12 @@ class AdminItemControllerTest extends IntegrationTest {
         condition.setSearchCondition(SearchCondition.NAME);
         condition.setSearchKeyword(ITEM_NAME);
 
-        PageRequest pageRequest = PageRequest.of(0, 10);
-
         LinkedMultiValueMap<String, String> conditionParams = new LinkedMultiValueMap<>();
         conditionParams.setAll(objectMapper.convertValue(condition, new TypeReference<Map<String, String>>() {}));
 
-        LinkedMultiValueMap<String, String> pageRequestParams = new LinkedMultiValueMap<>();
-        pageRequestParams.add("page", String.valueOf(pageRequest.getOffset()));
-        pageRequestParams.add("size", String.valueOf(pageRequest.getPageSize()));
-
         //when
-        ResultActions resultActions = mockMvc.perform(get(API_FIND_ITEMS)
-                .queryParams(conditionParams)
-                .queryParams(pageRequestParams));
+        ResultActions resultActions = mockMvc.perform(get(API_FIND_ITEMS, store.getId())
+                .queryParams(conditionParams));
 
         //then
         resultActions
@@ -130,14 +123,16 @@ class AdminItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
-                .andExpect(jsonPath("$.data.length()", Matchers.is(10)))
+                .andExpect(jsonPath("$.data.length()", Matchers.is(15)))
                 .andDo(print())
-                .andDo(document("admin-findItems",
+                .andDo(MockMvcRestDocumentation.document("manager-findItems",
+                        pathParameters(
+                                parameterWithName("storeId").description("스토어 고유번호")
+                        ),
                         requestParameters(
+                                parameterWithName("searchStoreId").ignored(),
                                 parameterWithName("searchCondition").description("검색 조건"),
-                                parameterWithName("searchKeyword").description("검색 키워드"),
-                                parameterWithName("page").description("검색 페이지"),
-                                parameterWithName("size").description("검색 사이즈")
+                                parameterWithName("searchKeyword").description("검색 키워드")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
@@ -152,18 +147,17 @@ class AdminItemControllerTest extends IntegrationTest {
                                 fieldWithPath("data[*].photo").description("상품 이미지")
                         )
                 ));
-
     }
 
     @Test
-    @DisplayName("상품 단건 조회")
+    @DisplayName("내 스토어 상품 상세")
     void findItem() throws Exception {
         //given
         Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get(API_FIND_ITEM, item.getId()));
+        ResultActions resultActions = mockMvc.perform(get(API_FIND_ITEM, store.getId(), item.getId()));
 
         //then
         resultActions
@@ -177,8 +171,9 @@ class AdminItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.price").value(PRICE))
                 .andExpect(jsonPath("$.data.photo").value(PHOTO.path()))
                 .andDo(print())
-                .andDo(document("admin-findItem",
+                .andDo(document("manager-findItem",
                         pathParameters(
+                                parameterWithName("storeId").description("스토어 고유번호"),
                                 parameterWithName("itemId").description("상품 고유번호")
                         ),
                         responseFields(
@@ -197,21 +192,20 @@ class AdminItemControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상품 저장")
-    void saveItem() throws Exception {
+    @DisplayName("상품 등록")
+    void registerItem() throws Exception {
         //given
-        SaveItemRequest request = SaveItemRequest.builder()
+        RegisterItemRequest request = RegisterItemRequest.builder()
                 .itemName(ITEM_NAME)
                 .itemPrice(PRICE)
                 .stockQuantity(STOCK_QUANTITY)
                 .photoPath(PHOTO.getPath())
                 .photoName(PHOTO.getName())
-                .storeId(store.getId())
                 .categoryId(category.getId())
                 .build();
 
         //when
-        ResultActions resultActions = mockMvc.perform(post(API_SAVE_ITEM)
+        ResultActions resultActions = mockMvc.perform(post(API_REGISTER_ITEM, store.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
 
@@ -222,14 +216,16 @@ class AdminItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("admin-saveItem",
+                .andDo(document("manager-registerItem",
+                        pathParameters(
+                                parameterWithName("storeId").description("스토어 고유번호")
+                        ),
                         requestFields(
                                 fieldWithPath("itemName").description("상품 이름"),
                                 fieldWithPath("itemPrice").description("상품 가격"),
                                 fieldWithPath("stockQuantity").description("재고수량"),
                                 fieldWithPath("photoPath").description("이미지 주소"),
                                 fieldWithPath("photoName").description("이미지 이름"),
-                                fieldWithPath("storeId").description("스토어 고유번호"),
                                 fieldWithPath("categoryId").description("카테고리 고유번호")
                         ),
                         responseFields(
@@ -243,13 +239,13 @@ class AdminItemControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상품 수정")
-    void updateItem() throws Exception {
+    @DisplayName("내 스토어 수정")
+    void editItem() throws Exception {
         //given
         Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
-        UpdateItemRequest request = UpdateItemRequest.builder()
+        EditItemRequest request = EditItemRequest.builder()
                 .itemName(ITEM_NAME)
                 .salesYn(SALES_YN)
                 .itemPrice(PRICE)
@@ -259,7 +255,7 @@ class AdminItemControllerTest extends IntegrationTest {
                 .build();
 
         //when
-        ResultActions resultActions = mockMvc.perform(put(API_UPDATE_ITEM, item.getId())
+        ResultActions resultActions = mockMvc.perform(put(API_EDIT_ITEM, store.getId(), item.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
 
@@ -271,8 +267,9 @@ class AdminItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.updatedItemId").value(item.getId()))
                 .andDo(print())
-                .andDo(document("admin-updateItem",
+                .andDo(document("manager-editItem",
                         pathParameters(
+                                parameterWithName("storeId").description("스토어 고유번호"),
                                 parameterWithName("itemId").description("상품 고유번호")
                         ),
                         requestFields(
@@ -294,14 +291,14 @@ class AdminItemControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상품 삭제")
+    @DisplayName("내 스토어 상품 삭제")
     void deleteItem() throws Exception {
         //given
         Item item = getItem(ITEM_NAME, PRICE, STOCK_QUANTITY, PHOTO);
         em.persist(item);
 
         //when
-        ResultActions resultActions = mockMvc.perform(delete(API_DELETE_ITEM, item.getId()));
+        ResultActions resultActions = mockMvc.perform(delete(API_DELETE_ITEM, store.getId(), item.getId()));
 
         //then
         resultActions
@@ -310,8 +307,9 @@ class AdminItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("admin-deleteItem",
+                .andDo(document("manager-deleteItem",
                         pathParameters(
+                                parameterWithName("storeId").description("스토어 고유번호"),
                                 parameterWithName("itemId").description("상품 고유번호")
                         ),
                         responseFields(

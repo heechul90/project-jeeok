@@ -3,6 +3,7 @@ package com.jeeok.jeeokshop.core.item.repository;
 import com.jeeok.jeeokshop.common.dto.SearchCondition;
 import com.jeeok.jeeokshop.core.item.domain.Item;
 import com.jeeok.jeeokshop.core.item.dto.ItemSearchCondition;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.jeeok.jeeokshop.core.item.domain.QItem.*;
+import static com.jeeok.jeeokshop.core.store.domain.QStore.*;
 import static org.springframework.util.StringUtils.*;
 
 @Repository
@@ -47,12 +49,18 @@ public class ItemQueryRepository {
         return queryFactory
                 .select(item)
                 .from(item)
+                .leftJoin(item.store, store)
                 .where(
-                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword())
+                        searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword()),
+                        searchStoreIdEq(condition.getSearchStoreId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+    }
+
+    private BooleanExpression searchStoreIdEq(Long searchStoreId) {
+        return searchStoreId != null ? store.id.eq(searchStoreId) : null;
     }
 
     /**
