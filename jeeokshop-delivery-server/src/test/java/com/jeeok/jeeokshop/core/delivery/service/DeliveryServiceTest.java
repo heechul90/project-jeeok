@@ -1,10 +1,14 @@
 package com.jeeok.jeeokshop.core.delivery.service;
 
+import com.jeeok.jeeokshop.client.member.FindMemberResponse;
+import com.jeeok.jeeokshop.client.member.MemberClient;
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
+import com.jeeok.jeeokshop.common.json.JsonResult;
 import com.jeeok.jeeokshop.core.MockTest;
 import com.jeeok.jeeokshop.core.delivery.domain.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
+import com.jeeok.jeeokshop.core.delivery.dto.SaveDeliveryParam;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
 import com.jeeok.jeeokshop.core.delivery.exception.OrderNotFound;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryRepository;
@@ -52,6 +56,8 @@ class DeliveryServiceTest extends MockTest {
 
     @Mock protected DeliveryRepository deliveryRepository;
 
+    @Mock protected MemberClient memberClient;
+
     @InjectMocks protected DeliveryService deliveryService;
 
     Delivery delivery;
@@ -85,10 +91,21 @@ class DeliveryServiceTest extends MockTest {
         @DisplayName("배송 저장")
         void saveDelivery() {
             //given
+            FindMemberResponse findMember = FindMemberResponse.builder()
+                    .memberId(MEMBER_ID_1)
+                    .address(ADDRESS)
+                    .build();
+
+            given(memberClient.findMember(any(Long.class))).willReturn(JsonResult.OK(findMember));
             given(deliveryRepository.save(any(Delivery.class))).willReturn(delivery);
 
+            SaveDeliveryParam param = SaveDeliveryParam.builder()
+                    .memberId(MEMBER_ID_1)
+                    .orderId(ORDER_ID_1)
+                    .build();
+
             //when
-            Delivery savedDelivery = deliveryService.saveDelivery(DeliveryServiceTest.this.delivery);
+            Delivery savedDelivery = deliveryService.saveDelivery(param);
 
             //then
             assertThat(savedDelivery.getAddress()).isEqualTo(ADDRESS);
@@ -97,6 +114,7 @@ class DeliveryServiceTest extends MockTest {
 
             //verify
             verify(deliveryRepository, times(1)).save(any(Delivery.class));
+            verify(memberClient, times(1)).findMember(any(Long.class));
         }
 
         @Test
