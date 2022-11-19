@@ -6,6 +6,7 @@ import com.jeeok.jeeokshop.core.delivery.domain.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
+import com.jeeok.jeeokshop.core.delivery.exception.OrderNotFound;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +37,8 @@ class DeliveryServiceTest extends MockTest {
     //ERROR_MESSAGE
     public static final String DELIVERY = "Delivery";
     public static final Long NOT_FOUND_DELIVERY_ID_0 = 0L;
+    public static final Long NOT_FOUND_MEMBER_ID_0 = 0L;
+    public static final Long NOT_FOUND_ORDER_ID_0 = 0L;
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
@@ -198,7 +201,7 @@ class DeliveryServiceTest extends MockTest {
     }
 
     @Nested
-    class UnsuccessfulTest {
+    class ExceptionTest {
 
         @Test
         @DisplayName("배송 단건 조회_entityNotFound")
@@ -213,6 +216,82 @@ class DeliveryServiceTest extends MockTest {
                     .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
         }
         
-        //TODO 나머지 추가하자
+        @Test
+        @DisplayName("배송 수정_entityNotFound")
+        void updateDelivery_entityNotFound() {
+            //given
+            given(deliveryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(DELIVERY, NOT_FOUND_DELIVERY_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.updateDelivery(NOT_FOUND_DELIVERY_ID_0, any(UpdateDeliveryParam.class)))
+                    .isInstanceOf(EntityNotFound.class)
+                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + DELIVERY)
+                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
+        }
+
+        @Test
+        @DisplayName("배송 시작_entityNotFound")
+        void delivery_entityNotFound() {
+            //given
+            given(deliveryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(DELIVERY, NOT_FOUND_DELIVERY_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.delivery(NOT_FOUND_DELIVERY_ID_0))
+                    .isInstanceOf(EntityNotFound.class)
+                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + DELIVERY)
+                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
+        }
+
+        @Test
+        @DisplayName("배송 완료_entityNotFound")
+        void complete_entityNotFound() {
+            //given
+            given(deliveryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(DELIVERY, NOT_FOUND_DELIVERY_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.complete(NOT_FOUND_DELIVERY_ID_0))
+                    .isInstanceOf(EntityNotFound.class)
+                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + DELIVERY)
+                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
+        }
+
+        @Test
+        @DisplayName("배달 취소 by deliveryId_entityNotFound")
+        void cancelByDeliveryId_entityNotFound() {
+            //given
+            given(deliveryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(DELIVERY, NOT_FOUND_DELIVERY_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.cancelByDeliveryId(NOT_FOUND_DELIVERY_ID_0))
+                    .isInstanceOf(EntityNotFound.class)
+                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + DELIVERY)
+                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
+        }
+
+        @Test
+        @DisplayName("배달 취소 by memberId and orderId_orderNotFound")
+        void cancelByMemberIdAndOrderId_orderNotFound() {
+            //given
+            given(deliveryRepository.findByMemberIdAndOrderId(any(Long.class), any(Long.class))).willThrow(new OrderNotFound());
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.cancelByMemberIdAndOrderId(NOT_FOUND_MEMBER_ID_0, NOT_FOUND_ORDER_ID_0))
+                    .isInstanceOf(OrderNotFound.class)
+                    .hasMessageStartingWith("주문내역")
+                    .hasMessageEndingWith("없습니다.");
+        }
+
+        @Test
+        @DisplayName("배송 삭제_entityNotFound")
+        void deleteDelivery_entityNotFound() {
+            //given
+            given(deliveryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(DELIVERY, NOT_FOUND_DELIVERY_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> deliveryService.deleteDelivery(NOT_FOUND_DELIVERY_ID_0))
+                    .isInstanceOf(EntityNotFound.class)
+                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + DELIVERY)
+                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_DELIVERY_ID_0);
+        }
     }
 }

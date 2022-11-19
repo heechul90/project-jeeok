@@ -4,6 +4,7 @@ import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
+import com.jeeok.jeeokshop.core.delivery.exception.OrderNotFound;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryQueryRepository;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +79,7 @@ public class DeliveryService {
     }
 
     /**
-     * 배달취소 by deliveryId
+     * 배달 취소 by deliveryId
      */
     @Transactional
     public void cancelByDeliveryId(Long deliveryId) {
@@ -88,12 +89,12 @@ public class DeliveryService {
     }
 
     /**
-     * 배달취소 by memberId and orderId
+     * 배달 취소 by memberId and orderId
      */
     @Transactional
     public void cancelByMemberIdAndOrderId(Long memberId, Long orderId) {
         Delivery findDelivery = deliveryRepository.findByMemberIdAndOrderId(memberId, orderId)
-                .orElseThrow(() -> new IllegalArgumentException("없음."));
+                .orElseThrow(OrderNotFound::new);
         findDelivery.cancel();
     }
 
