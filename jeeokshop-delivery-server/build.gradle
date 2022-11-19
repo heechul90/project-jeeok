@@ -33,6 +33,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+    //http client binder
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
     //message
     implementation 'org.springframework.kafka:spring-kafka'
 

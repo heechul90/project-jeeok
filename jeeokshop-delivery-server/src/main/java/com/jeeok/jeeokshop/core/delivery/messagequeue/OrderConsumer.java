@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.dto.KafkaSendOrderDto;
+import com.jeeok.jeeokshop.core.delivery.dto.SaveDeliveryParam;
 import com.jeeok.jeeokshop.core.delivery.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,11 @@ public class OrderConsumer {
 
         KafkaSendOrderDto kafkaSendOrderDto = objectMapper.readValue(kafkaMessage, KafkaSendOrderDto.class);
 
-        Delivery delivery = Delivery.createDelivery()
-                .address(null)
+        SaveDeliveryParam param = SaveDeliveryParam.builder()
                 .memberId(kafkaSendOrderDto.getMemberId())
                 .orderId(kafkaSendOrderDto.getOrderId())
                 .build();
-        deliveryService.saveDelivery(delivery);
+        deliveryService.saveDelivery(param);
     }
 
     @Transactional

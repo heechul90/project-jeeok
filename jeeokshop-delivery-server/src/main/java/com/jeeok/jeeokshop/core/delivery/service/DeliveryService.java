@@ -1,8 +1,13 @@
 package com.jeeok.jeeokshop.core.delivery.service;
 
+import com.jeeok.jeeokshop.client.member.FindMemberResponse;
+import com.jeeok.jeeokshop.client.member.MemberClient;
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
+import com.jeeok.jeeokshop.common.json.JsonResult;
+import com.jeeok.jeeokshop.core.delivery.domain.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
+import com.jeeok.jeeokshop.core.delivery.dto.SaveDeliveryParam;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
 import com.jeeok.jeeokshop.core.delivery.exception.OrderNotFound;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryQueryRepository;
@@ -25,6 +30,8 @@ public class DeliveryService {
     private final DeliveryQueryRepository deliveryQueryRepository;
     private final DeliveryRepository deliveryRepository;
 
+    private final MemberClient memberClient;
+
     /**
      * 배송 목록 조회
      */
@@ -44,7 +51,16 @@ public class DeliveryService {
      * 배송 저장
      */
     @Transactional
-    public Delivery saveDelivery(Delivery delivery) {
+    public Delivery saveDelivery(SaveDeliveryParam param) {
+        //멤버 주소 가져오기
+        FindMemberResponse findMember = memberClient.findMember(param.getMemberId()).getData();
+
+        Delivery delivery = Delivery.createDelivery()
+                .address(findMember.getAddress())
+                .memberId(param.getMemberId())
+                .orderId(param.getOrderId())
+                .build();
+
         return deliveryRepository.save(delivery);
     }
 

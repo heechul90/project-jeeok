@@ -58,7 +58,7 @@ public class AdminDeliveryController {
         //validate
         request.validate();
 
-        Delivery savedDelivery = deliveryService.saveDelivery(request.toDelivery());
+        Delivery savedDelivery = deliveryService.saveDelivery(request.toParam());
         return JsonResult.OK(new SaveDeliveryResponse(savedDelivery.getId()));
     }
 

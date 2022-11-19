@@ -2,7 +2,7 @@ package com.jeeok.jeeokshop.core.delivery.controller.request;
 
 import com.jeeok.jeeokshop.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokshop.common.json.ErrorCode;
-import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
+import com.jeeok.jeeokshop.core.delivery.dto.SaveDeliveryParam;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public class SaveDeliveryRequest {
         }
     }
 
-    public Delivery toDelivery() {
-        return Delivery.createDelivery()
+    public SaveDeliveryParam toParam() {
+        return SaveDeliveryParam.builder()
                 .memberId(this.memberId)
                 .orderId(this.orderId)
                 .build();
