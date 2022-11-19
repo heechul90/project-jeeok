@@ -17,11 +17,11 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class FrontAuthorizationHeaderFilter extends AbstractGatewayFilterFactory<FrontAuthorizationHeaderFilter.Config> {
+public class DeliverymanAuthorizationHeaderFilter extends AbstractGatewayFilterFactory<DeliverymanAuthorizationHeaderFilter.Config> {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public FrontAuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
+    public DeliverymanAuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
         super(Config.class);
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -46,7 +46,10 @@ public class FrontAuthorizationHeaderFilter extends AbstractGatewayFilterFactory
 
             String memberId = jwtTokenProvider.getUserId(accessToken);
 
-            //프론트 권한체크 한다면?
+            //권한 check
+            if (!jwtTokenProvider.getRoles(accessToken).contains(RoleType.ROLE_DELIVERYMAN.name())) {
+                return onError(exchange, "배달원 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
+            }
 
             ServerHttpRequest newRequest = request.mutate()
                     .header("member-id", memberId)

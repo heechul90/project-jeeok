@@ -12,18 +12,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 /**
  * /api/front/** check filter
  */
 @Slf4j
 @Component
-public class ManagerAuthorizationHeaderFilter extends AbstractGatewayFilterFactory<ManagerAuthorizationHeaderFilter.Config> {
+public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public ManagerAuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
+    public AuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
         super(Config.class);
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -48,10 +46,7 @@ public class ManagerAuthorizationHeaderFilter extends AbstractGatewayFilterFacto
 
             String memberId = jwtTokenProvider.getUserId(accessToken);
 
-            //권한 check
-            if (!jwtTokenProvider.getRoles(accessToken).contains(RoleType.ROLE_MANAGER.name())) {
-                return onError(exchange, "매니저 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
-            }
+            //프론트 권한체크 한다면?
 
             ServerHttpRequest newRequest = request.mutate()
                     .header("member-id", memberId)

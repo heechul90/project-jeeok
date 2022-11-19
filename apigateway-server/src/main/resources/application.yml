@@ -61,13 +61,13 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
-        #회원 프론트
+        #회원 사용자
         - id: member-server
-          uri: lb://MEMBER-SERVER/front
+          uri: lb://MEMBER-SERVER
           predicates:
-            - Path=/member-server/front/**
+            - Path=/member-server/**
           filters:
-            - FrontAuthorizationHeaderFilter
+            - AuthorizationHeaderFilter
             - RewritePath=/member-server/(?<segment>.*),/$\{segment}
 
         #지옥로그 관리자
@@ -79,13 +79,13 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
-        #지옥로그 프론트
+        #지옥로그 사용자
         - id: jeeoklog-server
-          uri: lb://JEEOKLOG-SERVER/front
+          uri: lb://JEEOKLOG-SERVER
           predicates:
-            - Path=/jeeoklog-server/front/**
+            - Path=/jeeoklog-server/**
           filters:
-            - FrontAuthorizationHeaderFilter
+            - AuthorizationHeaderFilter
             - RewritePath=/jeeoklog-server/(?<segment>.*),/$\{segment}
 
         #지록숍 스토어 관리자
@@ -97,13 +97,22 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
+        #지옥숍 스토어 매니저
+        - id: jeeokshop-store-server
+          uri: lb://JEEOKSHOP-STORE-SERVER/manager
+          predicates:
+            - Path=/jeeokshop-store-server/manager/**
+          filters:
+            - ManagerAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
+
         #지옥숍 스토어 사용자
         - id: jeeokshop-store-server
-          uri: lb://JEEOKSHOP-STORE-SERVER/front
+          uri: lb://JEEOKSHOP-STORE-SERVER
           predicates:
-            - Path=/jeeokshop-store-server/front/**
+            - Path=/jeeokshop-store-server/**
           filters:
-            - FrontAuthorizationHeaderFilter
+            - AuthorizationHeaderFilter
             - RewritePath=/jeeokshop-store-server/(?<segment>.*),/$\{segment}
 
         #지록숍 주문 관리자
@@ -115,13 +124,22 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
 
+        #지옥숍 주문 매니저
+        - id: jeeokshop-order-server
+          uri: lb://JEEOKSHOP-ORDER-SERVER/manager
+          predicates:
+            - Path=/jeeokshop-order-server/manager/**
+          filters:
+            - ManagerAuthorizationHeaderFilter
+            - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
+
         #지옥숍 주문 사용자
         - id: jeeokshop-order-server
-          uri: lb://JEEOKSHOP-ORDER-SERVER/front
+          uri: lb://JEEOKSHOP-ORDER-SERVER
           predicates:
-            - Path=/jeeokshop-order-server/front/**
+            - Path=/jeeokshop-order-server/**
           filters:
-            - FrontAuthorizationHeaderFilter
+            - AuthorizationHeaderFilter
             - RewritePath=/jeeokshop-order-server/(?<segment>.*),/$\{segment}
 
         #지록숍 배달 관리자
@@ -133,13 +151,13 @@ spring:
             - AdminAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-delivery-server/(?<segment>.*),/$\{segment}
 
-        #지옥숍 배달 사용자
+        #지옥숍 배달 배달원
         - id: jeeokshop-delivery-server
-          uri: lb://JEEOKSHOP-DELIVERY-SERVER/front
+          uri: lb://JEEOKSHOP-DELIVERY-SERVER/delivery
           predicates:
-            - Path=/jeeokshop-delivery-server/front/**
+            - Path=/jeeokshop-delivery-server/delivery/**
           filters:
-            - FrontAuthorizationHeaderFilter
+            - DeliverymanAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-delivery-server/(?<segment>.*),/$\{segment}
 
 #actuator config
