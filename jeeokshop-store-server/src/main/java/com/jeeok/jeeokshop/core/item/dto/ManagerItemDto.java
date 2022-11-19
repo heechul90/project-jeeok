@@ -24,6 +24,6 @@ public class ManagerItemDto {
         this.salesYn = item.getSalesYn();
         this.price = item.getPrice();
         this.stockQuantity = item.getStockQuantity();
-        this.photo = item.getPhoto().path();
+        this.photo = item.getPhoto().fullPhotoPath();
     }
 }

@@ -48,8 +48,9 @@ class ManagerItemControllerTest extends IntegrationTest {
     public static final String ITEM_NAME = "교촌오리지날";
     public static final int PRICE = 10000;
     public static final int STOCK_QUANTITY = 100;
-    public static final Photo PHOTO = new Photo("https://jeeok.com/item/picture", "photo_name");
+    public static final Photo PHOTO = new Photo("https://jeeok.com/item/picture", "교촌오리지날");
     public static final Yn SALES_YN = Yn.Y;
+    public static final Long MEMBER_ID_1 = 1L;
 
     //REQUEST_INFO
     public static final String API_FIND_ITEMS = "/manager/stores/{storeId}/items";
@@ -59,11 +60,8 @@ class ManagerItemControllerTest extends IntegrationTest {
     public static final String API_DELETE_ITEM = "/manager/stores/{storeId}/items/{itemId}";
 
     @Autowired protected MockMvc mockMvc;
-
     @Autowired protected ObjectMapper objectMapper;
-
     @PersistenceContext protected EntityManager em;
-
     @Autowired protected ItemService itemService;
 
     Category category;
@@ -72,16 +70,16 @@ class ManagerItemControllerTest extends IntegrationTest {
     @BeforeEach
     void beforeEach() {
         category = Category.createCategory()
-                .name("category_name")
+                .name("시리즈 카테고리")
                 .order(1)
                 .build();
 
         store = Store.createStore()
-                .name("store_name")
+                .name("교촌치킨")
                 .businessHours(new BusinessHours("1700", "2200"))
                 .phoneNumber(new PhoneNumber("010", "1111", "2222"))
                 .address(new Address("11234", "서울시"))
-                .memberId(1L)
+                .memberId(MEMBER_ID_1)
                 .categories(List.of(category))
                 .build();
 
@@ -169,7 +167,7 @@ class ManagerItemControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.itemName").value(ITEM_NAME))
                 .andExpect(jsonPath("$.data.salesYn").value(SALES_YN.name()))
                 .andExpect(jsonPath("$.data.price").value(PRICE))
-                .andExpect(jsonPath("$.data.photo").value(PHOTO.path()))
+                .andExpect(jsonPath("$.data.photo").value(PHOTO.fullPhotoPath()))
                 .andDo(print())
                 .andDo(document("manager-findItem",
                         pathParameters(

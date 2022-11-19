@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop;
 
 import com.jeeok.jeeokshop.common.entity.Address;
+import com.jeeok.jeeokshop.common.entity.Photo;
 import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.favoritestore.domain.FavoriteStore;
 import com.jeeok.jeeokshop.core.item.domain.Item;
@@ -56,12 +57,12 @@ public class TestDataInit {
                     .build();
         }
 
-        private Item getItem(String name, int price, int stockQuantity, Store store, Category category) {
+        private Item getItem(String name, int price, int stockQuantity, Photo photo, Store store, Category category) {
             return Item.createItem()
                     .name(name)
                     .price(price)
                     .stockQuantity(stockQuantity)
-                    .photo(null)
+                    .photo(photo)
                     .store(store)
                     .category(category)
                     .build();
@@ -77,8 +78,8 @@ public class TestDataInit {
             Store kyochon = getStore("교촌치킨", new BusinessHours("1700", "2200"), new Address("34291", "서울시 강남구"), 3L, categories);
             em.persist(kyochon);
 
-            Item kombo = getItem("교촌콤보", 19000, 100, kyochon, kyochonSeries);
-            Item original = getItem("교촌오리지날", 16000, 150, kyochon, kyochonSeries);
+            Item kombo = getItem("교촌콤보", 19000, 100, new Photo("https://jeeok.com/item/picture", "교촌콤보"), kyochon, kyochonSeries);
+            Item original = getItem("교촌오리지날", 16000, 150, new Photo("https://jeeok.com/item/picture", "교촌오리지날"), kyochon, kyochonSeries);
             em.persist(kombo);
             em.persist(original);
 
@@ -104,10 +105,10 @@ public class TestDataInit {
             Store bhc = getStore("BHC치킨", new BusinessHours("1800", "2400"), new Address("12864", "서울시 강북구"), 4L, categories);
             em.persist(bhc);
 
-            Item item1 = getItem("치퐁당후라이드", 20000, 200, bhc, category1);
-            Item item2 = getItem("히바네로후라이드", 20000, 100, bhc, category2);
-            Item item3 = getItem("포테킹후라이드", 19000, 100, bhc, category2);
-            Item item4 = getItem("싸이순살", 20900, 50, bhc, category3);
+            Item item1 = getItem("치퐁당후라이드", 20000, 200, new Photo("https://jeeok.com/item/picture", "치퐁당후라이드"), bhc, category1);
+            Item item2 = getItem("히바네로후라이드", 20000, 100, new Photo("https://jeeok.com/item/picture", "히바네로후라이드"), bhc, category2);
+            Item item3 = getItem("포테킹후라이드", 19000, 100, new Photo("https://jeeok.com/item/picture", "포테킹후라이드"), bhc, category2);
+            Item item4 = getItem("싸이순살", 20900, 50, new Photo("https://jeeok.com/item/picture", "싸이순살"), bhc, category3);
 
             em.persist(item1);
             em.persist(item2);

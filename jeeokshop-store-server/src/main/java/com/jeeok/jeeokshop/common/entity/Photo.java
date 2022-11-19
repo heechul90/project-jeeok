@@ -20,7 +20,7 @@ public class Photo {
     @Column(name = "photo_name")
     private String name;
 
-    public String path() {
+    public String fullPhotoPath() {
         return this.path + "/" + this.name;
     }
 }
