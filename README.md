@@ -21,9 +21,10 @@
 | [MEMBER-SERVER](https://github.com/heechul90/project-jeeok/tree/main/member-server) | JWT 토큰을 이용한 로그인/로그아웃, 회원가입 및 회원 관리 |
 | [JEEOKLOG-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeoklog-server) | 게시물 CRUD 개발 |
 | [JEEOKSHOP-STORE-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeokshop-store-server) | 관리자 및 매니저 스토어, 상품 관리 기능 개발 <br/> 유저 스토어 목록 확인 및 찜하기 등록 기능 개발 |
-| [JEEOKSHOP-ORDER-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeokshop-order-server) | 관리자 및 매니저 주문 관리 기능 개발중 <br/> 유저 상품 주문 기능 추가 중 |
+| [JEEOKSHOP-ORDER-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeokshop-order-server) | 관리자 및 매니저 주문 관리 기능 개발중 <br/> 유저 상품 주문 기능 |
+| [JEEOKSHOP-DELIVERY-SERVER](https://github.com/heechul90/project-jeeok/tree/main/jeeokshop-delivery-server) | 주문시 배송 추가 기능 <br/> 관리자 배송 관리 기능 |
 
-## 아키텍처 요약
+## 사용 기술스텍
 | 기술스택 | 개발환경 |
 | --- | --- |
 | Spring | - String Boot 2.7.x </br> - Java 11 </br> - Gradle </br> - Spring Web Mvc </br> - Spring Security |
@@ -32,6 +33,7 @@
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB </br> - Redis |
 | Test | - Spring RestDocs </br> - JUnit5 |
+| Message Queue | - Kafka |
 
 ## 시스템 아키텍처
 ![img.png](img.png)
