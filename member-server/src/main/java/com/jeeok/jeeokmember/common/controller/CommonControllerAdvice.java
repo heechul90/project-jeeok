@@ -23,13 +23,18 @@ public class CommonControllerAdvice {
     private final MessageSource messageSource;
 
     /**
-     * bindingResult erorrs
+     * bindingResult errors
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public JsonResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e, HttpServletRequest request) {
+       //TODO 메시지 네개의 코드로 가져오는 걸로 바꿔야 한다.
+
         List<JsonError> errors = e.getFieldErrors().stream()
-                .map(error -> new JsonError(error.getField(), messageSource.getMessage(error.getCodes()[0], error.getArguments(), request.getLocale())))
-                .collect(Collectors.toList());
+                .map(error -> JsonError.builder()
+                        .fieldName(error.getField())
+                        .errorMessage(messageSource.getMessage(error.getCodes()[1], error.getArguments(), request.getLocale()))
+                        .build()
+                ).collect(Collectors.toList());
         return JsonResult.ERROR(HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
     }
 
@@ -39,8 +44,11 @@ public class CommonControllerAdvice {
     @ExceptionHandler(CommonException.class)
     public JsonResult commonExceptionHandler(CommonException e, HttpServletRequest request) {
         List<JsonError> jsonErrors = e.getErrorCodes().stream()
-                .map(code -> new JsonError(code.getFieldName(), messageSource.getMessage(code.getErrorCode(), code.getArguments(), request.getLocale())))
-                .collect(Collectors.toList());
+                .map(code -> JsonError.builder()
+                        .fieldName(code.getFieldName())
+                        .errorMessage(messageSource.getMessage(code.getErrorCode(), code.getArguments(), request.getLocale()))
+                        .build()
+                ).collect(Collectors.toList());
         return JsonResult.ERROR(e.getMessage(), jsonErrors);
     }
 }

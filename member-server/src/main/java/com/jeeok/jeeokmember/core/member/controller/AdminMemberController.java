@@ -37,7 +37,6 @@ public class AdminMemberController {
         List<MemberDto> members = content.stream()
                 .map(MemberDto::new)
                 .collect(Collectors.toList());
-
         return JsonResult.OK(members);
     }
 

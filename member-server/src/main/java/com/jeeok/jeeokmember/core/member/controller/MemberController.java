@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/front/member")
-public class FrontMemberController {
+@RequestMapping("/member")
+public class MemberController {
 
     private final MemberService memberService;
 
@@ -23,9 +23,9 @@ public class FrontMemberController {
      * 내 정보 조회
      */
     @GetMapping("/info")
-    public JsonResult info(@RequestHeader(value = "member-id") @Validated String memberId) {
+    public JsonResult info(@RequestHeader(value = "member-id") @Validated Long memberId) {
 
-        Member findMember = memberService.findMember(Long.parseLong(memberId));
+        Member findMember = memberService.findMember(memberId);
         MemberInfoResponse memberInfo = new MemberInfoResponse(findMember);
         return JsonResult.OK(memberInfo);
     }

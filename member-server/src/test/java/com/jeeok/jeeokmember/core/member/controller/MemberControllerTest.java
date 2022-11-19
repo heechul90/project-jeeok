@@ -2,30 +2,23 @@ package com.jeeok.jeeokmember.core.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeeok.jeeokmember.common.json.Code;
-import com.jeeok.jeeokmember.config.security.SecurityConfig;
+import com.jeeok.jeeokmember.core.IntegrationTest;
 import com.jeeok.jeeokmember.core.member.controller.request.MemberEditRequest;
 import com.jeeok.jeeokmember.core.member.domain.AuthType;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.domain.RoleType;
-import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
 import com.jeeok.jeeokmember.core.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -38,16 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(
-        controllers = FrontMemberController.class,
-        excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}
-)
-@AutoConfigureMockMvc(addFilters = false)
-@AutoConfigureRestDocs(uriScheme = "https", uriHost = "member.jeeok.com", uriPort = 443)
-class FrontMemberControllerTest {
+class MemberControllerTest extends IntegrationTest {
 
     //CREATE_MEMBER
-    public static final Long MEMBER_ID = 1L;
+    public static final Long MEMBER_ID_1 = 1L;
     public static final String EMAIL = "gildong-hong@jeeok.com";
     public static final String PASSWORD = "1234";
     public static final String NAME = "홍길동";
@@ -61,14 +48,13 @@ class FrontMemberControllerTest {
 
     //REQUEST_INFO
     public static final String HEADER_NAME = "member-id";
-    public static final String API_MEMBER_INFO = "/front/member/info";
-    public static final String API_MEMBER_EDIT = "/front/member/{memberId}/edit";
+    public static final String API_MEMBER_INFO = "/member/info";
+    public static final String API_MEMBER_EDIT = "/member/{memberId}/edit";
 
-    @MockBean MemberService memberService;
-
-    @Autowired ObjectMapper objectMapper;
-
-    @Autowired MockMvc mockMvc;
+    @Autowired protected MockMvc mockMvc;
+    @Autowired protected ObjectMapper objectMapper;
+    @PersistenceContext protected EntityManager em;
+    @Autowired protected MemberService memberService;
 
     private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
         return Member.createMember()
@@ -86,11 +72,14 @@ class FrontMemberControllerTest {
     void info() throws Exception {
         //given
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
-        given(memberService.findMember(any(Long.class))).willReturn(member);
+        em.persist(member);
 
-        //expected
-        mockMvc.perform(get(API_MEMBER_INFO)
-                        .header(HEADER_NAME, MEMBER_ID))
+        //when
+        ResultActions resultActions = mockMvc.perform(get(API_MEMBER_INFO)
+                .header(HEADER_NAME, member.getId()));
+
+        //then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.transaction_time").isNotEmpty())
                 .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
@@ -100,9 +89,9 @@ class FrontMemberControllerTest {
                 .andExpect(jsonPath("$.data.memberName").value(NAME))
                 .andExpect(jsonPath("$.data.phoneNumber").value(PHONE_NUMBER.fullPhoneNumber()))
                 .andDo(print())
-                .andDo(document("member-info",
+                .andDo(document("memberInfo",
                         requestHeaders(
-                                headerWithName("member-id").description("로그인한 멤버 고유번호")
+                                headerWithName("member-id").description("회원 고유번호(입력하지 말것!)")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
@@ -115,9 +104,6 @@ class FrontMemberControllerTest {
                                 fieldWithPath("data.phoneNumber").description("회원 휴대폰번호")
                         )
                 ));
-
-        //verify
-        verify(memberService, times(1)).findMember(any(Long.class));
     }
 
     @Test
@@ -125,20 +111,23 @@ class FrontMemberControllerTest {
     void edit() throws Exception {
         //given
         Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
-        given(memberService.findMember(any(Long.class))).willReturn(member);
+        em.persist(member);
 
         MemberEditRequest request = MemberEditRequest.builder()
                 .memberName(EDIT_NAME)
                 .phoneNumber(EDIT_PHONE_NUMBER.fullPhoneNumber())
                 .build();
 
-        //expected
-        mockMvc.perform(put(API_MEMBER_EDIT, MEMBER_ID)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+        //when
+        ResultActions resultActions = mockMvc.perform(put(API_MEMBER_EDIT, member.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        resultActions
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("member-edit",
+                .andDo(document("memberEdit",
                         pathParameters(
                                 parameterWithName("memberId").description("회원 고유번호")
                         ),
@@ -153,11 +142,6 @@ class FrontMemberControllerTest {
                                 fieldWithPath("errors").description("에러"),
                                 fieldWithPath("data.memberId").description("회원 고유번호")
                         )
-                ))
-        ;
-
-        //verify
-        verify(memberService, times(1)).updateMember(any(Long.class), any(UpdateMemberParam.class));
-        verify(memberService, times(1)).findMember(any(Long.class));
+                ));
     }
 }

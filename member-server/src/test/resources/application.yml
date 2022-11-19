@@ -5,7 +5,7 @@ spring:
   application:
     name: member-server
   profiles:
-    active: dev
+    active: test
   config:
     import: optional:configserver:http://localhost:10000/
   messages:

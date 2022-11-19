@@ -37,7 +37,7 @@ public class RefreshTokenService {
     @Transactional
     public void updateRefreshToken(Long memberId, String uuid) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound("Member", memberId.toString()));
+                .orElseThrow(() -> new EntityNotFound("Member", memberId));
 
         refreshTokenRedisRepository.save(RefreshToken.of(findMember.getId().toString(), uuid));
     }
@@ -60,7 +60,7 @@ public class RefreshTokenService {
         }
 
         Member findMember = memberRepository.findById(Long.valueOf(memberId))
-                .orElseThrow(() -> new EntityNotFound("Member", memberId));
+                .orElseThrow(() -> new EntityNotFound("Member", Long.valueOf(memberId)));
 
         //access token
         Authentication authentication = getAuthentication(findMember.getEmail());

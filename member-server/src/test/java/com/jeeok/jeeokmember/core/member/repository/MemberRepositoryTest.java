@@ -1,16 +1,13 @@
-package com.jeeok.jeeokmember.core.member.service;
+package com.jeeok.jeeokmember.core.member.repository;
 
-import com.jeeok.jeeokmember.MemberTestConfig;
+import com.jeeok.jeeokmember.core.RepositoryTest;
 import com.jeeok.jeeokmember.core.member.domain.*;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SearchCondition;
-import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -20,10 +17,7 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@Import(MemberTestConfig.class)
-public class MemberQueryServiceTest {
+class MemberRepositoryTest extends RepositoryTest {
 
     //CREATE MEMBER
     public static final String EMAIL = "jeeok@gmail.com";
@@ -34,11 +28,11 @@ public class MemberQueryServiceTest {
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
     public static final Address ADDRESS = new Address("83726", "서울시");
 
-    @PersistenceContext EntityManager em;
+    @PersistenceContext protected EntityManager em;
 
-    @Autowired MemberService memberService;
+    @Autowired protected MemberQueryRepository memberQueryRepository;
 
-    @Autowired MemberQueryRepository memberQueryRepository;
+    @Autowired protected MemberRepository memberRepository;
 
     private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         return Member.createMember()
@@ -52,23 +46,26 @@ public class MemberQueryServiceTest {
                 .build();
     }
 
-    @Test
-    @DisplayName("멤버 목록 조회")
-    void findMembers() {
-        //given
-        IntStream.range(0, 20).forEach(i -> em.persist(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS)));
+    @Nested
+    class SuccessfulTest {
+        @Test
+        @DisplayName("멤버 목록 조회")
+        void findMembers() {
+            //given
+            IntStream.range(0, 20).forEach(i -> em.persist(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS)));
 
-        MemberSearchCondition condition = new MemberSearchCondition();
-        condition.setSearchCondition(SearchCondition.NAME);
-        condition.setSearchKeyword(NAME);
+            MemberSearchCondition condition = new MemberSearchCondition();
+            condition.setSearchCondition(SearchCondition.NAME);
+            condition.setSearchKeyword(NAME);
 
-        PageRequest pageRequest = PageRequest.of(0, 10);
+            PageRequest pageRequest = PageRequest.of(0, 10);
 
-        //when
-        Page<Member> content = memberService.findMembers(condition, pageRequest);
+            //when
+            Page<Member> content = memberQueryRepository.findMembers(condition, pageRequest);
 
-        //then
-        assertThat(content.getTotalElements()).isEqualTo(20);
-        assertThat(content.getContent().size()).isEqualTo(pageRequest.getPageSize());
+            //then
+            assertThat(content.getTotalElements()).isEqualTo(20);
+            assertThat(content.getContent().size()).isEqualTo(pageRequest.getPageSize());
+        }
     }
 }

@@ -37,7 +37,7 @@ public class MemberService {
      */
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
     }
 
     /**
@@ -63,7 +63,7 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, UpdateMemberParam param) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
         findMember.updateMember(param);
     }
 
@@ -73,7 +73,7 @@ public class MemberService {
     @Transactional
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId.toString()));
+                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
         memberRepository.delete(findMember);
     }
 }

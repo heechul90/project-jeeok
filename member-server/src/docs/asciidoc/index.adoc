@@ -1,10 +1,13 @@
-= jeeok member API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 2
 :sectlinks:
+
+= JEEOK-MEMBER : REST API
+
+이 문서는 REST API를 구현한 JEEOK-MEMBER API 사용 방법을 안내합니다.
 
 [[overview]]
 = 개요
@@ -58,77 +61,94 @@
 | 클라이언트의 요청이 서버의 상태와 충돌이 발생한 경우.
 |===
 
-= 회원
-----
-로그인한 회원만 사용할 수 있습니다.
-----
+[[overview-header]]
+== 기본 정보
+
+Host : https://member.jeeok.com
+
+로그인 및 권한정보를 request header에 포함하여 인증
+
+header에 member-id 입력할 필요 없음
+
+|===
+|Key|Value|Description
+
+|`+Authorization+`
+|`+Bearer ${accessToken}+`
+|로그인 후 리턴 받은 accessToken
+
+|===
+
+[[api-rest-docs]]
+= 사용자 모드
+
+사용자 화면에 사용됩니다.
 
 == 내 정보 조회
 === 요청
-include::{snippets}/member-info/request-headers.adoc[]
-include::{snippets}/member-info/http-request.adoc[]
+include::{snippets}/memberInfo/request-headers.adoc[]
+include::{snippets}/memberInfo/http-request.adoc[]
 
 === 응답
-include::{snippets}/member-info/http-response.adoc[]
-include::{snippets}/member-info/response-fields.adoc[]
+include::{snippets}/memberInfo/http-response.adoc[]
+include::{snippets}/memberInfo/response-fields.adoc[]
 
 == 내 정보 수정
 === 요청
-include::{snippets}/member-edit/path-parameters.adoc[]
-include::{snippets}/member-edit/http-request.adoc[]
+include::{snippets}/memberEdit/path-parameters.adoc[]
+include::{snippets}/memberEdit/http-request.adoc[]
 
 === 응답
-include::{snippets}/member-edit/http-response.adoc[]
-include::{snippets}/member-edit/response-fields.adoc[]
+include::{snippets}/memberEdit/http-response.adoc[]
+include::{snippets}/memberEdit/response-fields.adoc[]
 
-= 회원 관리
+[[api-rest-docs]]
+= 관리자 모드
 
-----
 관리자 권한만 사용할 수 있습니다.
-----
 
 == 회원 목록 조회
 === 요청
-include::{snippets}/findMembers/http-request.adoc[]
-include::{snippets}/findMembers/request-parameters.adoc[]
+include::{snippets}/admin-findMembers/http-request.adoc[]
+include::{snippets}/admin-findMembers/request-parameters.adoc[]
 
 === 응답
-include::{snippets}/findMembers/http-response.adoc[]
-include::{snippets}/findMembers/response-fields.adoc[]
+include::{snippets}/admin-findMembers/http-response.adoc[]
+include::{snippets}/admin-findMembers/response-fields.adoc[]
 
 == 회원 단건 조회
 === 요청
-include::{snippets}/findMember/http-request.adoc[]
-include::{snippets}/findMember/path-parameters.adoc[]
+include::{snippets}/admin-findMember/path-parameters.adoc[]
+include::{snippets}/admin-findMember/http-request.adoc[]
 
 === 응답
-include::{snippets}/findMember/http-response.adoc[]
-include::{snippets}/findMember/response-fields.adoc[]
+include::{snippets}/admin-findMember/http-response.adoc[]
+include::{snippets}/admin-findMember/response-fields.adoc[]
 
 == 회원 저장
 === 요청
-include::{snippets}/saveMember/http-request.adoc[]
-include::{snippets}/saveMember/request-fields.adoc[]
+include::{snippets}/admin-saveMember/http-request.adoc[]
+include::{snippets}/admin-saveMember/request-fields.adoc[]
 
 === 응답
-include::{snippets}/saveMember/http-response.adoc[]
-include::{snippets}/saveMember/response-fields.adoc[]
+include::{snippets}/admin-saveMember/http-response.adoc[]
+include::{snippets}/admin-saveMember/response-fields.adoc[]
 
 == 회원 수정
 === 요청
-include::{snippets}/updateMember/http-request.adoc[]
-include::{snippets}/updateMember/path-parameters.adoc[]
-include::{snippets}/updateMember/request-fields.adoc[]
+include::{snippets}/admin-updateMember/path-parameters.adoc[]
+include::{snippets}/admin-updateMember/http-request.adoc[]
+include::{snippets}/admin-updateMember/request-fields.adoc[]
 
 === 응답
-include::{snippets}/updateMember/http-response.adoc[]
-include::{snippets}/updateMember/response-fields.adoc[]
+include::{snippets}/admin-updateMember/http-response.adoc[]
+include::{snippets}/admin-updateMember/response-fields.adoc[]
 
 == 회원 삭제
 === 요청
-include::{snippets}/deleteMember/http-request.adoc[]
-include::{snippets}/deleteMember/path-parameters.adoc[]
+include::{snippets}/admin-deleteMember/path-parameters.adoc[]
+include::{snippets}/admin-deleteMember/http-request.adoc[]
 
 === 응답
-include::{snippets}/deleteMember/http-response.adoc[]
-include::{snippets}/deleteMember/response-fields.adoc[]
+include::{snippets}/admin-deleteMember/http-response.adoc[]
+include::{snippets}/admin-deleteMember/response-fields.adoc[]

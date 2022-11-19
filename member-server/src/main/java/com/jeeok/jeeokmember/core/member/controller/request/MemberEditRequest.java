@@ -5,7 +5,10 @@ import com.jeeok.jeeokmember.common.json.ErrorCode;
 import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,10 @@ import java.util.List;
 @Builder
 public class MemberEditRequest {
 
+    @NotBlank
     private String memberName;
+
+    @Length(min = 11, max = 11)
     private String phoneNumber;
 
     //validate
