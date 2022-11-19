@@ -6,10 +6,7 @@ import com.jeeok.jeeokmember.common.json.Code;
 import com.jeeok.jeeokmember.config.security.SecurityConfig;
 import com.jeeok.jeeokmember.core.member.controller.request.SaveMemberRequest;
 import com.jeeok.jeeokmember.core.member.controller.request.UpdateMemberRequest;
-import com.jeeok.jeeokmember.core.member.domain.AuthType;
-import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
-import com.jeeok.jeeokmember.core.member.domain.RoleType;
+import com.jeeok.jeeokmember.core.member.domain.*;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.member.dto.SearchCondition;
@@ -65,10 +62,12 @@ class AdminMemberControllerTest {
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
     public static final AuthType AUTH_TYPE = AuthType.JEEOK;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
+    public static final Address ADDRESS = new Address("83726", "서울시");
 
     //UPDATE_MEMBER
     public static final String UPDATE_NAME = "update_jeeok";
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "3333", "44444");
+    public static final Address UPDATE_ADDRESS = new Address("99802", "세종시");
 
     //ERROR_MESSAGE
     public static final String MEMBER = "Member";
@@ -89,7 +88,7 @@ class AdminMemberControllerTest {
 
     @Autowired MockMvc mockMvc;
 
-    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
+    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         return Member.createMember()
                 .email(email)
                 .password(password)
@@ -97,6 +96,7 @@ class AdminMemberControllerTest {
                 .roleType(roleType)
                 .authType(authType)
                 .phoneNumber(phoneNumber)
+                .address(address)
                 .build();
     }
 
@@ -105,7 +105,7 @@ class AdminMemberControllerTest {
     void findMembers() throws Exception {
         //given
         List<Member> members = new ArrayList<>();
-        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER)));
+        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS)));
         given(memberService.findMembers(any(MemberSearchCondition.class), any(Pageable.class))).willReturn(new PageImpl<>(members));
 
         MemberSearchCondition condition = new MemberSearchCondition();
@@ -148,7 +148,8 @@ class AdminMemberControllerTest {
                                 fieldWithPath("data[*].memberName").description("회원 이름"),
                                 fieldWithPath("data[*].role").description("회원 권한"),
                                 fieldWithPath("data[*].auth").description("회원 로그인 유형"),
-                                fieldWithPath("data[*].phoneNumber").description("회원 휴대폰번호")
+                                fieldWithPath("data[*].phoneNumber").description("회원 휴대폰번호"),
+                                fieldWithPath("data[*].address").description("회원 주소")
                         )
                 ));
 
@@ -160,7 +161,7 @@ class AdminMemberControllerTest {
     @DisplayName("회원 단건 조회")
     void findMember() throws Exception {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberService.findMember(any(Long.class))).willReturn(member);
 
         //expected
@@ -189,7 +190,8 @@ class AdminMemberControllerTest {
                                 fieldWithPath("data.memberName").description("회원 이름"),
                                 fieldWithPath("data.role").description("회원 권한"),
                                 fieldWithPath("data.auth").description("회원 로그인 유형"),
-                                fieldWithPath("data.phoneNumber").description("회원 휴대폰번호")
+                                fieldWithPath("data.phoneNumber").description("회원 휴대폰번호"),
+                                fieldWithPath("data.address").description("회원 주소")
                         )
                 ));
 
@@ -201,7 +203,7 @@ class AdminMemberControllerTest {
     @DisplayName("회원 저장")
     void saveMember() throws Exception {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberService.saveMember(any(SaveMemberParam.class))).willReturn(member);
 
         SaveMemberRequest request = SaveMemberRequest.builder()
@@ -210,6 +212,8 @@ class AdminMemberControllerTest {
                 .memberName(NAME)
                 .role(ROLE_TYPE)
                 .phoneNumber(PHONE_NUMBER.fullPhoneNumber())
+                .zipcode(ADDRESS.getZipcode())
+                .address(ADDRESS.getAddress())
                 .build();
 
         //expected
@@ -228,7 +232,9 @@ class AdminMemberControllerTest {
                                 fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
                                 fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름"),
                                 fieldWithPath("role").type(ROLE_TYPE).description("회원 권한"),
-                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("회원 휴대폰번호")
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("회원 휴대폰번호"),
+                                fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편번호"),
+                                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
@@ -247,12 +253,14 @@ class AdminMemberControllerTest {
     @DisplayName("회원 수정")
     void updateMember() throws Exception {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberService.findMember(any(Long.class))).willReturn(member);
 
         UpdateMemberRequest request = UpdateMemberRequest.builder()
                 .memberName(UPDATE_NAME)
                 .phoneNumber(UPDATE_PHONE_NUMBER.fullPhoneNumber())
+                .zipcode(UPDATE_ADDRESS.getZipcode())
+                .address(UPDATE_ADDRESS.getAddress())
                 .build();
 
         //when
@@ -271,7 +279,9 @@ class AdminMemberControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("memberName").description("회원 이름"),
-                                fieldWithPath("phoneNumber").description("회원 휴대폰번호")
+                                fieldWithPath("phoneNumber").description("회원 휴대폰번호"),
+                                fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편번호"),
+                                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),

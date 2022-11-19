@@ -1,10 +1,7 @@
 package com.jeeok.jeeokmember.core.member.service;
 
 import com.jeeok.jeeokmember.MemberTestConfig;
-import com.jeeok.jeeokmember.core.member.domain.AuthType;
-import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
-import com.jeeok.jeeokmember.core.member.domain.RoleType;
+import com.jeeok.jeeokmember.core.member.domain.*;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SearchCondition;
 import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
@@ -35,6 +32,7 @@ public class MemberQueryServiceTest {
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
     public static final AuthType AUTH_TYPE = AuthType.JEEOK;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
+    public static final Address ADDRESS = new Address("83726", "서울시");
 
     @PersistenceContext EntityManager em;
 
@@ -42,7 +40,7 @@ public class MemberQueryServiceTest {
 
     @Autowired MemberQueryRepository memberQueryRepository;
 
-    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
+    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         return Member.createMember()
                 .email(email)
                 .password(password)
@@ -50,6 +48,7 @@ public class MemberQueryServiceTest {
                 .roleType(roleType)
                 .authType(authType)
                 .phoneNumber(phoneNumber)
+                .address(address)
                 .build();
     }
 
@@ -57,7 +56,7 @@ public class MemberQueryServiceTest {
     @DisplayName("멤버 목록 조회")
     void findMembers() {
         //given
-        IntStream.range(0, 20).forEach(i -> em.persist(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER)));
+        IntStream.range(0, 20).forEach(i -> em.persist(getMember(EMAIL + i, PASSWORD, NAME + i, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS)));
 
         MemberSearchCondition condition = new MemberSearchCondition();
         condition.setSearchCondition(SearchCondition.NAME);

@@ -1,10 +1,7 @@
 package com.jeeok.jeeokmember.core.member.service;
 
 import com.jeeok.jeeokmember.common.exception.EntityNotFound;
-import com.jeeok.jeeokmember.core.member.domain.AuthType;
-import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
-import com.jeeok.jeeokmember.core.member.domain.RoleType;
+import com.jeeok.jeeokmember.core.member.domain.*;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
@@ -43,10 +40,12 @@ class MemberServiceTest {
     public static final RoleType ROLE_TYPE = RoleType.ROLE_USER;
     public static final AuthType AUTH_TYPE = AuthType.JEEOK;
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1111", "2222");
+    public static final Address ADDRESS = new Address("83726", "서울시");
 
     //UPDATE_MEMBER
     public static final String UPDATE_NAME = "update_jeeok";
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "3333", "44444");
+    public static final Address UPDATE_ADDRESS = new Address("99802", "세종시");
 
     //ERROR_MESSAGE
     public static final String MEMBER = "Member";
@@ -60,7 +59,7 @@ class MemberServiceTest {
 
     @Mock MemberRepository memberRepository;
 
-    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
+    private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         return Member.createMember()
                 .email(email)
                 .password(password)
@@ -68,6 +67,7 @@ class MemberServiceTest {
                 .roleType(roleType)
                 .authType(authType)
                 .phoneNumber(phoneNumber)
+                .address(address)
                 .build();
     }
 
@@ -76,7 +76,7 @@ class MemberServiceTest {
     void findMembers() {
         //given
         List<Member> members = new ArrayList<>();
-        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER)));
+        IntStream.range(0, 5).forEach(i -> members.add(getMember(EMAIL + i, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS)));
         given(memberQueryRepository.findMembers(any(MemberSearchCondition.class), any(Pageable.class))).willReturn(new PageImpl<>(members));
 
         MemberSearchCondition confition = new MemberSearchCondition();
@@ -94,7 +94,7 @@ class MemberServiceTest {
     @DisplayName("멤버 단건 조회")
     void findMember() {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(member));
 
         //when
@@ -107,6 +107,7 @@ class MemberServiceTest {
         assertThat(findMember.getRoleType()).isEqualTo(ROLE_TYPE);
         assertThat(findMember.getAuthType()).isEqualTo(AUTH_TYPE);
         assertThat(findMember.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
+        assertThat(findMember.getAddress()).isEqualTo(ADDRESS);
 
         //verify
         verify(memberRepository, times(1)).findById(any(Long.class));
@@ -116,7 +117,7 @@ class MemberServiceTest {
     @DisplayName("멤버 저장")
     void saveMember() {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberRepository.save(any(Member.class))).willReturn(member);
 
         SaveMemberParam param = SaveMemberParam.builder()
@@ -126,6 +127,7 @@ class MemberServiceTest {
                 .roleType(ROLE_TYPE)
                 .authType(AUTH_TYPE)
                 .phoneNumber(PHONE_NUMBER)
+                .address(ADDRESS)
                 .build();
 
         //when
@@ -138,6 +140,7 @@ class MemberServiceTest {
         assertThat(savedMember.getRoleType()).isEqualTo(ROLE_TYPE);
         assertThat(savedMember.getAuthType()).isEqualTo(AUTH_TYPE);
         assertThat(savedMember.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
+        assertThat(savedMember.getAddress()).isEqualTo(ADDRESS);
 
         //verify
         verify(memberRepository, times(1)).save(any(Member.class));
@@ -147,12 +150,13 @@ class MemberServiceTest {
     @DisplayName("멤버 수정")
     void updateMember() {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(member));
 
         UpdateMemberParam param = UpdateMemberParam.builder()
                 .name(UPDATE_NAME)
                 .phoneNumber(UPDATE_PHONE_NUMBER)
+                .address(UPDATE_ADDRESS)
                 .build();
 
         //when
@@ -163,6 +167,8 @@ class MemberServiceTest {
         assertThat(member.getPhoneNumber().getFirst()).isEqualTo(UPDATE_PHONE_NUMBER.getFirst());
         assertThat(member.getPhoneNumber().getMiddle()).isEqualTo(UPDATE_PHONE_NUMBER.getMiddle());
         assertThat(member.getPhoneNumber().getLast()).isEqualTo(UPDATE_PHONE_NUMBER.getLast());
+        assertThat(member.getAddress().getZipcode()).isEqualTo(UPDATE_ADDRESS.getZipcode());
+        assertThat(member.getAddress().getAddress()).isEqualTo(UPDATE_ADDRESS.getAddress());
 
         //verify
         verify(memberRepository, times(1)).findById(any(Long.class));
@@ -172,7 +178,7 @@ class MemberServiceTest {
     @DisplayName("멤버 삭제")
     void deleteMember() {
         //given
-        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER);
+        Member member = getMember(EMAIL, PASSWORD, NAME, ROLE_TYPE, AUTH_TYPE, PHONE_NUMBER, ADDRESS);
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(member));
 
         //when

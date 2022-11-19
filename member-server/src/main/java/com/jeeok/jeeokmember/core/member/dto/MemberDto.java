@@ -15,6 +15,7 @@ public class MemberDto {
     private String role;
     private String auth;
     private String phoneNumber;
+    private String address;
 
     public MemberDto(Member member) {
         this.memberId = member.getId();
@@ -23,5 +24,6 @@ public class MemberDto {
         this.role = member.getRoleType().getTypeName();
         this.auth = member.getAuthType().getTypeName();
         this.phoneNumber = member.getPhoneNumber().fullPhoneNumber();
+        this.address = member.getAddress().fullAddress();
     }
 }

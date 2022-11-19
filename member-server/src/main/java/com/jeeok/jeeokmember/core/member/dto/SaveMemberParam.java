@@ -1,5 +1,6 @@
 package com.jeeok.jeeokmember.core.member.dto;
 
+import com.jeeok.jeeokmember.core.member.domain.Address;
 import com.jeeok.jeeokmember.core.member.domain.AuthType;
 import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.domain.RoleType;
@@ -17,6 +18,5 @@ public class SaveMemberParam {
     private RoleType roleType;
     private AuthType authType;
     private PhoneNumber phoneNumber;
-
-
+    private Address address;
 }

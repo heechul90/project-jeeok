@@ -36,16 +36,20 @@ public class Member extends BaseEntity {
     @Embedded
     private PhoneNumber phoneNumber;
 
+    @Embedded
+    private Address address;
+
     //===생성자 메서드===//
     /** Member 생성 */
     @Builder(builderMethodName = "createMember")
-    public Member(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
+    public Member(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         this.email = email;
         this.password = new BCryptPasswordEncoder().encode(password);
         this.name = name;
         this.roleType = roleType;
         this.authType = authType;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     //===수정 메서드===//
@@ -53,5 +57,6 @@ public class Member extends BaseEntity {
     public void updateMember(UpdateMemberParam param) {
         this.name = param.getName();
         this.phoneNumber = param.getPhoneNumber();
+        this.address = param.getAddress();
     }
 }

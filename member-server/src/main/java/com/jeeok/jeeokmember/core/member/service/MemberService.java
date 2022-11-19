@@ -52,6 +52,7 @@ public class MemberService {
                 .roleType(param.getRoleType())
                 .authType(param.getAuthType())
                 .phoneNumber(param.getPhoneNumber())
+                .address(param.getAddress())
                 .build();
         return memberRepository.save(member);
     }

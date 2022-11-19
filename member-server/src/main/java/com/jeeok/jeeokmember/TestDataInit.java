@@ -1,9 +1,6 @@
 package com.jeeok.jeeokmember;
 
-import com.jeeok.jeeokmember.core.member.domain.AuthType;
-import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
-import com.jeeok.jeeokmember.core.member.domain.RoleType;
+import com.jeeok.jeeokmember.core.member.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +30,7 @@ public class TestDataInit {
 
         @PersistenceContext public final EntityManager em;
 
-        private static Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber) {
+        private static Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
             return Member.createMember()
                     .email(email)
                     .password(password)
@@ -41,6 +38,7 @@ public class TestDataInit {
                     .roleType(roleType)
                     .authType(authType)
                     .phoneNumber(phoneNumber)
+                    .address(address)
                     .build();
         }
 
@@ -51,7 +49,8 @@ public class TestDataInit {
                     "스프링1",
                     RoleType.ROLE_USER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "2397", "6591")
+                    new PhoneNumber("010", "2397", "6591"),
+                    new Address("83671", "서울시")
             );
             Member springMember2 = getMember(
                     "spring2",
@@ -59,7 +58,8 @@ public class TestDataInit {
                     "스프링2",
                     RoleType.ROLE_USER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "4422", "6242")
+                    new PhoneNumber("010", "4422", "6242"),
+                    new Address("87250", "성남시")
             );
             Member managerMember1 = getMember(
                     "manager1",
@@ -67,7 +67,8 @@ public class TestDataInit {
                     "교촌치킨 매니저",
                     RoleType.ROLE_MANAGER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "5678", "2345")
+                    new PhoneNumber("010", "5678", "2345"),
+                    new Address("55237", "논산시")
             );
             Member managerMember2 = getMember(
                     "manager2",
@@ -75,7 +76,8 @@ public class TestDataInit {
                     "BHC치킨 매니저",
                     RoleType.ROLE_MANAGER,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "3432", "2356")
+                    new PhoneNumber("010", "3432", "2356"),
+                    new Address("43255", "대전시")
             );
             Member adminMember = getMember(
                     "admin",
@@ -83,7 +85,8 @@ public class TestDataInit {
                     "관리자",
                     RoleType.ROLE_ADMIN,
                     AuthType.JEEOK,
-                    new PhoneNumber("010", "1111", "2222")
+                    new PhoneNumber("010", "1111", "2222"),
+                    new Address("22313", "세종시")
             );
             em.persist(springMember1);
             em.persist(springMember2);
