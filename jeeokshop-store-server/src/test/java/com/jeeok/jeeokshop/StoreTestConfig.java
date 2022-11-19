@@ -20,13 +20,9 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 @TestConfiguration
 public class StoreTestConfig {
 
-    @PersistenceContext EntityManager em;
-
-    @Autowired StoreRepository storeRepository;
-
-    @Autowired CategoryRepository categoryRepository;
-
-
+    @PersistenceContext protected EntityManager em;
+    @Autowired protected StoreRepository storeRepository;
+    @Autowired protected CategoryRepository categoryRepository;
 
     @Bean
     public StoreService storeService() {

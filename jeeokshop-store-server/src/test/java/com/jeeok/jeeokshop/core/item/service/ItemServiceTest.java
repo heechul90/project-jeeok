@@ -247,7 +247,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("멤버 단건 조회_entityNotFound_예외")
         void findItem_entityNotFound_exception() {
             //given
-            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID.toString()));
+            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> itemService.findItem(NOT_FOUND_ID))
@@ -260,7 +260,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("멤버 저장_entityNotFound_예외")
         void saveItem_store_entityNotFound_exception() {
             //given
-            given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, NOT_FOUND_ID.toString()));
+            given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> itemService.saveItem(any(SaveItemParam.class), NOT_FOUND_ID, NOT_FOUND_ID))
@@ -274,7 +274,7 @@ class ItemServiceTest extends MockTest {
         void saveItem_category_entityNotFound_exception() {
             //given
             given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
-            given(categoryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(CATEGORY, NOT_FOUND_ID.toString()));
+            given(categoryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(CATEGORY, NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> itemService.saveItem(any(SaveItemParam.class), NOT_FOUND_ID, NOT_FOUND_ID))
@@ -287,7 +287,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("멤버 수정_entityNotFound_예외")
         void updateItem_entityNotFound_exception() {
             //given
-            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID.toString()));
+            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> itemService.updateItem(NOT_FOUND_ID, any(UpdateItemParam.class)))
@@ -300,7 +300,7 @@ class ItemServiceTest extends MockTest {
         @DisplayName("멤버 삭제_entityNotFound_예외")
         void deleteItem_entityNotFound_exception() {
             //given
-            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID.toString()));
+            given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> itemService.deleteItem(NOT_FOUND_ID))

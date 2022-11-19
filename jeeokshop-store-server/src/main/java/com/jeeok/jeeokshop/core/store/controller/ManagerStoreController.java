@@ -1,6 +1,8 @@
 package com.jeeok.jeeokshop.core.store.controller;
 
 import com.jeeok.jeeokshop.common.json.JsonResult;
+import com.jeeok.jeeokshop.core.store.controller.request.EditStoreRequest;
+import com.jeeok.jeeokshop.core.store.controller.request.ResisterStoreRequest;
 import com.jeeok.jeeokshop.core.store.controller.request.SaveStoreRequest;
 import com.jeeok.jeeokshop.core.store.controller.request.UpdateStoreRequest;
 import com.jeeok.jeeokshop.core.store.controller.response.SaveStoreResponse;
@@ -23,17 +25,21 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/stores")
-public class AdminStoreController {
+@RequestMapping("/manager/stores")
+public class ManagerStoreController {
 
     private final StoreService storeService;
 
     /**
-     * 스토어 목록 조회
+     * 내 스토어 목록
      */
     @GetMapping
-    public JsonResult findStores(StoreSearchCondition condition,
+    public JsonResult findStores(@RequestHeader("member-id") Long memberId,
+                                 StoreSearchCondition condition,
                                  @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        //내 목록 가져오기 위해
+        condition.setSearchMemberId(memberId);
+
         Page<Store> content = storeService.findStores(condition, pageable);
         List<StoreDto> stores = content.stream()
                 .map(StoreDto::new)
@@ -42,7 +48,7 @@ public class AdminStoreController {
     }
 
     /**
-     * 스토어 단건 조회
+     * 내 스토어 상세
      */
     @GetMapping("/{storeId}")
     public JsonResult findStore(@PathVariable("storeId") Long storeId) {
@@ -52,23 +58,24 @@ public class AdminStoreController {
     }
 
     /**
-     * 스토어 저장
+     * 내 스토어 등록
      */
     @PostMapping
-    public JsonResult saveStore(@RequestBody @Validated SaveStoreRequest request) {
+    public JsonResult registerStore(@RequestHeader("member-id") Long memberId, @RequestBody @Validated ResisterStoreRequest request) {
+
         //validate
         request.validate();
 
-        Store savedStore = storeService.saveStore(request.toParam());
+        Store savedStore = storeService.saveStore(request.toParam(memberId));
 
         return JsonResult.OK(new SaveStoreResponse(savedStore.getId()));
     }
 
     /**
-     * 스토어 수정
+     * 내 스토어 수정
      */
     @PutMapping("/{storeId}")
-    public JsonResult updateStore(@PathVariable("storeId") Long storeId, @RequestBody @Validated UpdateStoreRequest request) {
+    public JsonResult editStore(@PathVariable("storeId") Long storeId, @RequestBody @Validated EditStoreRequest request) {
 
         //validate
         request.validate();
@@ -80,7 +87,7 @@ public class AdminStoreController {
     }
 
     /**
-     * 스토어 삭제
+     * 내 스토어 삭제
      */
     @DeleteMapping("/{storeId}")
     public JsonResult deleteStore(@PathVariable("storeId") Long storeId) {

@@ -39,7 +39,7 @@ public class FavoriteStoreService {
      */
     public FavoriteStore findFavoriteStore(Long favoriteStoreId) {
         return favoriteStoreRepository.findById(favoriteStoreId)
-                .orElseThrow(() -> new EntityNotFound(FAVORITE_STORE, favoriteStoreId.toString()));
+                .orElseThrow(() -> new EntityNotFound(FAVORITE_STORE, favoriteStoreId));
     }
 
     /**
@@ -47,7 +47,7 @@ public class FavoriteStoreService {
      */
     public FavoriteStore saveFavoriteStore(Long memberId, Long storeId) {
         Store findStore = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
 
         FavoriteStore favoriteStore = FavoriteStore.createFavoriteStore()
                 .memberId(memberId)
@@ -62,7 +62,7 @@ public class FavoriteStoreService {
      */
     public void deleteFavoriteStore(Long favoriteStoreId) {
         FavoriteStore findFavoriteStore = favoriteStoreRepository.findById(favoriteStoreId)
-                .orElseThrow(() -> new EntityNotFound(FAVORITE_STORE, favoriteStoreId.toString()));
+                .orElseThrow(() -> new EntityNotFound(FAVORITE_STORE, favoriteStoreId));
         favoriteStoreRepository.delete(findFavoriteStore);
     }
 }

@@ -41,7 +41,7 @@ public class CategoryService {
      */
     public Category findCategory(Long categoryId) {
         return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));
+                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId));
     }
 
     /**
@@ -51,7 +51,7 @@ public class CategoryService {
     public Category saveCategory(Long storeId, SaveCategoryParam param) {
 
         Store findStore = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
         Category category = Category.createCategory()
                 .name(param.getName())
                 .order(param.getOrder())
@@ -66,7 +66,7 @@ public class CategoryService {
     @Transactional
     public void updateCategory(Long categoryId, UpdateCategoryParam param) {
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));
+                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId));
         findCategory.updateCategory(param);
     }
 
@@ -76,7 +76,7 @@ public class CategoryService {
     @Transactional
     public void deleteCategory(Long categoryId) {
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));
+                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId));
         categoryRepository.delete(findCategory);
     }
 }

@@ -1,10 +1,6 @@
 package com.jeeok.jeeokshop.core.store.controller;
 
 import com.jeeok.jeeokshop.common.json.JsonResult;
-import com.jeeok.jeeokshop.core.store.controller.request.EditStoreRequest;
-import com.jeeok.jeeokshop.core.store.controller.request.ResisterStoreRequest;
-import com.jeeok.jeeokshop.core.store.controller.response.EditStoreResponse;
-import com.jeeok.jeeokshop.core.store.controller.response.ResisterStoreResponse;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.dto.StoreDto;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
@@ -14,8 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +21,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/front/stores")
-public class FrontStoreController {
+@RequestMapping("/stores")
+public class StoreController {
 
     private final StoreService storeService;
 
@@ -41,7 +39,7 @@ public class FrontStoreController {
     }
 
     /**
-     * 스토어 단건
+     * 스토어 상세
      */
     @GetMapping("/{storeId}")
     public JsonResult findStore(@PathVariable("storeId") Long storeId) {

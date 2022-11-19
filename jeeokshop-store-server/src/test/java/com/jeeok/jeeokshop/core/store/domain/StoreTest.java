@@ -1,13 +1,12 @@
 package com.jeeok.jeeokshop.core.store.domain;
 
 import com.jeeok.jeeokshop.common.entity.Address;
+import com.jeeok.jeeokshop.core.RepositoryTest;
 import com.jeeok.jeeokshop.core.category.domain.Category;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,9 +16,7 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-class StoreTest {
+class StoreTest extends RepositoryTest {
 
     //STORE
     public static final String STORE_NAME = "store";
@@ -31,12 +28,11 @@ class StoreTest {
     public static final String CATEGORY_NAME = "category";
     public static final int ORDER = 1;
 
-    @PersistenceContext EntityManager em;
-
-    @Autowired StoreRepository storeRepository;
+    @PersistenceContext protected EntityManager em;
+    @Autowired protected StoreRepository storeRepository;
 
     @Test
-    @DisplayName("Store Entity Create Test")
+    @DisplayName("스토어 생성 테스트")
     void createStore() {
         //given
         List<Category> categories = new ArrayList<>();

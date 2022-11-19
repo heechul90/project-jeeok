@@ -29,7 +29,7 @@ public class ResisterStoreRequest {
     private String zipcode;
     private String address;
 
-    private List<SaveStoreRequest.StoreCategoryRequest> storeCategories;
+    private List<ResisterStoreRequest.StoreCategoryRequest> storeCategories;
 
     @Getter
     @Setter

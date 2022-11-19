@@ -45,7 +45,7 @@ public class StoreService {
      */
     public Store findStore(Long storeId) {
         return storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
     }
 
     /**
@@ -77,14 +77,14 @@ public class StoreService {
     @Transactional
     public void updateStore(Long storeId, UpdateStoreParam param) {
         Store findStore = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
         findStore.updateStore(param);
 
         //categoryId 가 있으면 업데이트 없으면 생성
         param.getStoreCategoryParams().forEach(category -> {
             if (category.getCategoryId() != null) {
                 Category findCategory = categoryRepository.findById(category.getCategoryId())
-                        .orElseThrow(() -> new EntityNotFound(CATEGORY, category.getCategoryId().toString()));
+                        .orElseThrow(() -> new EntityNotFound(CATEGORY, category.getCategoryId()));
                 findCategory.updateCategory(
                         UpdateCategoryParam.builder()
                                 .name(category.getName())
@@ -109,7 +109,7 @@ public class StoreService {
     @Transactional
     public void deleteStore(Long storeId) {
         Store findStore = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
         findStore.deleteStore();
     }
 }

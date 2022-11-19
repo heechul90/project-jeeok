@@ -29,6 +29,8 @@ public class SaveStoreRequest {
     private String zipcode;
     private String address;
 
+    private Long memberId;
+
     private List<SaveStoreRequest.StoreCategoryRequest> storeCategories;
 
     @Getter
@@ -50,13 +52,13 @@ public class SaveStoreRequest {
         }
     }
 
-    public SaveStoreParam toParam(Long memberId) {
+    public SaveStoreParam toParam() {
         return SaveStoreParam.builder()
                 .name(this.storeName)
                 .businessHours(new BusinessHours(this.businessOpeningHours, this.businessClosingHours))
                 .phoneNumber(new PhoneNumber(this.phoneNumber.substring(0, 3), this.phoneNumber.substring(3, 7), this.phoneNumber.substring(7, 11)))
                 .address(new Address(this.zipcode, this.address))
-                .memberId(memberId)
+                .memberId(this.memberId)
                 .storeCategoryParams(
                         this.storeCategories.stream()
                                 .map(category -> SaveStoreParam.StoreCategoryParam.builder()

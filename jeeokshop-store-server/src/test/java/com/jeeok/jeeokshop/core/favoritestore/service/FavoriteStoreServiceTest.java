@@ -172,7 +172,7 @@ class FavoriteStoreServiceTest extends MockTest {
         @DisplayName("호감 스토어 단건 조회_예외")
         void findFavoriteStore_entityNotFound() {
             //given
-            given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID.toString()));
+            given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID));
 
             //expected
             assertThatThrownBy(() -> favoriteStoreService.findFavoriteStore(FAVORITE_STORE_ID))
@@ -185,7 +185,7 @@ class FavoriteStoreServiceTest extends MockTest {
         @DisplayName("호감 스토어 단건 조회_예외")
         void saveFavoriteStore_entityNotFound() {
             //given
-            given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, STORE_ID.toString()));
+            given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, STORE_ID));
 
             //expected
             assertThatThrownBy(() -> favoriteStoreService.saveFavoriteStore(MEMBER_10, STORE_ID))
@@ -198,7 +198,7 @@ class FavoriteStoreServiceTest extends MockTest {
         @DisplayName("호감 스토어 단건 조회_예외")
         void deleteFavoriteStore_entityNotFound() {
             //given
-            given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID.toString()));
+            given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID));
 
             //expected
             assertThatThrownBy(() -> favoriteStoreService.deleteFavoriteStore(FAVORITE_STORE_ID))

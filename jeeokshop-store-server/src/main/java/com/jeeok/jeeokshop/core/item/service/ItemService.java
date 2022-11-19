@@ -44,7 +44,7 @@ public class ItemService {
      */
     public Item findItem(Long itemId) {
         return itemRepository.findById(itemId)
-                .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));
+                .orElseThrow(() -> new EntityNotFound(ITEM, itemId));
     }
 
     /**
@@ -53,7 +53,7 @@ public class ItemService {
     @Transactional
     public Item saveItem(SaveItemParam param, Long storeId, Long categoryId) {
         Store findStore = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFound(STORE, storeId.toString()));
+                .orElseThrow(() -> new EntityNotFound(STORE, storeId));
 
         /*findStore.getCategories().stream()
                 .filter(category -> category.getId() == categoryId)
@@ -61,7 +61,7 @@ public class ItemService {
                 .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));*/
 
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId.toString()));
+                .orElseThrow(() -> new EntityNotFound(CATEGORY, categoryId));
 
         Item item = Item.createItem()
                 .name(param.getName())
@@ -80,7 +80,7 @@ public class ItemService {
     @Transactional
     public void updateItem(Long itemId, UpdateItemParam param) {
         Item findItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));
+                .orElseThrow(() -> new EntityNotFound(ITEM, itemId));
         findItem.updateItem(param);
     }
 
@@ -90,7 +90,7 @@ public class ItemService {
     @Transactional
     public void deleteItem(Long itemId) {
         Item findItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new EntityNotFound(ITEM, itemId.toString()));
+                .orElseThrow(() -> new EntityNotFound(ITEM, itemId));
         itemRepository.delete(findItem);
     }
 }

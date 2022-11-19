@@ -7,19 +7,25 @@ import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.json.Code;
 import com.jeeok.jeeokshop.core.IntegrationTest;
 import com.jeeok.jeeokshop.core.category.domain.Category;
+import com.jeeok.jeeokshop.core.store.controller.request.EditStoreRequest;
+import com.jeeok.jeeokshop.core.store.controller.request.ResisterStoreRequest;
 import com.jeeok.jeeokshop.core.store.controller.request.SaveStoreRequest;
 import com.jeeok.jeeokshop.core.store.controller.request.UpdateStoreRequest;
 import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import com.jeeok.jeeokshop.core.store.domain.Store;
+import com.jeeok.jeeokshop.core.store.dto.SaveStoreParam;
 import com.jeeok.jeeokshop.core.store.dto.StoreSearchCondition;
 import com.jeeok.jeeokshop.core.store.service.StoreService;
+import com.netflix.discovery.converters.Auto;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -27,12 +33,20 @@ import org.springframework.util.LinkedMultiValueMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -41,19 +55,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AdminStoreControllerTest extends IntegrationTest {
+class ManagerStoreControllerTest extends IntegrationTest {
 
     //CREATE_STORE
-    public static final String CATEGORY_NAME = "category";
+    public static final String CATEGORY_NAME = "시리즈";
     public static final int ORDER = 1;
-    public static final String STORE_NAME = "store";
+    public static final String STORE_NAME = "교촌치킨";
     public static final BusinessHours BUSINESS_HOURS = new BusinessHours("1700", "2200");
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1234", "5678");
     public static final Address ADDRESS = new Address("12345", "서울시");
     public static final Long MEMBER_ID = 1L;
 
     //UPDATE_STORE
-    public static final String UPDATE_STORE_NAME = "update_store";
+    public static final String UPDATE_STORE_NAME = "BHC치킨";
     public static final BusinessHours UPDATE_BUSINESS_HOURS = new BusinessHours("1800", "2300");
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "8765", "4321");
     public static final Address UPDATE_ADDRESS = new Address("54321", "세종시");
@@ -61,11 +75,12 @@ class AdminStoreControllerTest extends IntegrationTest {
     //ERROR_MESSAGE
 
     //REQUEST_INFO
-    public static final String API_FIND_STORES = "/admin/stores";
-    public static final String API_FIND_STORE = "/admin/stores/{storeId}";
-    public static final String API_SAVE_STORE = "/admin/stores";
-    public static final String API_UPDATE_STORE = "/admin/stores/{storeId}";
-    public static final String API_DELETE_STORE = "/admin/stores/{storeId}";
+    public static final String HEADER_NAME = "member-id";
+    public static final String API_FIND_STORES = "/manager/stores";
+    public static final String API_FIND_STORE = "/manager/stores/{storeId}";
+    public static final String API_SAVE_STORE = "/manager/stores";
+    public static final String API_UPDATE_STORE = "/manager/stores/{storeId}";
+    public static final String API_DELETE_STORE = "/manager/stores/{storeId}";
 
     @Autowired protected MockMvc mockMvc;
     @Autowired protected ObjectMapper objectMapper;
@@ -100,7 +115,7 @@ class AdminStoreControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("스토어 목록 조회")
+    @DisplayName("내 스토어 목록")
     void findStores() throws Exception {
         //given
         IntStream.range(0, 15).forEach(i -> em.persist(getStore(STORE_NAME + i, BUSINESS_HOURS, PHONE_NUMBER, ADDRESS, MEMBER_ID,
@@ -120,13 +135,11 @@ class AdminStoreControllerTest extends IntegrationTest {
         pageRequestParams.add("page", String.valueOf(pageRequest.getOffset()));
         pageRequestParams.add("size", String.valueOf(pageRequest.getPageSize()));
 
-        //when
-        ResultActions resultActions = mockMvc.perform(get(API_FIND_STORES)
-                .queryParams(conditionParams)
-                .queryParams(pageRequestParams));
-
-        //then
-        resultActions
+        //expected
+        mockMvc.perform(get(API_FIND_STORES)
+                        .header(HEADER_NAME, MEMBER_ID)
+                        .queryParams(conditionParams)
+                        .queryParams(pageRequestParams))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(Code.SUCCESS.name()))
                 .andExpect(jsonPath("$.message").isEmpty())
@@ -159,7 +172,7 @@ class AdminStoreControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("스토어 단건 조회")
+    @DisplayName("내 스토어 상세")
     void findStore() throws Exception {
         //given
         em.persist(store);
@@ -180,7 +193,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.address").value(ADDRESS.fullAddress()))
                 .andExpect(jsonPath("$.data.storeCategories.length()", Matchers.is(3)))
                 .andDo(print())
-                .andDo(document("findStore",
+                .andDo(document("manager-findStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유 번호")
                         ),
@@ -202,31 +215,31 @@ class AdminStoreControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("스토어 저장")
-    void saveStore() throws Exception {
+    @DisplayName("스토어 등록")
+    void registerStore() throws Exception {
         //given
-        List<SaveStoreRequest.StoreCategoryRequest> storeCategoryRequests = new ArrayList<>();
+        List<ResisterStoreRequest.StoreCategoryRequest> storeCategoryRequests = new ArrayList<>();
         IntStream.range(0, 3).forEach(i -> storeCategoryRequests.add(
-                SaveStoreRequest.StoreCategoryRequest.builder()
+                ResisterStoreRequest.StoreCategoryRequest.builder()
                         .categoryName(CATEGORY_NAME + i)
                         .categoryOrder(ORDER + i)
                         .build()
         ));
 
-        SaveStoreRequest request = SaveStoreRequest.builder()
+        ResisterStoreRequest request = ResisterStoreRequest.builder()
                 .storeName(STORE_NAME)
                 .businessOpeningHours(BUSINESS_HOURS.getOpeningHours())
                 .businessClosingHours(BUSINESS_HOURS.getClosingHours())
                 .phoneNumber(PHONE_NUMBER.fullPhoneNumber())
                 .zipcode(ADDRESS.getZipcode())
                 .address(ADDRESS.getAddress())
-                .memberId(MEMBER_ID)
                 .storeCategories(storeCategoryRequests)
                 .build();
 
         //when
         ResultActions resultActions = mockMvc.perform(post(API_SAVE_STORE)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header(HEADER_NAME, MEMBER_ID.toString())
                 .content(objectMapper.writeValueAsString(request)));
 
         //then
@@ -236,7 +249,10 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("saveStore",
+                .andDo(document("manager-registerStore",
+                        requestHeaders(
+                                headerWithName("member-id").description("회원 고유번호(입력하지 말것!)")
+                        ),
                         requestFields(
                                 fieldWithPath("storeName").description("스토어 이름"),
                                 fieldWithPath("businessOpeningHours").description("스토어 영업 시작 시간"),
@@ -244,7 +260,6 @@ class AdminStoreControllerTest extends IntegrationTest {
                                 fieldWithPath("phoneNumber").description("스토어 전화번호"),
                                 fieldWithPath("zipcode").description("스토어 우편번호"),
                                 fieldWithPath("address").description("스토어 주소"),
-                                fieldWithPath("memberId").description("회원 고유번호"),
                                 fieldWithPath("storeCategories[*].categoryName").description("카테고리 이름"),
                                 fieldWithPath("storeCategories[*].categoryOrder").description("카테고리 정렬번호")
                         ),
@@ -260,20 +275,20 @@ class AdminStoreControllerTest extends IntegrationTest {
 
     @Test
     @DisplayName("스토어 수정")
-    void updateStore() throws Exception {
+    void editStore() throws Exception{
         //given
         store.getCategories().add(Category.createCategory().name("new" + CATEGORY_NAME).order(ORDER + 3).build());
         em.persist(store);
 
-        List<UpdateStoreRequest.UpdateStoreCategory> storeCategories = store.getCategories().stream()
-                .map(category -> UpdateStoreRequest.UpdateStoreCategory.builder()
+        List<EditStoreRequest.UpdateStoreCategory> storeCategories = store.getCategories().stream()
+                .map(category -> EditStoreRequest.UpdateStoreCategory.builder()
                         .categoryId(category.getId())
                         .categoryName(category.getName())
                         .categoryOrder(category.getOrder())
                         .build()
                 ).collect(Collectors.toList());
 
-        UpdateStoreRequest request = UpdateStoreRequest.builder()
+        EditStoreRequest request = EditStoreRequest.builder()
                 .storeName(UPDATE_STORE_NAME)
                 .businessOpeningHours(UPDATE_BUSINESS_HOURS.getOpeningHours())
                 .businessClosingHours(UPDATE_BUSINESS_HOURS.getClosingHours())
@@ -295,7 +310,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("updateStore",
+                .andDo(document("manager-editStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유번호")
                         ),
@@ -321,7 +336,7 @@ class AdminStoreControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("스토어 삭제")
+    @DisplayName("내 스토어 삭제")
     void deleteStore() throws Exception {
         //given
         em.persist(store);
@@ -336,7 +351,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("deleteStore",
+                .andDo(document("manager-deleteStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유번호")
                         ),
