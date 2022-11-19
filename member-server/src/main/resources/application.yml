@@ -8,6 +8,8 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:10000/
+  messages:
+    basename: messages, errors
 
   security:
     oauth2:
@@ -33,9 +35,6 @@ spring:
         ues_sql_comment: true
         default_batch_fetch_size: 1000
     open-in-view: true
-
-  messages:
-    basename: messages, errors
 
 eureka:
   client:

@@ -8,6 +8,8 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:10000/
+  messages:
+    basename: messages, errors
 
   datasource:
     url: jdbc:mariadb://localhost:3307/jeeokshop_delivery_db?allowPublicKeyRetrieval=true&useSSL=false
