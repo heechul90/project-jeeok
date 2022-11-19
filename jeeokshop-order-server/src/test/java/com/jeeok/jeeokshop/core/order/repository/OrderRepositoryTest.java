@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class OrderRepositoryTest extends RepositoryTest {
 
-
     //CREATE_ORDER
     public static final Long MEMBER_ID_1 = 1L;
     public static final Long MEMBER_ID_2 = 2L;

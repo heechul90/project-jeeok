@@ -12,5 +12,5 @@ public enum DeliveryStatus {
     COMPLETE("배송완료"),
     CANCEL("취소");
 
-    private final String description;
+    private final String message;
 }

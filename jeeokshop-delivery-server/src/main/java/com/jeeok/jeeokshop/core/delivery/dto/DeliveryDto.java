@@ -18,7 +18,7 @@ public class DeliveryDto {
     public DeliveryDto(Delivery delivery) {
         this.deliveryId = delivery.getId();
         this.address = delivery.getAddress().fullAddress();
-        this.deliveryStatus = delivery.getStatus().getDescription();
+        this.deliveryStatus = delivery.getStatus().getMessage();
         this.memberId = delivery.getMemberId();
         this.orderId = delivery.getOrderId();
     }
