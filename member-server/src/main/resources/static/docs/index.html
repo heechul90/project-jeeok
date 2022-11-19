@@ -644,7 +644,7 @@ Host: member.jeeok.com</code></pre>
 Content-Type: application/json
 Content-Length: 207
 
-{"transaction_time":"2022-11-12T21:09:13.9248151","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"gildong-hong@jeeok.com","memberName":"홍길동","phoneNumber":"01012345678"}}</code></pre>
+{"transaction_time":"2022-11-19T15:52:32.2101262","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"gildong-hong@jeeok.com","memberName":"홍길동","phoneNumber":"01012345678"}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -747,9 +747,9 @@ Host: member.jeeok.com
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 120
+Content-Length: 121
 
-{"transaction_time":"2022-11-12T21:09:13.829815","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null}}</code></pre>
+{"transaction_time":"2022-11-19T15:52:32.1132519","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -854,9 +854,9 @@ Host: member.jeeok.com</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 765
+Content-Length: 915
 
-{"transaction_time":"2022-11-12T21:09:11.8680132","code":"SUCCESS","message":null,"errors":null,"data":[{"memberId":null,"email":"jeeok@gmail.com0","memberName":"jeeok0","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"},{"memberId":null,"email":"jeeok@gmail.com1","memberName":"jeeok1","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"},{"memberId":null,"email":"jeeok@gmail.com2","memberName":"jeeok2","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"},{"memberId":null,"email":"jeeok@gmail.com3","memberName":"jeeok3","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"},{"memberId":null,"email":"jeeok@gmail.com4","memberName":"jeeok4","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"}]}</code></pre>
+{"transaction_time":"2022-11-19T15:52:28.7237665","code":"SUCCESS","message":null,"errors":null,"data":[{"memberId":null,"email":"jeeok@gmail.com0","memberName":"jeeok0","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"},{"memberId":null,"email":"jeeok@gmail.com1","memberName":"jeeok1","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"},{"memberId":null,"email":"jeeok@gmail.com2","memberName":"jeeok2","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"},{"memberId":null,"email":"jeeok@gmail.com3","memberName":"jeeok3","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"},{"memberId":null,"email":"jeeok@gmail.com4","memberName":"jeeok4","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"}]}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -923,6 +923,11 @@ Content-Length: 765
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 휴대폰번호</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 주소</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -965,9 +970,9 @@ Host: member.jeeok.com</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 233
+Content-Length: 263
 
-{"transaction_time":"2022-11-12T21:09:11.4310107","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"jeeok@gmail.com","memberName":"jeeok","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222"}}</code></pre>
+{"transaction_time":"2022-11-19T15:52:28.2850581","code":"SUCCESS","message":null,"errors":null,"data":{"memberId":null,"email":"jeeok@gmail.com","memberName":"jeeok","role":"일반유저","auth":"JEEOK","phoneNumber":"01011112222","address":"(83726) 서울시"}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1034,6 +1039,11 @@ Content-Length: 233
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 휴대폰번호</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 주소</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1048,10 +1058,10 @@ Content-Length: 233
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /admin/members HTTP/1.1
 Content-Type: application/json
-Content-Length: 113
+Content-Length: 153
 Host: member.jeeok.com
 
-{"email":"jeeok@gmail.com","password":"1234","memberName":"jeeok","role":"ROLE_USER","phoneNumber":"01011112222"}</code></pre>
+{"email":"jeeok@gmail.com","password":"1234","memberName":"jeeok","role":"ROLE_USER","phoneNumber":"01011112222","zipcode":"83726","address":"서울시"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1093,6 +1103,16 @@ Host: member.jeeok.com
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 휴대폰번호</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>zipcode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">우편번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1104,7 +1124,7 @@ Host: member.jeeok.com
 Content-Type: application/json
 Content-Length: 126
 
-{"transaction_time":"2022-11-12T21:09:11.5240101","code":"SUCCESS","message":null,"errors":null,"data":{"savedMemberId":null}}</code></pre>
+{"transaction_time":"2022-11-19T15:52:28.3820641","code":"SUCCESS","message":null,"errors":null,"data":{"savedMemberId":null}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1160,10 +1180,10 @@ Content-Length: 126
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /admin/members/0 HTTP/1.1
 Content-Type: application/json
-Content-Length: 58
+Content-Length: 98
 Host: member.jeeok.com
 
-{"memberName":"update_jeeok","phoneNumber":"010333344444"}</code></pre>
+{"memberName":"update_jeeok","phoneNumber":"010333344444","zipcode":"99802","address":"세종시"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1209,6 +1229,16 @@ Host: member.jeeok.com
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 휴대폰번호</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>zipcode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">우편번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1218,9 +1248,9 @@ Host: member.jeeok.com
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 128
+Content-Length: 127
 
-{"transaction_time":"2022-11-12T21:09:11.2350109","code":"SUCCESS","message":null,"errors":null,"data":{"updatedMemberId":null}}</code></pre>
+{"transaction_time":"2022-11-19T15:52:28.085541","code":"SUCCESS","message":null,"errors":null,"data":{"updatedMemberId":null}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1306,7 +1336,7 @@ Host: member.jeeok.com</code></pre>
 Content-Type: application/json
 Content-Length: 108
 
-{"transaction_time":"2022-11-12T21:09:11.3450119","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-19T15:52:28.1955413","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">

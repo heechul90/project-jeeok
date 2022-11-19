@@ -1,5 +1,6 @@
 package com.jeeok.jeeokmember.core.member.dto;
 
+import com.jeeok.jeeokmember.core.member.domain.Address;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class MemberDto {
     private String role;
     private String auth;
     private String phoneNumber;
-    private String address;
+    private Address address;
 
     public MemberDto(Member member) {
         this.memberId = member.getId();
@@ -24,6 +25,6 @@ public class MemberDto {
         this.role = member.getRoleType().getTypeName();
         this.auth = member.getAuthType().getTypeName();
         this.phoneNumber = member.getPhoneNumber().fullPhoneNumber();
-        this.address = member.getAddress().fullAddress();
+        this.address = member.getAddress();
     }
 }

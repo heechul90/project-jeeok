@@ -149,7 +149,8 @@ class AdminMemberControllerTest {
                                 fieldWithPath("data[*].role").description("회원 권한"),
                                 fieldWithPath("data[*].auth").description("회원 로그인 유형"),
                                 fieldWithPath("data[*].phoneNumber").description("회원 휴대폰번호"),
-                                fieldWithPath("data[*].address").description("회원 주소")
+                                fieldWithPath("data[*].address.zipcode").description("우편번호"),
+                                fieldWithPath("data[*].address.address").description("회원 주소")
                         )
                 ));
 
@@ -191,7 +192,8 @@ class AdminMemberControllerTest {
                                 fieldWithPath("data.role").description("회원 권한"),
                                 fieldWithPath("data.auth").description("회원 로그인 유형"),
                                 fieldWithPath("data.phoneNumber").description("회원 휴대폰번호"),
-                                fieldWithPath("data.address").description("회원 주소")
+                                fieldWithPath("data.address.zipcode").description("우편번호"),
+                                fieldWithPath("data.address.address").description("회원 주소")
                         )
                 ));
 
@@ -234,7 +236,7 @@ class AdminMemberControllerTest {
                                 fieldWithPath("role").type(ROLE_TYPE).description("회원 권한"),
                                 fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("회원 휴대폰번호"),
                                 fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편번호"),
-                                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
+                                fieldWithPath("address").type(JsonFieldType.STRING).description("회원 주소")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
@@ -281,7 +283,7 @@ class AdminMemberControllerTest {
                                 fieldWithPath("memberName").description("회원 이름"),
                                 fieldWithPath("phoneNumber").description("회원 휴대폰번호"),
                                 fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편번호"),
-                                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
+                                fieldWithPath("address").type(JsonFieldType.STRING).description("회원 주소")
                         ),
                         responseFields(
                                 fieldWithPath("transaction_time").description("api 요청 시간"),
