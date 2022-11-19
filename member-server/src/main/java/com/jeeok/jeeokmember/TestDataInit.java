@@ -43,7 +43,7 @@ public class TestDataInit {
         }
 
         public void memberInit() {
-            Member springMember1 = getMember(
+            Member spring1 = getMember(
                     "spring1",
                     "1234",
                     "스프링1",
@@ -52,7 +52,7 @@ public class TestDataInit {
                     new PhoneNumber("010", "2397", "6591"),
                     new Address("83671", "서울시")
             );
-            Member springMember2 = getMember(
+            Member spring2 = getMember(
                     "spring2",
                     "1234",
                     "스프링2",
@@ -61,7 +61,7 @@ public class TestDataInit {
                     new PhoneNumber("010", "4422", "6242"),
                     new Address("87250", "성남시")
             );
-            Member managerMember1 = getMember(
+            Member managerMember = getMember(
                     "manager1",
                     "1234",
                     "교촌치킨 매니저",
@@ -70,7 +70,7 @@ public class TestDataInit {
                     new PhoneNumber("010", "5678", "2345"),
                     new Address("55237", "논산시")
             );
-            Member managerMember2 = getMember(
+            Member manager2 = getMember(
                     "manager2",
                     "1234",
                     "BHC치킨 매니저",
@@ -79,7 +79,16 @@ public class TestDataInit {
                     new PhoneNumber("010", "3432", "2356"),
                     new Address("43255", "대전시")
             );
-            Member adminMember = getMember(
+            Member deliveryman1 = getMember(
+                    "deliveryman1",
+                    "1234",
+                    "배달원1",
+                    RoleType.ROLE_DELIVERYMAN,
+                    AuthType.JEEOK,
+                    new PhoneNumber("010", "3411", "9266"),
+                    new Address("34328", "천안시")
+            );
+            Member admin = getMember(
                     "admin",
                     "1234",
                     "관리자",
@@ -88,11 +97,12 @@ public class TestDataInit {
                     new PhoneNumber("010", "1111", "2222"),
                     new Address("22313", "세종시")
             );
-            em.persist(springMember1);
-            em.persist(springMember2);
-            em.persist(managerMember1);
-            em.persist(managerMember2);
-            em.persist(adminMember);
+            em.persist(spring1);
+            em.persist(spring2);
+            em.persist(managerMember);
+            em.persist(manager2);
+            em.persist(deliveryman1);
+            em.persist(admin);
         }
     }
 }
