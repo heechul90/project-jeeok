@@ -133,7 +133,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.length()", Matchers.is(10)))
                 .andDo(print())
-                .andDo(document("findStores",
+                .andDo(document("admin-findStores",
                         requestParameters(
                                 parameterWithName("searchCondition").description("검색 조건"),
                                 parameterWithName("searchKeyword").description("검색 키워드"),
@@ -180,7 +180,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.address").value(ADDRESS.fullAddress()))
                 .andExpect(jsonPath("$.data.storeCategories.length()", Matchers.is(3)))
                 .andDo(print())
-                .andDo(document("findStore",
+                .andDo(document("admin-findStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유 번호")
                         ),
@@ -236,7 +236,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("saveStore",
+                .andDo(document("admin-saveStore",
                         requestFields(
                                 fieldWithPath("storeName").description("스토어 이름"),
                                 fieldWithPath("businessOpeningHours").description("스토어 영업 시작 시간"),
@@ -295,7 +295,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("updateStore",
+                .andDo(document("admin-updateStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유번호")
                         ),
@@ -336,7 +336,7 @@ class AdminStoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.message").isEmpty())
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andDo(print())
-                .andDo(document("deleteStore",
+                .andDo(document("admin-deleteStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유번호")
                         ),
