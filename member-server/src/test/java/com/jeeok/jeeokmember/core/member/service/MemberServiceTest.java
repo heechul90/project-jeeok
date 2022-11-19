@@ -206,6 +206,9 @@ class MemberServiceTest extends MockTest {
                     .isInstanceOf(EntityNotFound.class)
                     .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
                     .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+
+            //then
+            verify(memberRepository, times(1)).findById(any(Long.class));
         }
 
         @Test
@@ -219,6 +222,9 @@ class MemberServiceTest extends MockTest {
                     .isInstanceOf(EntityNotFound.class)
                     .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
                     .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+
+            //then
+            verify(memberRepository, times(1)).findById(any(Long.class));
         }
 
         @Test
@@ -232,6 +238,9 @@ class MemberServiceTest extends MockTest {
                     .isInstanceOf(EntityNotFound.class)
                     .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
                     .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+
+            //then
+            verify(memberRepository, times(1)).findById(any(Long.class));
         }
     }
 }
