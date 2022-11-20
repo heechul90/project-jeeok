@@ -41,7 +41,6 @@ public class OrderServiceTest extends MockTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     @Mock protected OrderRepository orderRepository;
-
     @InjectMocks protected OrderService orderService;
 
     private List<OrderItem> getOrderItems() {
@@ -149,11 +148,11 @@ public class OrderServiceTest extends MockTest {
     }
 
     @Nested
-    class UnsuccessfulTest {
+    class EntityNotFoundTest {
 
         @Test
-        @DisplayName("주문 단건 조회_entityNotFound")
-        void findOrder_entityNotfound() {
+        @DisplayName("주문 단건 조회_예외")
+        void findOrder_exception() {
             //given
             given(orderRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ORDER, NOT_FOUND_ORDER_ID_0));
 
@@ -165,8 +164,8 @@ public class OrderServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("주문 취소_entityNotFound")
-        void cancelOrder_entityNotfound() {
+        @DisplayName("주문 취소_예외")
+        void cancelOrder_exception() {
             //given
             given(orderRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ORDER, NOT_FOUND_ORDER_ID_0));
 
@@ -178,8 +177,8 @@ public class OrderServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("주문 삭제_entityNotFound")
-        void deleteOrder_entityNotfound() {
+        @DisplayName("주문 삭제_예외")
+        void deleteOrder_exception() {
             //given
             given(orderRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ORDER, NOT_FOUND_ORDER_ID_0));
 

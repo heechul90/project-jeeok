@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/front/orders")
-public class FrontOrderController {
+public class OrderController {
 
     private final OrderService orderService;
 

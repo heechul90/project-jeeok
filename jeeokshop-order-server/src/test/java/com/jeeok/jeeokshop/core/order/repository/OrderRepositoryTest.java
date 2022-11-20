@@ -24,9 +24,7 @@ class OrderRepositoryTest extends RepositoryTest {
     public static final Long MEMBER_ID_2 = 2L;
 
     @PersistenceContext protected EntityManager em;
-
     @Autowired protected OrderQueryRepository orderQueryRepository;
-
     @Autowired protected OrderRepository orderRepository;
 
     private List<OrderItem> getOrderItems() {
