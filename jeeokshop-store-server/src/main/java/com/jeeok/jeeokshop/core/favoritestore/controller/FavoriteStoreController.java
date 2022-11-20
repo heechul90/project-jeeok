@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/front/favoriteStores")
-public class FrontFavoriteStoreController {
+public class FavoriteStoreController {
 
     private final FavoriteStoreService favoriteStoreService;
 
@@ -62,5 +62,14 @@ public class FrontFavoriteStoreController {
 
         FavoriteStore savedFavoriteStore = favoriteStoreService.saveFavoriteStore(memberId, storeId);
         return JsonResult.OK(new AddFavoriteStoreResponse(savedFavoriteStore.getId()));
+    }
+
+    /**
+     * 내 호감 스토어 삭제
+     */
+    @DeleteMapping("/{favoriteStoreId}")
+    public JsonResult deleteFavoriteStore(@PathVariable("favoriteStoreId") Long favoriteStoreId) {
+        favoriteStoreService.deleteFavoriteStore(favoriteStoreId);
+        return JsonResult.OK();
     }
 }

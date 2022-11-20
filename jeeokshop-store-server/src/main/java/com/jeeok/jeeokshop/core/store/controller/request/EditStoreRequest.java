@@ -7,7 +7,10 @@ import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import com.jeeok.jeeokshop.core.store.dto.UpdateStoreParam;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,16 +22,23 @@ import java.util.stream.Collectors;
 @Builder
 public class EditStoreRequest {
 
+    @NotBlank
     private String storeName;
 
+    @NotBlank
     private String businessOpeningHours;
+    @NotBlank
     private String businessClosingHours;
 
+    @Length(min = 11, max = 11)
     private String phoneNumber;
 
+    @Length(min = 5, max = 5)
     private String zipcode;
+    @NotBlank
     private String address;
 
+    @NotNull
     private List<EditStoreRequest.UpdateStoreCategory> storeCategories;
 
     @Getter
@@ -37,14 +47,21 @@ public class EditStoreRequest {
     @AllArgsConstructor
     @Builder
     public static class UpdateStoreCategory {
+        @NotNull
         private Long categoryId;
+        @NotBlank
         private String categoryName;
+        @NotNull
         private Integer categoryOrder;
     }
 
     //validate
     public void validate() {
         List<ErrorCode> errorCodes = new ArrayList<>();
+
+        if (this.businessOpeningHours.length() != 4 || this.businessClosingHours.length() != 4) {
+            errorCodes.add(new ErrorCode("businessHours", "business.hours", new Object[]{4}));
+        }
 
         if (errorCodes.size() > 0) {
             throw new JsonInvalidRequest(errorCodes);

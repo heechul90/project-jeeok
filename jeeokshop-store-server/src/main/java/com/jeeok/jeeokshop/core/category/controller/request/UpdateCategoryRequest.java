@@ -5,6 +5,8 @@ import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.category.dto.UpdateCategoryParam;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,9 @@ import java.util.List;
 @Builder
 public class UpdateCategoryRequest {
 
+    @NotBlank
     private String categoryName;
+    @NotNull
     private Integer categoryOrder;
 
     //validate

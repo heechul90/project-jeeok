@@ -7,6 +7,8 @@ import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.item.dto.UpdateItemParam;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +19,15 @@ import java.util.List;
 @Builder
 public class EditItemRequest {
 
+    @NotBlank
     private String itemName;
+
+    @NotNull
     private Yn salesYn;
+
     private int itemPrice;
     private int stockQuantity;
+
     private String photoPath;
     private String photoName;
 

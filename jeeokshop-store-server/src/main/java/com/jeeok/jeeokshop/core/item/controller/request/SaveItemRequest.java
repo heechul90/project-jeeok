@@ -6,6 +6,8 @@ import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.item.dto.SaveItemParam;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +18,18 @@ import java.util.List;
 @Builder
 public class SaveItemRequest {
 
+    @NotBlank
     private String itemName;
+
     private int itemPrice;
     private int stockQuantity;
+
     private String photoPath;
     private String photoName;
 
+    @NotNull
     private Long storeId;
+    @NotNull
     private Long categoryId;
 
     //validate
