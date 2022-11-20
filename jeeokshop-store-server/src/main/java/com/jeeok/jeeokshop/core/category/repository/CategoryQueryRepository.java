@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.jeeok.jeeokshop.core.category.domain.QCategory.category;
+import static com.jeeok.jeeokshop.core.store.domain.QStore.store;
 import static org.springframework.util.StringUtils.hasText;
 
 @Repository
@@ -45,9 +46,11 @@ public class CategoryQueryRepository {
          return queryFactory
                 .select(category)
                 .from(category)
+                .leftJoin(category.store, store)
                 .where(
                         searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword()),
-                        searchMemberIdIn(condition.getSearchMemberId())
+                        searchMemberIdEq(condition.getSearchMemberId()),
+                        searchStoreIdEq(condition.getSearchStoreId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -63,7 +66,8 @@ public class CategoryQueryRepository {
                 .from(category)
                 .where(
                         searchConditionContains(condition.getSearchCondition(), condition.getSearchKeyword()),
-                        searchMemberIdIn(condition.getSearchMemberId())
+                        searchMemberIdEq(condition.getSearchMemberId()),
+                        searchStoreIdEq(condition.getSearchStoreId())
                 );
     }
 
@@ -82,7 +86,18 @@ public class CategoryQueryRepository {
         return null;
     }
 
-    private BooleanExpression searchMemberIdIn(Long searchMemberId) {
-        return null;
+    /**
+     * where memberId == searchMemberId
+     */
+    private BooleanExpression searchMemberIdEq(Long searchMemberId) {
+        return searchMemberId != null ? store.memberId.eq(searchMemberId) : null;
+
+    }
+
+    /**
+     * where storeId == searchStoreId
+     */
+    private BooleanExpression searchStoreIdEq(Long searchStoreId) {
+        return searchStoreId != null ? store.id.eq(searchStoreId) : null;
     }
 }

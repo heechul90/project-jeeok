@@ -9,4 +9,5 @@ import lombok.Setter;
 public class CategorySearchCondition extends CommonSearchCondition {
 
     private Long searchMemberId;
+    private Long searchStoreId;
 }

@@ -1,5 +1,6 @@
 package com.jeeok.jeeokshop;
 
+import com.jeeok.jeeokshop.core.category.repository.CategoryQueryRepository;
 import com.jeeok.jeeokshop.core.category.repository.CategoryRepository;
 import com.jeeok.jeeokshop.core.favoritestore.repository.FavoriteStoreQueryRepository;
 import com.jeeok.jeeokshop.core.item.repository.ItemQueryRepository;
@@ -42,6 +43,11 @@ public class StoreTestConfig {
     @Bean
     public FavoriteStoreQueryRepository favoriteStoreQueryRepository() {
         return new FavoriteStoreQueryRepository(em);
+    }
+
+    @Bean
+    public CategoryQueryRepository categoryQueryRepository() {
+        return new CategoryQueryRepository(em);
     }
 
     @Bean

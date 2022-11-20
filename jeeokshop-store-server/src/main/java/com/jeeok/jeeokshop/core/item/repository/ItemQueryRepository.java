@@ -59,10 +59,6 @@ public class ItemQueryRepository {
                 .fetch();
     }
 
-    private BooleanExpression searchStoreIdEq(Long searchStoreId) {
-        return searchStoreId != null ? store.id.eq(searchStoreId) : null;
-    }
-
     /**
      * 상품 목록 카운트
      */
@@ -88,5 +84,12 @@ public class ItemQueryRepository {
         }
 
         return null;
+    }
+
+    /**
+     * where store.id == searchStoreId
+     */
+    private BooleanExpression searchStoreIdEq(Long searchStoreId) {
+        return searchStoreId != null ? store.id.eq(searchStoreId) : null;
     }
 }
