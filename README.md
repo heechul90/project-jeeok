@@ -36,5 +36,5 @@
 | Message Queue | - Kafka |
 
 ## 시스템 아키텍처
-![img.png](img.png)
+![img_1.png](img_1.png)
 

@@ -17,6 +17,9 @@
 | --- | --- |
 | JEEOKSHOP-STORE-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/store-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
+## 데이터베이스 설계
+![img.png](img.png)
+
 ## 기능
 - 사용자 모드(일반 유저)
   - 스토어

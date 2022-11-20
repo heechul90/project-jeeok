@@ -18,6 +18,9 @@ JEEOK-PROJECT 의 회원을 관리합니다.<br/>
 | --- | --- |
 | MEMBER-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/member/member-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
+## 데이터베이스 설계
+![img.png](img.png)
+
 ## 기능
 - 회원 로그인
   - 회원가입

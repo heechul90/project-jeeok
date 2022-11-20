@@ -18,6 +18,9 @@
 | --- | --- |
 | JEEOKSHOP-DELIVERY-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/order-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
+## 데이터베이스 설계
+![img.png](img.png)
+
 ## 기능
 - 관리자 모드
   - 배송 목록 조회
