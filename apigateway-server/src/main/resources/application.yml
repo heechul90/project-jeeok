@@ -5,7 +5,7 @@ spring:
   application:
     name: apigateway-server
   profiles:
-    active: dev
+    active: local
   config:
     import: optional:configserver:http://localhost:10000/
   messages:
