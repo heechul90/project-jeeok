@@ -64,7 +64,7 @@
 [[overview-header]]
 == 기본 정보
 
-Host : https://order.jeeokshop.jeeok.com
+Host : store.jeeokshop.jeeok.com
 
 로그인 및 권한정보를 request header에 포함하여 인증
 
@@ -83,47 +83,48 @@ Host : https://order.jeeokshop.jeeok.com
 사용자 화면에 사용됩니다.
 
 == 주문
+사용자는 상품을 선택 후 주문을 할 수 있고, 주문 목록 조회, 수정 및 취소 할 수 있습니다.
 
 == 내 주문 목록
 === 요청
-include::{snippets}/front-findOrders/http-request.adoc[]
-include::{snippets}/front-findOrders/request-parameters.adoc[]
+include::{snippets}/findOrders/http-request.adoc[]
+include::{snippets}/findOrders/request-parameters.adoc[]
 
 === 응답
-include::{snippets}/front-findOrders/http-response.adoc[]
-include::{snippets}/front-findOrders/response-fields.adoc[]
+include::{snippets}/findOrders/http-response.adoc[]
+include::{snippets}/findOrders/response-fields.adoc[]
 
 == 내 주문 상세
 === 요청
-include::{snippets}/front-findOrder/http-request.adoc[]
-include::{snippets}/front-findOrder/path-parameters.adoc[]
+include::{snippets}/findOrder/http-request.adoc[]
+include::{snippets}/findOrder/path-parameters.adoc[]
 
 === 응답
-include::{snippets}/front-findOrder/http-response.adoc[]
-include::{snippets}/front-findOrder/response-fields.adoc[]
+include::{snippets}/findOrder/http-response.adoc[]
+include::{snippets}/findOrder/response-fields.adoc[]
 
 == 주문
-include::{snippets}/front-order/http-request.adoc[]
-include::{snippets}/front-order/request-fields.adoc[]
+include::{snippets}/order/http-request.adoc[]
+include::{snippets}/order/request-fields.adoc[]
 
 === 응답
-include::{snippets}/front-order/http-response.adoc[]
-include::{snippets}/front-order/response-fields.adoc[]
+include::{snippets}/order/http-response.adoc[]
+include::{snippets}/order/response-fields.adoc[]
 
 == 주문 취소
 === 요청
-include::{snippets}/front-orderCancel/http-request.adoc[]
-include::{snippets}/front-orderCancel/path-parameters.adoc[]
+include::{snippets}/orderCancel/http-request.adoc[]
+include::{snippets}/orderCancel/path-parameters.adoc[]
 
 === 응답
-include::{snippets}/front-orderCancel/http-response.adoc[]
-include::{snippets}/front-orderCancel/response-fields.adoc[]
+include::{snippets}/orderCancel/http-response.adoc[]
+include::{snippets}/orderCancel/response-fields.adoc[]
 
 == 주문 삭제
 === 요청
-include::{snippets}/front-deleteOrder/http-request.adoc[]
-include::{snippets}/front-deleteOrder/path-parameters.adoc[]
+include::{snippets}/deleteOrder/http-request.adoc[]
+include::{snippets}/deleteOrder/path-parameters.adoc[]
 
 === 응답
-include::{snippets}/front-deleteOrder/http-response.adoc[]
-include::{snippets}/front-deleteOrder/response-fields.adoc[]
+include::{snippets}/deleteOrder/http-response.adoc[]
+include::{snippets}/deleteOrder/response-fields.adoc[]
