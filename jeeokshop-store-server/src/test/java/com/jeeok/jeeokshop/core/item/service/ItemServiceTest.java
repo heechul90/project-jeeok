@@ -241,11 +241,11 @@ class ItemServiceTest extends MockTest {
     }
 
     @Nested
-    class UnsuccessfulTest {
+    class EntityNotFoundTest {
 
         @Test
-        @DisplayName("멤버 단건 조회_entityNotFound_예외")
-        void findItem_entityNotFound_exception() {
+        @DisplayName("멤버 단건 조회_예외")
+        void findItem_exception() {
             //given
             given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
@@ -257,8 +257,8 @@ class ItemServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("멤버 저장_entityNotFound_예외")
-        void saveItem_store_entityNotFound_exception() {
+        @DisplayName("멤버 저장_예외")
+        void saveItem_store_exception() {
             //given
             given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, NOT_FOUND_ID));
 
@@ -270,8 +270,8 @@ class ItemServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("멤버 저장_entityNotFound_예외")
-        void saveItem_category_entityNotFound_exception() {
+        @DisplayName("멤버 저장_예외")
+        void saveItem_category_exception() {
             //given
             given(storeRepository.findById(any(Long.class))).willReturn(Optional.ofNullable(store));
             given(categoryRepository.findById(any(Long.class))).willThrow(new EntityNotFound(CATEGORY, NOT_FOUND_ID));
@@ -284,8 +284,8 @@ class ItemServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("멤버 수정_entityNotFound_예외")
-        void updateItem_entityNotFound_exception() {
+        @DisplayName("멤버 수정_예외")
+        void updateItem_exception() {
             //given
             given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
@@ -297,8 +297,8 @@ class ItemServiceTest extends MockTest {
         }
 
         @Test
-        @DisplayName("멤버 삭제_entityNotFound_예외")
-        void deleteItem_entityNotFound_exception() {
+        @DisplayName("멤버 삭제_예외")
+        void deleteItem_exception() {
             //given
             given(itemRepository.findById(any(Long.class))).willThrow(new EntityNotFound(ITEM, NOT_FOUND_ID));
 
