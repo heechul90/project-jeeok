@@ -7,10 +7,10 @@
 | --- | --- |
 | Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
 | Spring Data | - String Data JPA |
-| Spring Cloud | - Eureka Client </br> - Config |
+| Spring Cloud | - Eureka Client </br> - Config Client </br> - OpenFeign |
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB |
-| Test | - Spring RestDocs </br> - JUnit5 |
+| Test | - Spring RestDocs </br> - JUnit5 </br> - Mock |
 | Message Queue | - Kafka |
 
 ## API 문서
@@ -19,8 +19,6 @@
 | JEEOKSHOP-DELIVERY-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/order-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 기능
-- 사용자 모드
-  - 
 - 관리자 모드
   - 배송 목록 조회
   - 배송 단건 조회

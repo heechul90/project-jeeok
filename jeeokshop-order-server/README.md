@@ -6,10 +6,11 @@
 | --- | --- |
 | Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
 | Spring Data | - String Data JPA |
-| Spring Cloud | - Eureka Client </br> - Config |
+| Spring Cloud | - Eureka Client </br> - Config Client </br> - OpenFeign |
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB |
-| Test | - Spring RestDocs </br> - JUnit5 |
+| Test | - Spring RestDocs </br> - JUnit5 </br> - Mock |
+| Message Queue | - Kafka |
 
 ## API 문서
 | 서비스 | 설계서 |
@@ -18,6 +19,8 @@
 
 ## 기능
 - 사용자 모드
-  - 
-- 관리자 모드
-  -
+  - 내주문 목록 조회
+  - 내주문 상세
+  - 주문(주문시 delivery-server Delivery 저장)
+  - 주문 취소(취소시 delivery-server DeliveryStatus 수정)
+  - 주문 삭제

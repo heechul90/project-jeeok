@@ -7,10 +7,10 @@
 | --- | --- |
 | Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
 | Spring Data | - String Data JPA |
-| Spring Cloud | - Eureka Client </br> - Config |
+| Spring Cloud | - Eureka Client </br> - Config Client </br> - OpenFeign |
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB |
-| Test | - Spring RestDocs </br> - JUnit5 |
+| Test | - Spring RestDocs </br> - JUnit5 </br> - Mock |
 
 ## API 문서
 | 서비스 | 설계서 |
@@ -27,7 +27,20 @@
     - 내 호감 스토어 상세
     - 내 호감 스토어 추가
     - 내 호감 스토어 삭제
-- 관리자 모드(매니저, 관리자 유저)
+- 매니저 모드(매니저 권한)
+  - 스토어
+    - 내스토어 목록
+    - 내스토어 상세
+    - 내스토어 등록
+    - 내스토어 수정
+    - 내스토어 삭제
+  - 상품
+    - 내스토어 상품 목록
+    - 내스토어 상품 상세
+    - 내스토어 상품 등록
+    - 내스토어 상품 수정
+    - 내스토어 상품 삭제
+- 관리자 모드(관리자 유저)
   - 스토어
     - 스토어 목록 조회
     - 스토어 단건 조회
@@ -40,3 +53,9 @@
     - 상품 저장
     - 상품 수정
     - 상품 삭제
+  - 카테고리
+    - 카테고리 목록 조회
+    - 카테고리 단건 조회
+    - 카테고리 저장
+    - 카테고리 수정
+    - 카테고리 삭제

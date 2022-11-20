@@ -1,15 +1,17 @@
 # MEMBER-SERVER
+JEEOK-PROJECT 의 회원을 관리합니다.<br/>
+사용자(ROLE_USER), 매니저(ROLE_MANAGER), 배달원(ROLE_DELIVERYMAN), 관리자(ROLE_ADMIN) 으로 권한이 나뉘어져 있으며, 관리자는 모든 권한을 갖습니다.
 
 ## 프로젝트 환경
 | 기술 | 개발환경 |
 | --- | --- |
 | Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
 | Spring Data | - String Data JPA |
-| Spring Cloud | - Eureka Client </br> - Config |
+| Spring Cloud | - Eureka Client </br> - Config Client |
 | Authenticate | - JWT (Json Web Token) 0.11.2 |
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB </br> - Redis |
-| Test | - Spring RestDocs </br> - JUnit5 |
+| Test | - Spring RestDocs </br> - JUnit5 </br> - Mock |
 
 ## API 문서
 | 서비스 | 설계서 |
