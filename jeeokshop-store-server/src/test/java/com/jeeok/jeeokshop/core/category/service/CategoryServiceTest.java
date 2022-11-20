@@ -45,9 +45,8 @@ class CategoryServiceTest extends MockTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     @Mock protected CategoryRepository categoryRepository;
-
     @Mock protected StoreRepository storeRepository;
-
+    @Mock protected Store store;
     @InjectMocks protected CategoryService categoryService;
 
     private Category getCategory(String name, int order) {
@@ -56,8 +55,6 @@ class CategoryServiceTest extends MockTest {
                 .order(order)
                 .build();
     }
-
-    @Mock protected Store store;
 
     Category category;
 

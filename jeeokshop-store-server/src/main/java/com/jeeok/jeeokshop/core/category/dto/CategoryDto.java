@@ -11,11 +11,11 @@ public class CategoryDto {
 
     private Long categoryId;
     private String categoryName;
-    private Integer order;
+    private int categoryOrder;
 
     public CategoryDto(Category category) {
         this.categoryId = category.getId();
         this.categoryName = category.getName();
-        this.order = category.getOrder();
+        this.categoryOrder = category.getOrder();
     }
 }
