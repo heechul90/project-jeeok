@@ -26,7 +26,6 @@ class DeliveryRepositoryTest extends RepositoryTest {
     public static final Address ADDRESS = new Address("38273", "서울시");
 
     @PersistenceContext protected EntityManager em;
-
     @Autowired protected DeliveryQueryRepository deliveryQueryRepository;
 
     private Delivery getDelivery(Address address, Long memberId, Long orderId) {
