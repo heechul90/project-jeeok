@@ -5,6 +5,7 @@ import com.jeeok.jeeokshop.common.json.ErrorCode;
 import com.jeeok.jeeokshop.core.order.dto.OrderParam;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Builder
 public class OrderRequest {
 
+    @NotNull
     private List<OrderRequest.Item> items;
 
     @Getter
@@ -24,7 +26,9 @@ public class OrderRequest {
     @AllArgsConstructor
     @Builder
     public static class Item {
+        @NotNull
         private Long itemId;
+
         private int orderPrice;
         private int orderCount;
     }
