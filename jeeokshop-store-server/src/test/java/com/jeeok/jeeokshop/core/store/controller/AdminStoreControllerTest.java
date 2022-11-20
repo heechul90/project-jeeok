@@ -44,21 +44,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AdminStoreControllerTest extends IntegrationTest {
 
     //CREATE_STORE
-    public static final String CATEGORY_NAME = "category";
+    public static final String CATEGORY_NAME = "시리즈A";
     public static final int ORDER = 1;
-    public static final String STORE_NAME = "store";
+    public static final String STORE_NAME = "교촌치킨";
     public static final BusinessHours BUSINESS_HOURS = new BusinessHours("1700", "2200");
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1234", "5678");
     public static final Address ADDRESS = new Address("12345", "서울시");
     public static final Long MEMBER_ID = 1L;
 
     //UPDATE_STORE
-    public static final String UPDATE_STORE_NAME = "update_store";
+    public static final String UPDATE_STORE_NAME = "BHC치킨";
     public static final BusinessHours UPDATE_BUSINESS_HOURS = new BusinessHours("1800", "2300");
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "8765", "4321");
     public static final Address UPDATE_ADDRESS = new Address("54321", "세종시");
-
-    //ERROR_MESSAGE
 
     //REQUEST_INFO
     public static final String API_FIND_STORES = "/admin/stores";

@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,11 +35,9 @@ class ItemRepositoryTest extends RepositoryTest {
     public static final Photo PHOTO = new Photo("photo_path", "photo_name");
     public static final Yn SALES_YN = Yn.Y;
 
-    @PersistenceContext EntityManager em;
-
-    @Autowired protected ItemRepository itemRepository;
-
+    @PersistenceContext protected EntityManager em;
     @Autowired protected ItemQueryRepository itemQueryRepository;
+    @Autowired protected ItemRepository itemRepository;
 
     Category category;
     Store store;
@@ -97,10 +94,5 @@ class ItemRepositoryTest extends RepositoryTest {
             assertThat(content.getTotalElements()).isEqualTo(15);
             assertThat(content.getContent().size()).isEqualTo(10);
         }
-    }
-
-    @Nested
-    class UnsuccessfulTest {
-
     }
 }

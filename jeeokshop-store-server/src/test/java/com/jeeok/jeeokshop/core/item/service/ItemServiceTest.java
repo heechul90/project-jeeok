@@ -18,7 +18,6 @@ import com.jeeok.jeeokshop.core.store.domain.BusinessHours;
 import com.jeeok.jeeokshop.core.store.domain.PhoneNumber;
 import com.jeeok.jeeokshop.core.store.domain.Store;
 import com.jeeok.jeeokshop.core.store.repository.StoreRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -35,7 +34,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -69,13 +69,9 @@ class ItemServiceTest extends MockTest {
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
     @Mock private ItemQueryRepository itemQueryRepository;
-
     @Mock private ItemRepository itemRepository;
-
     @Mock private StoreRepository storeRepository;
-
     @Mock private CategoryRepository categoryRepository;
-
     @InjectMocks private ItemService itemService;
 
     Category category;

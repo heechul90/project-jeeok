@@ -42,8 +42,6 @@ class StoreRepositoryTest extends RepositoryTest {
     public static final long MEMBER_ID_1 = 1L;
     public static final long MEMBER_ID_2 = 2L;
 
-    //ERROR_MESSAGE
-
     @PersistenceContext protected EntityManager em;
     @Autowired protected StoreQueryRepository storeQueryRepository;
     @Autowired protected StoreRepository storeRepository;

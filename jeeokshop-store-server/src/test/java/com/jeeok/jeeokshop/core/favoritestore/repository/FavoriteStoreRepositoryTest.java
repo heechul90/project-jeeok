@@ -13,10 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,15 +25,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FavoriteStoreRepositoryTest extends RepositoryTest {
 
+    //CREATE_FAVORITE_STORE
     public static final long MEMBER_10 = 10L;
     public static final long MEMBER_20 = 20L;
-    @PersistenceContext
-    protected EntityManager em;
 
-    @Autowired
-    protected FavoriteStoreRepository favoriteStoreRepository;
-
+    @PersistenceContext protected EntityManager em;
     @Autowired protected FavoriteStoreQueryRepository favoriteStoreQueryRepository;
+    @Autowired protected FavoriteStoreRepository favoriteStoreRepository;
 
     Category category;
     Store store;

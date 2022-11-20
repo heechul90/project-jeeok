@@ -142,7 +142,7 @@ class AdminCategoryControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.categoryId").value(category.getId()))
                 .andExpect(jsonPath("$.data.categoryName").value(NAME))
-                .andExpect(jsonPath("$.data.order").value(ORDER))
+                .andExpect(jsonPath("$.data.categoryOrder").value(ORDER))
                 .andDo(print())
                 .andDo(document("admin-findCategory",
                         pathParameters(

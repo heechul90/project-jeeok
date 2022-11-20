@@ -63,10 +63,10 @@ class StoreServiceTest extends MockTest {
     public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
     public static final String HAS_MESSAGE_ENDING_WITH = "id=";
 
-    @InjectMocks protected StoreService storeService;
     @Mock protected StoreQueryRepository storeQueryRepository;
     @Mock protected StoreRepository storeRepository;
     @Mock protected CategoryRepository categoryRepository;
+    @InjectMocks protected StoreService storeService;
 
     private Store getStore(String name, BusinessHours businessHours, PhoneNumber phoneNumber, Address address, Long memberId, List<Category> categories) {
         return Store.createStore()

@@ -39,10 +39,7 @@ class StoreQueryServiceTest extends RepositoryTest {
     public static final PhoneNumber UPDATE_PHONE_NUMBER = new PhoneNumber("010", "8765", "4321");
     public static final Address UPDATE_ADDRESS = new Address("54321", "세종시");
 
-    //ERROR_MESSAGE
-
     @PersistenceContext protected EntityManager em;
-
     @Autowired protected StoreService storeService;
 
     private Store getStore(String name, BusinessHours businessHours, PhoneNumber phoneNumber, Address address, Long memberId, List<Category> categories) {

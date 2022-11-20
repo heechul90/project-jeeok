@@ -58,7 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ManagerStoreControllerTest extends IntegrationTest {
 
     //CREATE_STORE
-    public static final String CATEGORY_NAME = "시리즈";
+    public static final String CATEGORY_NAME = "시리즈A";
     public static final int ORDER = 1;
     public static final String STORE_NAME = "교촌치킨";
     public static final BusinessHours BUSINESS_HOURS = new BusinessHours("1700", "2200");

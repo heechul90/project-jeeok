@@ -40,15 +40,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class StoreControllerTest extends IntegrationTest {
 
     //CREATE_STORE
-    public static final String CATEGORY_NAME = "시리즈";
+    public static final String CATEGORY_NAME = "시리즈A";
     public static final int ORDER = 1;
     public static final String STORE_NAME = "교촌치킨";
     public static final BusinessHours BUSINESS_HOURS = new BusinessHours("1700", "2200");
     public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "1234", "5678");
     public static final Address ADDRESS = new Address("12345", "서울시");
     public static final Long MEMBER_ID = 1L;
-
-    //ERROR_MESSAGE
 
     //REQUEST_INFO
     public static final String API_FIND_STORES = "/stores";
@@ -112,7 +110,7 @@ public class StoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.errors").isEmpty())
                 .andExpect(jsonPath("$.data.length()", Matchers.is(10)))
                 .andDo(print())
-                .andDo(document("front-findStores",
+                .andDo(document("findStores",
                         requestParameters(
                                 parameterWithName("searchCondition").description("검색 조건"),
                                 parameterWithName("searchKeyword").description("검색 키워드"),
@@ -163,7 +161,7 @@ public class StoreControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.address").value(ADDRESS.fullAddress()))
                 .andExpect(jsonPath("$.data.storeCategories.length()", Matchers.is(3)))
                 .andDo(print())
-                .andDo(document("front-findStore",
+                .andDo(document("findStore",
                         pathParameters(
                                 parameterWithName("storeId").description("스토어 고유 번호")
                         ),

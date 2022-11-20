@@ -56,16 +56,13 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
 
     //REQUEST_INFO
     public static final String HEADER_NAME = "member-id";
-    public static final String FRONT_FIND_FAVORITE_STORES = "/front/favoriteStores";
-    public static final String FRONT_FIND_FAVORITE_STORE = "/front/favoriteStores/{favoriteStoreId}";
-    public static final String FRONT_ADD_FAVORITE_STORE = "/front/favoriteStores/stores/{storeId}";
+    public static final String API_FIND_FAVORITE_STORES = "/front/favoriteStores";
+    public static final String API_FIND_FAVORITE_STORE = "/front/favoriteStores/{favoriteStoreId}";
+    public static final String API_ADD_FAVORITE_STORE = "/front/favoriteStores/stores/{storeId}";
 
     @Autowired protected MockMvc mockMvc;
-
     @Autowired protected ObjectMapper objectMapper;
-
     @PersistenceContext protected EntityManager em;
-
     @Autowired protected FavoriteStoreService favoriteStoreService;
 
     Category category;
@@ -118,7 +115,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
             pageRequestParams.add("size", String.valueOf(pageRequest.getPageSize()));
 
             //when
-            ResultActions resultActions = mockMvc.perform(get(FRONT_FIND_FAVORITE_STORES)
+            ResultActions resultActions = mockMvc.perform(get(API_FIND_FAVORITE_STORES)
                     .header(HEADER_NAME, MEMBER_ID_10)
                     .queryParams(conditionParams)
                     .queryParams(pageRequestParams));
@@ -131,7 +128,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.errors").isEmpty())
                     .andExpect(jsonPath("$.data.length()", Matchers.is(8)))
                     .andDo(print())
-                    .andDo(document("front-findMyFavoriteStores",
+                    .andDo(document("findMyFavoriteStores",
                             requestParameters(
                                     parameterWithName("searchMemberId").ignored(),
                                     parameterWithName("page").description("검색 페이지"),
@@ -157,7 +154,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
             em.persist(favoriteStore);
 
             //when
-            ResultActions resultActions = mockMvc.perform(get(FRONT_FIND_FAVORITE_STORE, favoriteStore.getId()));
+            ResultActions resultActions = mockMvc.perform(get(API_FIND_FAVORITE_STORE, favoriteStore.getId()));
 
             //then
             resultActions
@@ -169,7 +166,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.data.storeId").value(store.getId()))
                     .andExpect(jsonPath("$.data.storeName").value(store.getName()))
                     .andDo(print())
-                    .andDo(document("front-findMyFavoriteStore",
+                    .andDo(document("findMyFavoriteStore",
                             pathParameters(
                                     parameterWithName("favoriteStoreId").description("호감 스토어 고유번호")
                             ),
@@ -191,7 +188,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
             //given
 
             //when
-            ResultActions resultActions = mockMvc.perform(post(FRONT_ADD_FAVORITE_STORE, store.getId())
+            ResultActions resultActions = mockMvc.perform(post(API_ADD_FAVORITE_STORE, store.getId())
                     .header(HEADER_NAME, MEMBER_ID_10));
 
             //then
@@ -201,7 +198,7 @@ class FrontFavoriteStoreControllerTest extends IntegrationTest {
                     .andExpect(jsonPath("$.message").isEmpty())
                     .andExpect(jsonPath("$.errors").isEmpty())
                     .andDo(print())
-                    .andDo(document("front-addMyFavoriteStore",
+                    .andDo(document("addMyFavoriteStore",
                             pathParameters(
                                     parameterWithName("storeId").description("스토어 고유번호")
                             ),

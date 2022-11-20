@@ -48,11 +48,8 @@ class FavoriteStoreServiceTest extends MockTest {
     public static final String STORE = "Store";
 
     @Mock protected FavoriteStoreQueryRepository favoriteStoreQueryRepository;
-
     @Mock protected FavoriteStoreRepository favoriteStoreRepository;
-
     @Mock protected StoreRepository storeRepository;
-
     @InjectMocks protected FavoriteStoreService favoriteStoreService;
 
     Category category;
@@ -166,11 +163,11 @@ class FavoriteStoreServiceTest extends MockTest {
     }
 
     @Nested
-    class UnsuccessfulTest {
+    class EntityNotFoundTest {
 
         @Test
         @DisplayName("호감 스토어 단건 조회_예외")
-        void findFavoriteStore_entityNotFound() {
+        void findFavoriteStore_exception() {
             //given
             given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID));
 
@@ -183,7 +180,7 @@ class FavoriteStoreServiceTest extends MockTest {
 
         @Test
         @DisplayName("호감 스토어 단건 조회_예외")
-        void saveFavoriteStore_entityNotFound() {
+        void saveFavoriteStore_exception() {
             //given
             given(storeRepository.findById(any(Long.class))).willThrow(new EntityNotFound(STORE, STORE_ID));
 
@@ -196,7 +193,7 @@ class FavoriteStoreServiceTest extends MockTest {
 
         @Test
         @DisplayName("호감 스토어 단건 조회_예외")
-        void deleteFavoriteStore_entityNotFound() {
+        void deleteFavoriteStore_exception() {
             //given
             given(favoriteStoreRepository.findById(any(Long.class))).willThrow(new EntityNotFound(FAVORITE_STORE, FAVORITE_STORE_ID));
 
