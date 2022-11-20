@@ -5,7 +5,7 @@ spring:
   application:
     name: jeeokshop-store-server
   profiles:
-    active: local
+    active: dev
   config:
     import: optional:configserver:http://localhost:10000/
   messages:
