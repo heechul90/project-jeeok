@@ -27,7 +27,7 @@ public class DeliveryRiderQueryRepository {
     /**
      * 배송 라이더 목록 조회
      */
-    public Page<DeliveryRider> findRiders(DeliveryRiderSearchCondition condition, Pageable pageable) {
+    public Page<DeliveryRider> findDeliveryRiders(DeliveryRiderSearchCondition condition, Pageable pageable) {
 
         List<DeliveryRider> content = getDeliveryRiderList(condition, pageable);
 
