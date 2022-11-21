@@ -17,11 +17,11 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class DeliverymanAuthorizationHeaderFilter extends AbstractGatewayFilterFactory<DeliverymanAuthorizationHeaderFilter.Config> {
+public class RiderAuthorizationHeaderFilter extends AbstractGatewayFilterFactory<RiderAuthorizationHeaderFilter.Config> {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public DeliverymanAuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
+    public RiderAuthorizationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
         super(Config.class);
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -47,7 +47,7 @@ public class DeliverymanAuthorizationHeaderFilter extends AbstractGatewayFilterF
             String memberId = jwtTokenProvider.getUserId(accessToken);
 
             //권한 check
-            if (!jwtTokenProvider.getRoles(accessToken).contains(RoleType.ROLE_DELIVERYMAN.name())) {
+            if (!jwtTokenProvider.getRoles(accessToken).contains(RoleType.ROLE_RIDER.name())) {
                 return onError(exchange, "배달원 권한이 없습니다.", HttpStatus.UNAUTHORIZED);
             }
 

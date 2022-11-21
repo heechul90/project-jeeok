@@ -153,11 +153,11 @@ spring:
 
         #지옥숍 배달 배달원
         - id: jeeokshop-delivery-server
-          uri: lb://JEEOKSHOP-DELIVERY-SERVER/delivery
+          uri: lb://JEEOKSHOP-DELIVERY-SERVER/rider
           predicates:
-            - Path=/jeeokshop-delivery-server/delivery/**
+            - Path=/jeeokshop-delivery-server/rider/**
           filters:
-            - DeliverymanAuthorizationHeaderFilter
+            - RiderAuthorizationHeaderFilter
             - RewritePath=/jeeokshop-delivery-server/(?<segment>.*),/$\{segment}
 
 #actuator config
