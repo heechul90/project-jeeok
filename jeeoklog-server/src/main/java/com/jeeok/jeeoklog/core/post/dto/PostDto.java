@@ -16,7 +16,7 @@ public class PostDto {
     private String postContent;
     private int hits;
     private LocalDateTime createdDate;
-    private String createdBy;
+    private Long createdBy;
 
     public PostDto(Post post) {
         this.postId = post.getId();
