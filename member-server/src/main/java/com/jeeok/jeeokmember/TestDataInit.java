@@ -83,7 +83,7 @@ public class TestDataInit {
                     "deliveryman1",
                     "1234",
                     "배달원1",
-                    RoleType.ROLE_DELIVERYMAN,
+                    RoleType.ROLE_RIDER,
                     AuthType.JEEOK,
                     new PhoneNumber("010", "3411", "9266"),
                     new Address("34328", "천안시")
