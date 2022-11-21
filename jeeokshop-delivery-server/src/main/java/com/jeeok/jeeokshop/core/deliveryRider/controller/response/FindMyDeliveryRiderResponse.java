@@ -4,7 +4,7 @@ import com.jeeok.jeeokshop.core.deliveryRider.domain.DeliveryRider;
 import lombok.*;
 
 @Getter
-PhoneNumber@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class FindMyDeliveryRiderResponse {

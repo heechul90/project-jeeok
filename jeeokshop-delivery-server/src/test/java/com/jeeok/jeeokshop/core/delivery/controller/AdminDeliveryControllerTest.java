@@ -46,17 +46,17 @@ class AdminDeliveryControllerTest extends IntegrationTest {
     public static final Address UPDATE_ADDRESS = new Address("33871", "세종시");
 
     //REQUEST_INFO
-    public static final String ADMIN_FIND_DELIVERIES = "/admin/deliveries";
-    public static final String ADMIN_FIND_DELIVERY = "/admin/deliveries/{deliveryId}";
-    public static final String ADMIN_SAVE_DELIVERY = "/admin/deliveries";
-    public static final String ADMIN_UPDATE_DELIVERY = "/admin/deliveries/{deliveryId}";
-    public static final String ADMIN_DELIVERY = "/admin/deliveries/{deliveryId}/delivery";
-    public static final String ADMIN_COMPLETE = "/admin/deliveries/{deliveryId}/complete";
-    public static final String ADMIN_CANCEL = "/admin/deliveries/{deliveryId}/cancel";
-    public static final String ADMIN_DELETE_DELIVERY = "/admin/deliveries/{deliveryId}";
+    public static final String API_FIND_DELIVERIES = "/admin/deliveries";
+    public static final String API_FIND_DELIVERY = "/admin/deliveries/{deliveryId}";
+    public static final String API_SAVE_DELIVERY = "/admin/deliveries";
+    public static final String API_UPDATE_DELIVERY = "/admin/deliveries/{deliveryId}";
+    public static final String API_DELIVERY = "/admin/deliveries/{deliveryId}/delivery";
+    public static final String API_COMPLETE = "/admin/deliveries/{deliveryId}/complete";
+    public static final String API_CANCEL = "/admin/deliveries/{deliveryId}/cancel";
+    public static final String API_DELETE_DELIVERY = "/admin/deliveries/{deliveryId}";
 
-    @Autowired protected MockMvc mockMvc;
     @PersistenceContext protected EntityManager em;
+    @Autowired protected MockMvc mockMvc;
     @Autowired protected ObjectMapper objectMapper;
     @Autowired protected DeliveryService deliveryService;
 
@@ -87,7 +87,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         pageRequestParams.add("size", String.valueOf(pageRequest.getPageSize()));
 
         //when
-        ResultActions resultActions = mockMvc.perform(get(ADMIN_FIND_DELIVERIES)
+        ResultActions resultActions = mockMvc.perform(get(API_FIND_DELIVERIES)
                 .queryParams(conditionParams)
                 .queryParams(pageRequestParams));
 
@@ -127,7 +127,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         em.persist(delivery);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get(ADMIN_FIND_DELIVERY, delivery.getId()));
+        ResultActions resultActions = mockMvc.perform(get(API_FIND_DELIVERY, delivery.getId()));
 
         //then
         resultActions
@@ -169,7 +169,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
                 .build();
 
         //when
-        ResultActions resultActions = mockMvc.perform(post(ADMIN_SAVE_DELIVERY)
+        ResultActions resultActions = mockMvc.perform(post(API_SAVE_DELIVERY)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
 
@@ -208,7 +208,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
                 .build();
 
         //when
-        ResultActions resultActions = mockMvc.perform(put(ADMIN_UPDATE_DELIVERY, delivery.getId())
+        ResultActions resultActions = mockMvc.perform(put(API_UPDATE_DELIVERY, delivery.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
 
@@ -246,7 +246,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         em.persist(delivery);
 
         //when
-        ResultActions resultActions = mockMvc.perform(put(ADMIN_DELIVERY, delivery.getId()));
+        ResultActions resultActions = mockMvc.perform(put(API_DELIVERY, delivery.getId()));
 
         //then
         resultActions
@@ -277,7 +277,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         em.persist(delivery);
 
         //when
-        ResultActions resultActions = mockMvc.perform(put(ADMIN_COMPLETE, delivery.getId()));
+        ResultActions resultActions = mockMvc.perform(put(API_COMPLETE, delivery.getId()));
 
         //then
         resultActions
@@ -308,7 +308,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         em.persist(delivery);
 
         //when
-        ResultActions resultActions = mockMvc.perform(put(ADMIN_CANCEL, delivery.getId()));
+        ResultActions resultActions = mockMvc.perform(put(API_CANCEL, delivery.getId()));
 
         //then
         resultActions
@@ -339,7 +339,7 @@ class AdminDeliveryControllerTest extends IntegrationTest {
         em.persist(delivery);
 
         //when
-        ResultActions resultActions = mockMvc.perform(delete(ADMIN_DELETE_DELIVERY, delivery.getId()));
+        ResultActions resultActions = mockMvc.perform(delete(API_DELETE_DELIVERY, delivery.getId()));
 
         //then
         resultActions

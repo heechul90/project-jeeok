@@ -79,6 +79,33 @@ Host : https://delivery.jeeokshop.jeeok.com
 
 [[api-rest-docs]]
 
+= 라이더 모드
+
+라이더 회원(ROLE_RIDER)만 사용할 수 있습니다.
+
+== 배송
+라이더는 배송을 픽하기 위해 배송준비중인 배송 목록 및 상세를 조회할 수 있습니다.
+
+== 배송 목록
+=== 요청
+include::{snippets}/rider-findDeliveries/http-request.adoc[]
+include::{snippets}/rider-findDeliveries/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/rider-findDeliveries/http-response.adoc[]
+include::{snippets}/rider-findDeliveries/response-fields.adoc[]
+
+== 배송 상세
+=== 요청
+include::{snippets}/rider-findDelivery/http-request.adoc[]
+include::{snippets}/rider-findDelivery/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/rider-findDelivery/http-response.adoc[]
+include::{snippets}/rider-findDelivery/response-fields.adoc[]
+
+[[api-rest-docs]]
+
 = 관리자 모드
 
 관리자 회원(ROLE_ADMIN)만 사용할 수 있습니다.
