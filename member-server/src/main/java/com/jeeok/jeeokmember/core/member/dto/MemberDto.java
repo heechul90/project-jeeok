@@ -1,6 +1,6 @@
 package com.jeeok.jeeokmember.core.member.dto;
 
-import com.jeeok.jeeokmember.core.member.domain.Address;
+import com.jeeok.jeeokmember.common.entity.Address;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;

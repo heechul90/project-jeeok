@@ -1,5 +1,7 @@
 package com.jeeok.jeeokmember.core.member.service;
 
+import com.jeeok.jeeokmember.common.entity.Address;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.MockTest;
 import com.jeeok.jeeokmember.core.member.domain.*;

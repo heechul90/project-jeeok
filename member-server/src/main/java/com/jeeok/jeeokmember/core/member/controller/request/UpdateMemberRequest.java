@@ -2,8 +2,8 @@ package com.jeeok.jeeokmember.core.member.controller.request;
 
 import com.jeeok.jeeokmember.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokmember.common.json.ErrorCode;
-import com.jeeok.jeeokmember.core.member.domain.Address;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
+import com.jeeok.jeeokmember.common.entity.Address;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;

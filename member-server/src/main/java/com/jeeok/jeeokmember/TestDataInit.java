@@ -1,5 +1,7 @@
 package com.jeeok.jeeokmember;
 
+import com.jeeok.jeeokmember.common.entity.Address;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

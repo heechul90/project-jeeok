@@ -1,6 +1,8 @@
 package com.jeeok.jeeokmember.core.member.domain;
 
+import com.jeeok.jeeokmember.common.entity.Address;
 import com.jeeok.jeeokmember.common.entity.BaseTimeEntity;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
 import lombok.AccessLevel;
 import lombok.Builder;

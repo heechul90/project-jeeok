@@ -1,5 +1,7 @@
 package com.jeeok.jeeokmember.core.member.repository;
 
+import com.jeeok.jeeokmember.common.entity.Address;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.RepositoryTest;
 import com.jeeok.jeeokmember.core.member.domain.*;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;

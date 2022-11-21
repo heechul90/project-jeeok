@@ -4,7 +4,7 @@ import com.jeeok.jeeokmember.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokmember.common.json.ErrorCode;
 import com.jeeok.jeeokmember.core.member.domain.AuthType;
 import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.domain.PhoneNumber;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.domain.RoleType;
 import lombok.AccessLevel;
 import lombok.Getter;

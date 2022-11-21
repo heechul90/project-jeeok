@@ -1,4 +1,4 @@
-package com.jeeok.jeeokmember.core.member.domain;
+package com.jeeok.jeeokmember.common.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

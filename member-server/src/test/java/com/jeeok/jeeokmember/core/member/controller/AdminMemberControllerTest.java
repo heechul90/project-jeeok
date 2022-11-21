@@ -2,6 +2,8 @@ package com.jeeok.jeeokmember.core.member.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jeeok.jeeokmember.common.entity.Address;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.common.json.Code;
 import com.jeeok.jeeokmember.core.IntegrationTest;
 import com.jeeok.jeeokmember.core.member.controller.request.SaveMemberRequest;
