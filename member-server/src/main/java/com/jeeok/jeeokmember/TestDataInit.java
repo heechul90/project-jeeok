@@ -81,7 +81,7 @@ public class TestDataInit {
                     new PhoneNumber("010", "3432", "2356"),
                     new Address("43255", "대전시")
             );
-            Member deliveryman1 = getMember(
+            Member rider1 = getMember(
                     "deliveryman1",
                     "1234",
                     "배달원1",
@@ -103,7 +103,7 @@ public class TestDataInit {
             em.persist(spring2);
             em.persist(managerMember);
             em.persist(manager2);
-            em.persist(deliveryman1);
+            em.persist(rider1);
             em.persist(admin);
         }
     }
