@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.delivery.domain;
 
 import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
+import com.jeeok.jeeokshop.core.deliveryRider.domain.DeliveryRider;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,10 +30,13 @@ public class Delivery {
     private Long memberId;
     private Long orderId;
 
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    private DeliveryRider deliveryRider;
+
     //===연관관계 편의 메서드===//
-    /*public void addDeliveryRider(DeliveryRider deliveryRider) {
+    public void addDeliveryRider(DeliveryRider deliveryRider) {
         this.deliveryRider = deliveryRider;
-    }*/
+    }
 
     //===생성 메서드===//
     @Builder(builderMethodName = "createDelivery")

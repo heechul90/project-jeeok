@@ -53,7 +53,7 @@ public class AdminDeliveryRiderController {
     /**
      * 배송 라이더 삭제
      */
-    @DeleteMapping("/{deliveryRiderId")
+    @DeleteMapping("/{deliveryRiderId}")
     public JsonResult deleteDeliveryRider(@PathVariable("deliveryRiderId") Long deliveryRiderId) {
 
         deliveryRiderService.deleteDeliveryRider(deliveryRiderId);

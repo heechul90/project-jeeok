@@ -36,6 +36,8 @@ public class DeliveryRider extends BaseEntity {
         this.riderName = riderName;
         this.phoneNumber = phoneNumber;
         this.delivery = delivery;
+
+        this.delivery.addDeliveryRider(this);
     }
 
     //===수정 메서드===//
