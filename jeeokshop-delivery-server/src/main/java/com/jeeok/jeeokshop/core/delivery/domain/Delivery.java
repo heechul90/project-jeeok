@@ -29,6 +29,11 @@ public class Delivery {
     private Long memberId;
     private Long orderId;
 
+    //===연관관계 편의 메서드===//
+    /*public void addDeliveryRider(DeliveryRider deliveryRider) {
+        this.deliveryRider = deliveryRider;
+    }*/
+
     //===생성 메서드===//
     @Builder(builderMethodName = "createDelivery")
     public Delivery(Address address, Long memberId, Long orderId) {
