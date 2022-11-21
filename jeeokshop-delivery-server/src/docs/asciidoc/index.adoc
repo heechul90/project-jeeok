@@ -104,6 +104,56 @@ include::{snippets}/rider-findDelivery/path-parameters.adoc[]
 include::{snippets}/rider-findDelivery/http-response.adoc[]
 include::{snippets}/rider-findDelivery/response-fields.adoc[]
 
+
+== 배송 라이더
+라이더는 배송준비인 목록을 확인하고 배송을 픽하고 수정, 취소 할 수 있습니다.
+
+== 내 배송 라이더 목록 조회
+=== 요청
+include::{snippets}/rider-findMyDeliveryRiders/http-request.adoc[]
+include::{snippets}/rider-findMyDeliveryRiders/request-parameters.adoc[]
+
+=== 응답
+include::{snippets}/rider-findMyDeliveryRiders/http-response.adoc[]
+include::{snippets}/rider-findMyDeliveryRiders/response-fields.adoc[]
+
+== 내 배송 라이더 상세
+=== 요청
+include::{snippets}/rider-findMyDeliveryRider/path-parameters.adoc[]
+include::{snippets}/rider-findMyDeliveryRider/http-request.adoc[]
+include::{snippets}/rider-findMyDeliveryRider/path-parameters.adoc[]
+
+=== 응답
+include::{snippets}/rider-findMyDeliveryRider/http-response.adoc[]
+include::{snippets}/rider-findMyDeliveryRider/response-fields.adoc[]
+
+== 배송하기
+include::{snippets}/rider-registerMyDelivery/http-request.adoc[]
+include::{snippets}/rider-registerMyDelivery/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/rider-registerMyDelivery/http-response.adoc[]
+include::{snippets}/rider-registerMyDelivery/response-fields.adoc[]
+
+== 내 배송 라이더 수정
+=== 요청
+include::{snippets}/rider-editMyDeliveryRider/path-parameters.adoc[]
+include::{snippets}/rider-editMyDeliveryRider/http-request.adoc[]
+include::{snippets}/rider-editMyDeliveryRider/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/rider-editMyDeliveryRider/http-response.adoc[]
+include::{snippets}/rider-editMyDeliveryRider/response-fields.adoc[]
+
+== 배송 라이더 취소
+=== 요청
+include::{snippets}/rider-cancelDeliveryRider/path-parameters.adoc[]
+include::{snippets}/rider-cancelDeliveryRider/http-request.adoc[]
+
+=== 응답
+include::{snippets}/rider-cancelDeliveryRider/http-response.adoc[]
+include::{snippets}/rider-cancelDeliveryRider/response-fields.adoc[]
+
 [[api-rest-docs]]
 
 = 관리자 모드
@@ -124,8 +174,8 @@ include::{snippets}/admin-findDeliveries/response-fields.adoc[]
 
 == 배송 단건 조회
 === 요청
-include::{snippets}/admin-findDelivery/http-request.adoc[]
 include::{snippets}/admin-findDelivery/path-parameters.adoc[]
+include::{snippets}/admin-findDelivery/http-request.adoc[]
 
 === 응답
 include::{snippets}/admin-findDelivery/http-response.adoc[]
@@ -141,8 +191,8 @@ include::{snippets}/admin-saveDelivery/response-fields.adoc[]
 
 == 배송 수정
 === 요청
-include::{snippets}/admin-updateDelivery/http-request.adoc[]
 include::{snippets}/admin-updateDelivery/path-parameters.adoc[]
+include::{snippets}/admin-updateDelivery/http-request.adoc[]
 include::{snippets}/admin-updateDelivery/request-fields.adoc[]
 
 === 응답
@@ -151,8 +201,8 @@ include::{snippets}/admin-updateDelivery/response-fields.adoc[]
 
 == 배송 시작
 === 요청
-include::{snippets}/admin-delivery/http-request.adoc[]
 include::{snippets}/admin-delivery/path-parameters.adoc[]
+include::{snippets}/admin-delivery/http-request.adoc[]
 
 === 응답
 include::{snippets}/admin-delivery/http-response.adoc[]
@@ -160,8 +210,8 @@ include::{snippets}/admin-delivery/response-fields.adoc[]
 
 == 배송 완료
 === 요청
-include::{snippets}/admin-complete/http-request.adoc[]
 include::{snippets}/admin-complete/path-parameters.adoc[]
+include::{snippets}/admin-complete/http-request.adoc[]
 
 === 응답
 include::{snippets}/admin-complete/http-response.adoc[]
@@ -169,8 +219,8 @@ include::{snippets}/admin-complete/response-fields.adoc[]
 
 == 배송 취소
 === 요청
-include::{snippets}/admin-cancel/http-request.adoc[]
 include::{snippets}/admin-cancel/path-parameters.adoc[]
+include::{snippets}/admin-cancel/http-request.adoc[]
 
 === 응답
 include::{snippets}/admin-cancel/http-response.adoc[]
@@ -178,9 +228,40 @@ include::{snippets}/admin-cancel/response-fields.adoc[]
 
 == 배송 삭제
 === 요청
-include::{snippets}/admin-deleteDelivery/http-request.adoc[]
 include::{snippets}/admin-deleteDelivery/path-parameters.adoc[]
+include::{snippets}/admin-deleteDelivery/http-request.adoc[]
 
 === 응답
 include::{snippets}/admin-deleteDelivery/http-response.adoc[]
 include::{snippets}/admin-deleteDelivery/response-fields.adoc[]
+
+
+== 배송 라이더
+관리자는 배송 라이더를 추가할 수 있고 수정 및 삭제할 수 있습니다.
+
+== 배송 라이더 저장
+include::{snippets}/admin-saveDeliveryRider/http-request.adoc[]
+include::{snippets}/admin-saveDeliveryRider/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/admin-saveDeliveryRider/http-response.adoc[]
+include::{snippets}/admin-saveDeliveryRider/response-fields.adoc[]
+
+== 배송 라이더 수정
+=== 요청
+include::{snippets}/admin-updateDeliveryRider/path-parameters.adoc[]
+include::{snippets}/admin-updateDeliveryRider/http-request.adoc[]
+include::{snippets}/admin-updateDeliveryRider/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/admin-updateDeliveryRider/http-response.adoc[]
+include::{snippets}/admin-updateDeliveryRider/response-fields.adoc[]
+
+== 배송 라이더 삭제
+=== 요청
+include::{snippets}/admin-deleteDeliveryRider/path-parameters.adoc[]
+include::{snippets}/admin-deleteDeliveryRider/http-request.adoc[]
+
+=== 응답
+include::{snippets}/admin-deleteDeliveryRider/http-response.adoc[]
+include::{snippets}/admin-deleteDeliveryRider/response-fields.adoc[]
