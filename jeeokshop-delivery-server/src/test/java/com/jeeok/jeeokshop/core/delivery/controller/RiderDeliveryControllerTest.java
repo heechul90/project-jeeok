@@ -103,7 +103,10 @@ class RiderDeliveryControllerTest extends IntegrationTest {
                                 fieldWithPath("data[*].address").description("배송 주소"),
                                 fieldWithPath("data[*].deliveryStatus").description("배송 상태"),
                                 fieldWithPath("data[*].memberId").description("멤버 고유번호"),
-                                fieldWithPath("data[*].orderId").description("주문 고유번호")
+                                fieldWithPath("data[*].orderId").description("주문 고유번호"),
+                                fieldWithPath("data[*].riderId").description("라이더 고유번호"),
+                                fieldWithPath("data[*].riderName").description("라이더 이름"),
+                                fieldWithPath("data[*].phoneNumber").description("휴대폰번호")
                         )
                 ));
     }
@@ -143,7 +146,10 @@ class RiderDeliveryControllerTest extends IntegrationTest {
                                 fieldWithPath("data.address").description("배송 주소"),
                                 fieldWithPath("data.deliveryStatus").description("배송 상태"),
                                 fieldWithPath("data.memberId").description("멤버 고유번호"),
-                                fieldWithPath("data.orderId").description("주문 고유번호")
+                                fieldWithPath("data.orderId").description("주문 고유번호"),
+                                fieldWithPath("data.riderId").description("라이더 고유번호"),
+                                fieldWithPath("data.riderName").description("라이더 이름"),
+                                fieldWithPath("data.phoneNumber").description("휴대폰번호")
                         )
                 ));
     }
