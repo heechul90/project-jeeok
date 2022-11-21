@@ -41,8 +41,8 @@ class RiderDeliveryControllerTest extends IntegrationTest {
     public static final Address ADDRESS = new Address("38273", "서울시");
 
     //REQUEST_INFO
-    public static final String API_FIND_DELIVERIES = "/admin/deliveries";
-    public static final String API_FIND_DELIVERY = "/admin/deliveries/{deliveryId}";
+    public static final String API_FIND_DELIVERIES = "/rider/deliveries";
+    public static final String API_FIND_DELIVERY = "/rider/deliveries/{deliveryId}";
 
     @PersistenceContext protected EntityManager em;
     @Autowired protected MockMvc mockMvc;

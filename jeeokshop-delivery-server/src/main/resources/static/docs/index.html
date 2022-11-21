@@ -453,54 +453,71 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#overview-header">기본 정보</a></li>
 </ul>
 </li>
-<li><a href="#api-rest-docs">사용자 모드</a>
+<li><a href="#api-rest-docs">라이더 모드</a>
 <ul class="sectlevel1">
 <li><a href="#_배송">배송</a></li>
-<li><a href="#_배송_목록_조회">배송 목록 조회</a>
+<li><a href="#_배송_목록">배송 목록</a>
 <ul class="sectlevel2">
 <li><a href="#_요청">요청</a></li>
 <li><a href="#_응답">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_단건_조회">배송 단건 조회</a>
+<li><a href="#_배송_상세">배송 상세</a>
 <ul class="sectlevel2">
 <li><a href="#_요청_2">요청</a></li>
 <li><a href="#_응답_2">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_저장">배송 저장</a>
+</ul>
+</li>
+<li><a href="#api-rest-docs">관리자 모드</a>
+<ul class="sectlevel1">
+<li><a href="#_배송_2">배송</a></li>
+<li><a href="#_배송_목록_조회">배송 목록 조회</a>
 <ul class="sectlevel2">
+<li><a href="#_요청_3">요청</a></li>
 <li><a href="#_응답_3">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_수정">배송 수정</a>
+<li><a href="#_배송_단건_조회">배송 단건 조회</a>
 <ul class="sectlevel2">
-<li><a href="#_요청_3">요청</a></li>
+<li><a href="#_요청_4">요청</a></li>
 <li><a href="#_응답_4">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_시작">배송 시작</a>
+<li><a href="#_배송_저장">배송 저장</a>
 <ul class="sectlevel2">
-<li><a href="#_요청_4">요청</a></li>
 <li><a href="#_응답_5">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_완료">배송 완료</a>
+<li><a href="#_배송_수정">배송 수정</a>
 <ul class="sectlevel2">
 <li><a href="#_요청_5">요청</a></li>
 <li><a href="#_응답_6">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_취소">배송 취소</a>
+<li><a href="#_배송_시작">배송 시작</a>
 <ul class="sectlevel2">
 <li><a href="#_요청_6">요청</a></li>
 <li><a href="#_응답_7">응답</a></li>
 </ul>
 </li>
-<li><a href="#_배송_삭제">배송 삭제</a>
+<li><a href="#_배송_완료">배송 완료</a>
 <ul class="sectlevel2">
 <li><a href="#_요청_7">요청</a></li>
 <li><a href="#_응답_8">응답</a></li>
+</ul>
+</li>
+<li><a href="#_배송_취소">배송 취소</a>
+<ul class="sectlevel2">
+<li><a href="#_요청_8">요청</a></li>
+<li><a href="#_응답_9">응답</a></li>
+</ul>
+</li>
+<li><a href="#_배송_삭제">배송 삭제</a>
+<ul class="sectlevel2">
+<li><a href="#_요청_9">요청</a></li>
+<li><a href="#_응답_10">응답</a></li>
 </ul>
 </li>
 </ul>
@@ -637,26 +654,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 </div>
-<h1 id="api-rest-docs" class="sect0"><a class="link" href="#api-rest-docs">사용자 모드</a></h1>
+<h1 id="api-rest-docs" class="sect0"><a class="link" href="#api-rest-docs">라이더 모드</a></h1>
 <div class="openblock partintro">
 <div class="content">
-사용자 화면에 사용됩니다.
+라이더 회원(ROLE_RIDER)만 사용할 수 있습니다.
 </div>
 </div>
 <div class="sect1">
 <h2 id="_배송"><a class="link" href="#_배송">배송</a></h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>라이더는 배송을 픽하기 위해 배송준비중인 배송 목록 및 상세를 조회할 수 있습니다.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_배송_목록_조회"><a class="link" href="#_배송_목록_조회">배송 목록 조회</a></h2>
+<h2 id="_배송_목록"><a class="link" href="#_배송_목록">배송 목록</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_요청"><a class="link" href="#_요청">요청</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/admin/deliveries?searchDeliveryStatus=READY&amp;page=0&amp;size=10 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/rider/deliveries?searchDeliveryStatus&amp;page=0&amp;size=10&amp;searchDeliveryStatus= HTTP/1.1
 Host: https</code></pre>
 </div>
 </div>
@@ -672,10 +691,6 @@ Host: https</code></pre>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>searchDeliveryStatus</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">배송 상태</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">검색 페이지</p></td>
@@ -693,9 +708,9 @@ Host: https</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 1149
+Content-Length: 1155
 
-{"transaction_time":"2022-11-19T14:55:29.9991358","code":"SUCCESS","message":null,"errors":null,"data":[{"deliveryId":4,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":5,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":6,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":7,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":8,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":9,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":10,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":11,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":12,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":13,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1}]}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.8050426","code":"SUCCESS","message":null,"errors":null,"data":[{"deliveryId":23,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":24,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":25,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":26,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":27,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":28,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":29,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":30,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":31,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1},{"deliveryId":32,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1}]}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -763,18 +778,18 @@ Content-Length: 1149
 </div>
 </div>
 <div class="sect1">
-<h2 id="_배송_단건_조회"><a class="link" href="#_배송_단건_조회">배송 단건 조회</a></h2>
+<h2 id="_배송_상세"><a class="link" href="#_배송_상세">배송 상세</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_요청_2"><a class="link" href="#_요청_2">요청</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/admin/deliveries/21 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/rider/deliveries/38 HTTP/1.1
 Host: https</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /admin/deliveries/{deliveryId}</caption>
+<caption class="title">Table 1. /rider/deliveries/{deliveryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -788,7 +803,7 @@ Host: https</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>deliveryId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">배송 고유번호</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 고윱번호</p></td>
 </tr>
 </tbody>
 </table>
@@ -801,7 +816,7 @@ Host: https</code></pre>
 Content-Type: application/json
 Content-Length: 208
 
-{"transaction_time":"2022-11-19T14:55:30.1211365","code":"SUCCESS","message":null,"errors":null,"data":{"deliveryId":21,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1}}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.8350419","code":"SUCCESS","message":null,"errors":null,"data":{"deliveryId":38,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -868,6 +883,269 @@ Content-Length: 208
 </div>
 </div>
 </div>
+<h1 id="api-rest-docs" class="sect0"><a class="link" href="#api-rest-docs">관리자 모드</a></h1>
+<div class="openblock partintro">
+<div class="content">
+관리자 회원(ROLE_ADMIN)만 사용할 수 있습니다.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_배송_2"><a class="link" href="#_배송_2">배송</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>관리자는 배송 조회, 저장, 수정 및 삭제 할 수 있고, 배송 상태를 업데이트 할 수 있습니다.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_배송_목록_조회"><a class="link" href="#_배송_목록_조회">배송 목록 조회</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_요청_3"><a class="link" href="#_요청_3">요청</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/admin/deliveries?searchDeliveryStatus=READY&amp;page=0&amp;size=10 HTTP/1.1
+Host: https</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>searchDeliveryStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 페이지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 사이즈</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_응답_3"><a class="link" href="#_응답_3">응답</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 1659
+
+{"transaction_time":"2022-11-21T20:17:54.4596815","code":"SUCCESS","message":null,"errors":null,"data":[{"deliveryId":4,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":5,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":6,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":7,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":8,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":9,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":10,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":11,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":12,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null},{"deliveryId":13,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":null,"riderName":null,"phoneNumber":null}]}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>transaction_time</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">api 요청 시간</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUCCESS or ERROR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errors</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].deliveryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].deliveryStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">멤버 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].orderId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].riderId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">라이더 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].riderName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">라이더 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[*].phoneNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">휴대폰번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_배송_단건_조회"><a class="link" href="#_배송_단건_조회">배송 단건 조회</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_요청_4"><a class="link" href="#_요청_4">요청</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET //delivery.jeeokshop.jeeok.com/admin/deliveries/21 HTTP/1.1
+Host: https</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /admin/deliveries/{deliveryId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deliveryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 고유번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_응답_4"><a class="link" href="#_응답_4">응답</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 273
+
+{"transaction_time":"2022-11-21T20:17:54.7090422","code":"SUCCESS","message":null,"errors":null,"data":{"deliveryId":21,"address":"(38273) 서울시","deliveryStatus":"배송준비","memberId":1,"orderId":1,"riderId":11,"riderName":"스미스","phoneNumber":"01048231009"}}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>transaction_time</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">api 요청 시간</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUCCESS or ERROR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errors</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.deliveryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.deliveryStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">배송 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">멤버 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.orderId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.riderId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">라이더 고유번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.riderName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">라이더 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.phoneNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">휴대폰번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_배송_저장"><a class="link" href="#_배송_저장">배송 저장</a></h2>
 <div class="sectionbody">
@@ -908,14 +1186,14 @@ Host: https
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="_응답_3"><a class="link" href="#_응답_3">응답</a></h3>
+<h3 id="_응답_5"><a class="link" href="#_응답_5">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 126
 
-{"transaction_time":"2022-11-19T14:55:30.0591358","code":"SUCCESS","message":null,"errors":null,"data":{"savedDeliveryId":19}}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.6490396","code":"SUCCESS","message":null,"errors":null,"data":{"savedDeliveryId":19}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -966,7 +1244,7 @@ Content-Length: 126
 <h2 id="_배송_수정"><a class="link" href="#_배송_수정">배송 수정</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_요청_3"><a class="link" href="#_요청_3">요청</a></h3>
+<h3 id="_요청_5"><a class="link" href="#_요청_5">요청</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT //delivery.jeeokshop.jeeok.com/admin/deliveries/22 HTTP/1.1
@@ -978,7 +1256,7 @@ Host: https
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. /admin/deliveries/{deliveryId}</caption>
+<caption class="title">Table 3. /admin/deliveries/{deliveryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1024,14 +1302,14 @@ Host: https
 </table>
 </div>
 <div class="sect2">
-<h3 id="_응답_4"><a class="link" href="#_응답_4">응답</a></h3>
+<h3 id="_응답_6"><a class="link" href="#_응답_6">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 128
 
-{"transaction_time":"2022-11-19T14:55:30.1581351","code":"SUCCESS","message":null,"errors":null,"data":{"updatedDeliveryId":22}}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.7550384","code":"SUCCESS","message":null,"errors":null,"data":{"updatedDeliveryId":22}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1082,7 +1360,7 @@ Content-Length: 128
 <h2 id="_배송_시작"><a class="link" href="#_배송_시작">배송 시작</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_요청_4"><a class="link" href="#_요청_4">요청</a></h3>
+<h3 id="_요청_6"><a class="link" href="#_요청_6">요청</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT //delivery.jeeokshop.jeeok.com/admin/deliveries/20/delivery HTTP/1.1
@@ -1090,7 +1368,7 @@ Host: https</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. /admin/deliveries/{deliveryId}/delivery</caption>
+<caption class="title">Table 4. /admin/deliveries/{deliveryId}/delivery</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1110,14 +1388,14 @@ Host: https</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_응답_5"><a class="link" href="#_응답_5">응답</a></h3>
+<h3 id="_응답_7"><a class="link" href="#_응답_7">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 107
+Content-Length: 108
 
-{"transaction_time":"2022-11-19T14:55:30.092138","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.6820366","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1163,7 +1441,7 @@ Content-Length: 107
 <h2 id="_배송_완료"><a class="link" href="#_배송_완료">배송 완료</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_요청_5"><a class="link" href="#_요청_5">요청</a></h3>
+<h3 id="_요청_7"><a class="link" href="#_요청_7">요청</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT //delivery.jeeokshop.jeeok.com/admin/deliveries/3/complete HTTP/1.1
@@ -1171,7 +1449,7 @@ Host: https</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. /admin/deliveries/{deliveryId}/complete</caption>
+<caption class="title">Table 5. /admin/deliveries/{deliveryId}/complete</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1191,14 +1469,14 @@ Host: https</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_응답_6"><a class="link" href="#_응답_6">응답</a></h3>
+<h3 id="_응답_8"><a class="link" href="#_응답_8">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 108
 
-{"transaction_time":"2022-11-19T14:55:29.7501344","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.2146773","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1244,7 +1522,7 @@ Content-Length: 108
 <h2 id="_배송_취소"><a class="link" href="#_배송_취소">배송 취소</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_요청_6"><a class="link" href="#_요청_6">요청</a></h3>
+<h3 id="_요청_8"><a class="link" href="#_요청_8">요청</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT //delivery.jeeokshop.jeeok.com/admin/deliveries/1/cancel HTTP/1.1
@@ -1252,7 +1530,7 @@ Host: https</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. /admin/deliveries/{deliveryId}/cancel</caption>
+<caption class="title">Table 6. /admin/deliveries/{deliveryId}/cancel</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1272,14 +1550,14 @@ Host: https</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_응답_7"><a class="link" href="#_응답_7">응답</a></h3>
+<h3 id="_응답_9"><a class="link" href="#_응답_9">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 108
 
-{"transaction_time":"2022-11-19T14:55:29.5771371","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.0603564","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1325,7 +1603,7 @@ Content-Length: 108
 <h2 id="_배송_삭제"><a class="link" href="#_배송_삭제">배송 삭제</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_요청_7"><a class="link" href="#_요청_7">요청</a></h3>
+<h3 id="_요청_9"><a class="link" href="#_요청_9">요청</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE //delivery.jeeokshop.jeeok.com/admin/deliveries/2 HTTP/1.1
@@ -1333,7 +1611,7 @@ Host: https</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. /admin/deliveries/{deliveryId}</caption>
+<caption class="title">Table 7. /admin/deliveries/{deliveryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1353,14 +1631,14 @@ Host: https</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_응답_8"><a class="link" href="#_응답_8">응답</a></h3>
+<h3 id="_응답_10"><a class="link" href="#_응답_10">응답</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 108
 
-{"transaction_time":"2022-11-19T14:55:29.7251378","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
+{"transaction_time":"2022-11-21T20:17:54.1896805","code":"SUCCESS","message":null,"errors":null,"data":null}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1406,7 +1684,7 @@ Content-Length: 108
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-19 14:54:57 +0900
+Last updated 2022-11-21 19:35:49 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
