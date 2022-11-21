@@ -15,11 +15,20 @@ public class DeliveryDto {
     private Long memberId;
     private Long orderId;
 
+    private Long riderId;
+    private String riderName;
+    private String phoneNumber;
+
     public DeliveryDto(Delivery delivery) {
         this.deliveryId = delivery.getId();
         this.address = delivery.getAddress().fullAddress();
         this.deliveryStatus = delivery.getStatus().getMessage();
         this.memberId = delivery.getMemberId();
         this.orderId = delivery.getOrderId();
+        if (delivery.getDeliveryRider() != null) {
+            this.riderId = delivery.getDeliveryRider().getRiderId();
+            this.riderName = delivery.getDeliveryRider().getRiderName();
+            this.phoneNumber = delivery.getDeliveryRider().getPhoneNumber().fullPhoneNumber();
+        }
     }
 }

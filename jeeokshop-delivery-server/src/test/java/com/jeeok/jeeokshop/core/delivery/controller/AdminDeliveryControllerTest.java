@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.delivery.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jeeok.jeeokshop.common.entity.PhoneNumber;
 import com.jeeok.jeeokshop.common.json.Code;
 import com.jeeok.jeeokshop.core.IntegrationTest;
 import com.jeeok.jeeokshop.core.delivery.controller.request.SaveDeliveryRequest;
@@ -11,6 +12,7 @@ import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
 import com.jeeok.jeeokshop.core.delivery.service.DeliveryService;
+import com.jeeok.jeeokshop.core.deliveryRider.domain.DeliveryRider;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +46,11 @@ class AdminDeliveryControllerTest extends IntegrationTest {
 
     //UPDATE_DELIVERY
     public static final Address UPDATE_ADDRESS = new Address("33871", "세종시");
+
+    //CREATE_DELIVERY_RIDER
+    public static final long RIDER_ID_11 = 11L;
+    public static final String RIDER_NAME = "스미스";
+    public static final PhoneNumber PHONE_NUMBER = new PhoneNumber("010", "4823", "1009");
 
     //REQUEST_INFO
     public static final String API_FIND_DELIVERIES = "/admin/deliveries";
@@ -114,7 +121,10 @@ class AdminDeliveryControllerTest extends IntegrationTest {
                                 fieldWithPath("data[*].address").description("배송 주소"),
                                 fieldWithPath("data[*].deliveryStatus").description("배송 상태"),
                                 fieldWithPath("data[*].memberId").description("멤버 고유번호"),
-                                fieldWithPath("data[*].orderId").description("주문 고유번호")
+                                fieldWithPath("data[*].orderId").description("주문 고유번호"),
+                                fieldWithPath("data[*].riderId").description("라이더 고유번호"),
+                                fieldWithPath("data[*].riderName").description("라이더 이름"),
+                                fieldWithPath("data[*].phoneNumber").description("휴대폰번호")
                         )
                 ));
     }
@@ -124,6 +134,12 @@ class AdminDeliveryControllerTest extends IntegrationTest {
     void findDelivery() throws Exception {
         //given
         Delivery delivery = getDelivery(ADDRESS, MEMBER_ID_1, ORDER_ID_1);
+        DeliveryRider.createDeliveryRider()
+                .riderId(RIDER_ID_11)
+                .riderName(RIDER_NAME)
+                .phoneNumber(PHONE_NUMBER)
+                .delivery(delivery)
+                .build();
         em.persist(delivery);
 
         //when
@@ -140,6 +156,9 @@ class AdminDeliveryControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.data.deliveryStatus").value(DeliveryStatus.READY.getMessage()))
                 .andExpect(jsonPath("$.data.memberId").value(MEMBER_ID_1))
                 .andExpect(jsonPath("$.data.orderId").value(ORDER_ID_1))
+                .andExpect(jsonPath("$.data.riderId").value(RIDER_ID_11))
+                .andExpect(jsonPath("$.data.riderName").value(RIDER_NAME))
+                .andExpect(jsonPath("$.data.phoneNumber").value(PHONE_NUMBER.fullPhoneNumber()))
                 .andDo(print())
                 .andDo(document("admin-findDelivery",
                         pathParameters(
@@ -154,7 +173,10 @@ class AdminDeliveryControllerTest extends IntegrationTest {
                                 fieldWithPath("data.address").description("배송 주소"),
                                 fieldWithPath("data.deliveryStatus").description("배송 상태"),
                                 fieldWithPath("data.memberId").description("멤버 고유번호"),
-                                fieldWithPath("data.orderId").description("주문 고유번호")
+                                fieldWithPath("data.orderId").description("주문 고유번호"),
+                                fieldWithPath("data.riderId").description("라이더 고유번호"),
+                                fieldWithPath("data.riderName").description("라이더 이름"),
+                                fieldWithPath("data.phoneNumber").description("휴대폰번호")
                         )
                 ));
     }
