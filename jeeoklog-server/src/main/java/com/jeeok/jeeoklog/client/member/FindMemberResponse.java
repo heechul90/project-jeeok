@@ -1,6 +1,6 @@
-package com.jeeok.jeeokshop.client.member;
+package com.jeeok.jeeoklog.client.member;
 
-import com.jeeok.jeeokshop.common.entity.Address;
+import com.jeeok.jeeoklog.common.entity.Address;
 import lombok.*;
 
 @Getter

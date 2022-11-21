@@ -6,7 +6,7 @@ import com.jeeok.jeeokshop.common.json.Code;
 import com.jeeok.jeeokshop.core.IntegrationTest;
 import com.jeeok.jeeokshop.core.delivery.controller.request.SaveDeliveryRequest;
 import com.jeeok.jeeokshop.core.delivery.controller.request.UpdateDeliveryRequest;
-import com.jeeok.jeeokshop.core.delivery.domain.Address;
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;

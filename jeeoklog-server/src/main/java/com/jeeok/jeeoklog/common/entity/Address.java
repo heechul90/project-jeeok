@@ -1,4 +1,4 @@
-package com.jeeok.jeeokshop.core.delivery.domain;
+package com.jeeok.jeeoklog.common.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

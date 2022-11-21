@@ -1,5 +1,6 @@
 package com.jeeok.jeeokshop.core.delivery.domain;
 
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
 import lombok.AccessLevel;
 import lombok.Builder;

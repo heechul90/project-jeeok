@@ -5,7 +5,7 @@ import com.jeeok.jeeokshop.client.member.MemberClient;
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.common.json.JsonResult;
 import com.jeeok.jeeokshop.core.MockTest;
-import com.jeeok.jeeokshop.core.delivery.domain.Address;
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.SaveDeliveryParam;

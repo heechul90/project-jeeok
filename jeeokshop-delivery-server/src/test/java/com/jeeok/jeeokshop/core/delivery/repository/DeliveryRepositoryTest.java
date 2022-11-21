@@ -1,7 +1,7 @@
 package com.jeeok.jeeokshop.core.delivery.repository;
 
 import com.jeeok.jeeokshop.core.RepositoryTest;
-import com.jeeok.jeeokshop.core.delivery.domain.Address;
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.domain.DeliveryStatus;
 import com.jeeok.jeeokshop.core.delivery.dto.DeliverySearchCondition;
