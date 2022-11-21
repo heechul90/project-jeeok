@@ -49,6 +49,11 @@ public class Delivery {
     }
 
     //===비즈니스 로직===//
+    /** 배달준비 */
+    public void ready() {
+        this.status = DeliveryStatus.READY;
+    }
+
     /** 배달시작 */
     public void delivery() {
         this.status = DeliveryStatus.DELIVERY;

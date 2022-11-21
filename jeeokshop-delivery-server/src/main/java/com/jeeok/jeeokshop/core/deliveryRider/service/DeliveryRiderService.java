@@ -2,6 +2,7 @@ package com.jeeok.jeeokshop.core.deliveryRider.service;
 
 import com.jeeok.jeeokshop.client.member.FindMemberResponse;
 import com.jeeok.jeeokshop.client.member.MemberClient;
+import com.jeeok.jeeokshop.common.entity.PhoneNumber;
 import com.jeeok.jeeokshop.common.exception.EntityNotFound;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryRepository;
@@ -63,9 +64,12 @@ public class DeliveryRiderService {
         DeliveryRider deliveryRider = DeliveryRider.createDeliveryRider()
                 .riderId(riderId)
                 .riderName(findRider.getMemberName())
-                .riderPhoneNumber(findRider.getPhoneNumber())
+                .phoneNumber(new PhoneNumber(findRider.getPhoneNumber().substring(0, 3), findRider.getPhoneNumber().substring(3, 7), findRider.getPhoneNumber().substring(7, 11)))
                 .delivery(findDelivery)
                 .build();
+
+        //배송 상태 업데이트
+        findDelivery.delivery();
 
         return deliveryRiderRepository.save(deliveryRider);
     }
@@ -87,6 +91,11 @@ public class DeliveryRiderService {
     public void deleteDeliveryRider(Long deliveryRiderId) {
         DeliveryRider findDeliveryRider = deliveryRiderRepository.findById(deliveryRiderId)
                 .orElseThrow(() -> new EntityNotFound(DELIVERY_RIDER, deliveryRiderId));
+
+        //배송 상태 업데이트(취소로 업데이트)
+        findDeliveryRider.getDelivery().cancel();
+
+        //삭제
         deliveryRiderRepository.delete(findDeliveryRider);
     }
 }

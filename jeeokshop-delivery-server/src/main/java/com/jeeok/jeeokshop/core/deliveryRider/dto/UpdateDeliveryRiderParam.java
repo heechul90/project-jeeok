@@ -1,5 +1,6 @@
 package com.jeeok.jeeokshop.core.deliveryRider.dto;
 
+import com.jeeok.jeeokshop.common.entity.PhoneNumber;
 import lombok.*;
 
 @Getter
@@ -9,5 +10,5 @@ import lombok.*;
 public class UpdateDeliveryRiderParam {
 
     private String riderName;
-    private String riderPhoneNumber;
+    private PhoneNumber phoneNumber;
 }

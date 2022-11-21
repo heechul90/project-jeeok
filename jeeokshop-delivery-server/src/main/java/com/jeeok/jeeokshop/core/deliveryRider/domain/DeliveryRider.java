@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.core.deliveryRider.domain;
 
 import com.jeeok.jeeokshop.common.entity.BaseEntity;
+import com.jeeok.jeeokshop.common.entity.PhoneNumber;
 import com.jeeok.jeeokshop.core.delivery.domain.Delivery;
 import com.jeeok.jeeokshop.core.deliveryRider.dto.UpdateDeliveryRiderParam;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ public class DeliveryRider extends BaseEntity {
 
     private Long riderId;
     private String riderName;
-    private String riderPhoneNumber;
+    private PhoneNumber phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
@@ -30,16 +31,16 @@ public class DeliveryRider extends BaseEntity {
 
     //===생성 메서드===//
     @Builder(builderMethodName = "createDeliveryRider")
-    public DeliveryRider(Long riderId, String riderName, String riderPhoneNumber, Delivery delivery) {
+    public DeliveryRider(Long riderId, String riderName, PhoneNumber phoneNumber, Delivery delivery) {
         this.riderId = riderId;
         this.riderName = riderName;
-        this.riderPhoneNumber = riderPhoneNumber;
+        this.phoneNumber = phoneNumber;
         this.delivery = delivery;
     }
 
     //===수정 메서드===//
     public void updateDeliveryRider(UpdateDeliveryRiderParam param) {
         this.riderName = param.getRiderName();
-        this.riderPhoneNumber = param.getRiderPhoneNumber();
+        this.phoneNumber = param.getPhoneNumber();
     }
 }
