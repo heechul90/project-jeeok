@@ -16,7 +16,7 @@
 ## API 문서
 | 서비스 | 설계서 |
 | --- | --- |
-| JEEOKSHOP-DELIVERY-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/order-server-API-%EB%AC%B8%EC%84%9C/index.html) |
+| JEEOKSHOP-DELIVERY-SERVER | [[링크]](https://heechul90.github.io/docs/api/jeeok-project/jeeokshop/delivery-server-API-%EB%AC%B8%EC%84%9C/index.html) |
 
 ## 데이터베이스 설계
 ![img_1.png](img_1.png)
