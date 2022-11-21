@@ -1,8 +1,8 @@
 package com.jeeok.jeeokshop.core.delivery.controller.request;
 
+import com.jeeok.jeeokshop.common.entity.Address;
 import com.jeeok.jeeokshop.common.exception.JsonInvalidRequest;
 import com.jeeok.jeeokshop.common.json.ErrorCode;
-import com.jeeok.jeeokshop.core.delivery.domain.Address;
 import com.jeeok.jeeokshop.core.delivery.dto.UpdateDeliveryParam;
 import lombok.*;
 
