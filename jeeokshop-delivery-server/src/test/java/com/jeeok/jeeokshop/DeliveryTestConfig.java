@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop;
 
 import com.jeeok.jeeokshop.core.delivery.repository.DeliveryQueryRepository;
+import com.jeeok.jeeokshop.core.deliveryRider.repository.DeliveryRiderQueryRepository;
 import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,10 @@ public class DeliveryTestConfig {
     @Bean
     public DeliveryQueryRepository deliveryQueryRepository() {
         return new DeliveryQueryRepository(em);
+    }
+
+    @Bean public DeliveryRiderQueryRepository deliveryRiderQueryRepository() {
+        return new DeliveryRiderQueryRepository(em);
     }
 
     @Bean

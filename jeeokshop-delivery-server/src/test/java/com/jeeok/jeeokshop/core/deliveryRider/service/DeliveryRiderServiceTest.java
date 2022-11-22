@@ -33,7 +33,7 @@ import static org.mockito.Mockito.verify;
 class DeliveryRiderServiceTest extends MockTest {
 
     //CREATE_DELIVERY_RIDER
-    public static final Address address = new Address("00283", "서울시");
+    public static final Address DELIVERY_ASSRESS = new Address("00283", "서울시");
     public static final Long MEMBER_ID_1 = 1L;
     public static final Long ORDER_ID_1 = 1L;
     public static final Long RIDER_ID_1 = 7L;
@@ -50,7 +50,7 @@ class DeliveryRiderServiceTest extends MockTest {
     public static final String EMAIL = "email";
     public static final String ROLE = "라이더";
     public static final String AUTH = "JEEOK";
-    public static final Address ADDRESS = new Address("88378", "세종시");
+    public static final Address RIDER_ADDRESS = new Address("88378", "세종시");
 
     //ERROR_MESSAGE
     public static final String DELIVERY = "Delivery";
@@ -71,7 +71,7 @@ class DeliveryRiderServiceTest extends MockTest {
     @BeforeEach
     void beforeEach() {
         delivery = Delivery.createDelivery()
-                .address(address)
+                .address(DELIVERY_ASSRESS)
                 .memberId(MEMBER_ID_1)
                 .orderId(ORDER_ID_1)
                 .build();
@@ -117,7 +117,7 @@ class DeliveryRiderServiceTest extends MockTest {
                     .role(ROLE)
                     .auth(AUTH)
                     .phoneNumber(PHONE_NUMBER.fullPhoneNumber())
-                    .address(ADDRESS)
+                    .address(RIDER_ADDRESS)
                     .build();
 
             given(memberClient.findMember(any(Long.class))).willReturn(JsonResult.OK(findRider));
@@ -212,7 +212,7 @@ class DeliveryRiderServiceTest extends MockTest {
                     .role(ROLE)
                     .auth(AUTH)
                     .phoneNumber(PHONE_NUMBER.fullPhoneNumber())
-                    .address(ADDRESS)
+                    .address(RIDER_ADDRESS)
                     .build();
 
             given(memberClient.findMember(any(Long.class))).willReturn(JsonResult.OK(findRider));
