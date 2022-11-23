@@ -1,4 +1,4 @@
-package com.jeeok.jeeokmember.common.controller;
+package com.jeeok.jeeokmember.common.error;
 
 import com.jeeok.jeeokmember.common.exception.CommonException;
 import com.jeeok.jeeokmember.common.json.JsonError;
