@@ -1,4 +1,4 @@
 FROM openjdk:11
 #VOLUME
-COPY build/libs/config-server-0.0.1-SNAPSHOT.jar config-server.jar
+COPY build/libs/config-server-1.0.0.jar config-server.jar
 ENTRYPOINT ["java", "-jar", "config-server.jar"]
