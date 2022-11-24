@@ -1,10 +1,10 @@
-package com.jeeok.discoveryservcer;
+package com.jeeok.discoveryserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DiscoveryServcerApplicationTests {
+class DiscoveryServerApplicationTests {
 
     @Test
     void contextLoads() {
