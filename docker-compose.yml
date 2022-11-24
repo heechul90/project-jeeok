@@ -1,0 +1,159 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - jeeok-network
+      -
+  kafka:
+   image: wurstmeister/kafka
+   ports:
+     - "9092:9092"
+   environment:
+     DOCKER_API_VERSION: 1.22
+     KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+     KAFKA_CREATE_TOPICS: "order:1:1"
+     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+   volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    command: redis-server --port 6379
+    hostname: redis_boot
+    labels:
+      - "name=redis"
+      - "mode-standalone"
+    ports
+     - 6379:6379
+    networks:
+      jeeok-network:
+
+  mariadb:
+    image: mariadb:10.6.10
+    container_name: mariadb
+    ports:
+      - 3307:3306
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      jeeok-network:
+
+  config:
+    container_name: config
+    build:
+      context: ./config-server/
+      dockerfile: Dockerfile
+    ports:
+      - 10000:10000
+    networks:
+      jeeok-network:
+
+  discovery:
+    container_name: discovery
+    build:
+      context: ./discovery-service/
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+    networks:
+      - jeeok-network
+    depends_on:
+      - config
+
+  apigateway:
+    container_name: api-gateway
+    build:
+      context: ./apigateway-server/
+      dockerfile: Dockerfile
+    ports:
+      - 11000:11000
+    networks:
+      jeeok-network:
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+    depends_on:
+      - discovery
+
+  member-server:
+    container_name: member-server
+    build:
+      context: ./member-server/
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - spring.config.import=optional:configserver:http://config:10000
+      - spring.datasource.url=jdbc:mariadb://localhost:3307/jeeok_member_db?allowPublicKeyRetrieval=true&useSSL=false
+      - spring.redis.host=redis
+    depends_on:
+      - config
+      - discovery
+      - redis
+      - mariadb
+
+  jeeoklog-server:
+    container_name: jeeoklog
+    build:
+      context: ./jeeoklog-server/
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - spring.datasource.url=jdbc:mariadb://localhost:3307/jeeoklog_post_db?allowPublicKeyRetrieval=true&useSSL=false
+    depends_on:
+      - config
+      - discovery
+      - mariadb
+    networks:
+      jeeok-network:
+
+  jeeokshop-store-server:
+    container_name: jeeokshop-store
+    build:
+      context: ./jeeokshop-store-server/
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - spring.datasource.url=jdbc:mariadb://localhost:3307/jeeokshop_store_db?allowPublicKeyRetrieval=true&useSSL=false
+    depends_on:
+      - config
+      - discovery
+      - mariadb
+    restart: always
+    networks:
+      jeeok-network:
+
+  jeeokshop-order-server:
+    container_name: jeeokshop-order
+    build:
+      context: ./jeeokshop-order-server
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - spring.datasource.url=jdbc:mariadb://localhost:3307/jeeokshop_store_db?allowPublicKeyRetrieval=true&useSSL=false
+      - kafka.host=127.0.0.1
+      - kafka.port=9092
+    depends_on:
+      - config
+      - discovery
+      - mariadb
+      - kafka
+
+  jeeokshop-delivery-server:
+    container_name: jeeokshop-delivery
+    build:
+      context: ./jeeokshop-delivery-server
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - spring.datasource.url=jdbc:mariadb://localhost:3307/jeeokshop_store_db?allowPublicKeyRetrieval=true&useSSL=false
+      - kafka.host=127.0.0.1
+      - kafka.port=9092
+
+networks:
+  jeeok-network:
+    driver: bridge
