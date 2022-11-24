@@ -17,6 +17,33 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
         super(Config.class);
     }
 
+    @Override
+    public GatewayFilter apply(Config config) {
+        return (exchange, chain) -> {
+
+            //Netty 비동기 방식 서버 사용시에는 ServerHttpRequest 를 사용해야 한다.
+            ServerHttpRequest request = exchange.getRequest();
+            ServerHttpResponse response = exchange.getResponse();
+
+            log.info("Global baseMessage: {}", config.getBaseMessage());
+
+            // Global pre Filter
+            if (config.isPreLogger()){
+                log.info("[GlobalFilter Start] request ID = {}, method = {}, path = {}", request.getId(), request.getMethod(), request.getPath());
+            }
+
+            //Global Post Filter
+            //비동기 방식의 단일값 전달시 Mono  사용(Webflux)
+            return chain.filter(exchange).then(Mono.fromRunnable(()->{
+
+                if (config.isPostLogger()){
+                    log.info("[GlobalFilter End] request ID = {}, method = {}, path = {}, statusCode = {}", request.getId(), request.getMethod(), request.getPath(), response.getStatusCode());
+
+                }
+            }));
+        };
+    }
+
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,30 +53,5 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
         private String baseMessage;
         private boolean preLogger;
         private boolean postLogger;
-    }
-
-    @Override
-    public GatewayFilter apply(Config config) {
-        return (exchange, chain) -> {
-            ServerHttpRequest request = exchange.getRequest(); //reactive 포함된거로 import
-            ServerHttpResponse response = exchange.getResponse();
-
-            log.info("Global com.example.scg.filter baseMessage: {}", config.getBaseMessage());
-
-            // Global pre Filter
-            if (config.isPreLogger()){
-                log.info("Global Filter Start: request id -> {}" , request.getId());
-                log.info("Global Filter Start: request path -> {}" , request.getPath());
-            }
-
-            //Global Post Filter
-            //Mono 는 webflux 에서 단일값 전송할때 Mono 값으로 전송
-            return chain.filter(exchange).then(Mono.fromRunnable(()->{
-
-                if (config.isPostLogger()){
-                    log.info("Global Filter End: response statusCode -> {}" , response.getStatusCode());
-                }
-            }));
-        };
     }
 }
