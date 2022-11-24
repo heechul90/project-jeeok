@@ -11,5 +11,5 @@ Spring Cloud Gateway(SCG) 라이브러리를 사용하여 JEEOK-PROJECT의 API G
 - JWT 토큰 체크
 - 권한 체크
   - 매니저 (/manager/**)
-  - 배달원 (/deliveryman/**)
+  - 배달원 (/rider/**)
   - 관리자 (/admin/**)
