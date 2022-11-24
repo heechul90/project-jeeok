@@ -1,6 +1,5 @@
-package com.jeeok.jeeokmember.common.error;
+package com.jeeok.jeeokmember.common.exception;
 
-import com.jeeok.jeeokmember.common.exception.CommonException;
 import com.jeeok.jeeokmember.common.json.JsonError;
 import com.jeeok.jeeokmember.common.json.JsonResult;
 import lombok.RequiredArgsConstructor;
