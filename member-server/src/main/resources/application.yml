@@ -8,6 +8,12 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:10000/
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+    sleuth:
+      sampler:
+        probability: 1.0
   messages:
     basename: messages, errors
     encoding: UTF-8
