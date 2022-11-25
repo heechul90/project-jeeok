@@ -34,6 +34,7 @@
 | Database | - MariaDB </br> - Redis |
 | Test | - Spring RestDocs </br> - JUnit5 </br> - Mock |
 | Message Queue | - Kafka |
+| Monitoring | - Spring Cloud Sleuth </br> - Zipkin |
 
 ## 시스템 아키텍처
 ![img_1.png](img_1.png)

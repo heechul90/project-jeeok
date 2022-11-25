@@ -6,6 +6,7 @@ Spring Cloud Gateway(SCG) 라이브러리를 사용하여 JEEOK-PROJECT의 API G
 | --- | --- |
 | Spring Boot | - String Boot 2.7.5 </br> - Java 11 </br> - Gradle |
 | Spring Cloud | - API Gateway </br> - Eureka Client </br> - Config Client |
+| Monitoring | - Spring Cloud Sleuth </br> - Zipkin |
 
 ##필터
 - JWT 토큰 체크

@@ -9,6 +9,7 @@
 | ORM | - JPA </br> - Querydsl |
 | Database | - MariaDB |
 | Test | - Spring RestDocs </br> - JUnit5 |
+| Monitoring | - Spring Cloud Sleuth </br> - Zipkin |
 
 ## API 문서
 | 서비스 | 설계서 |
