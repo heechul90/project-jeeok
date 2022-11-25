@@ -57,6 +57,11 @@ logging:
     root: info
     org.hibernate.SQL: debug
 
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
 token:
   access-expired-time: 3600000
   refresh-expired-time: 604800000
