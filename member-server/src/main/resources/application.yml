@@ -43,6 +43,13 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: true
 
+#actuator config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
 eureka:
   client:
     service-url:
@@ -54,7 +61,7 @@ eureka:
 
 logging:
   level:
-    root: debug
+    root: info
     org.hibernate.SQL: debug
 
 decorator:
