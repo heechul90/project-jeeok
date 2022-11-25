@@ -1,0 +1,11 @@
+version: "3.3" # 파일 규격 버전
+services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    # environment:
+    #   - STORAGE_TYPE=elasticsearch
+    #   - ES_HOSTS=localhost:9200 ## 도커로 엘라스틱 저장소 연결하는거는 다음처럼 했을때 안됐음.
+    ports:
+      - "9411:9411"
