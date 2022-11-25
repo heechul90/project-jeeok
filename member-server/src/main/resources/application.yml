@@ -9,7 +9,7 @@ spring:
   config:
     import: optional:configserver:http://localhost:10000/
   zipkin:
-    base-url: http://127.0.0.1:9411
+    base-url: http://localhost:9411
     enabled: true
   sleuth:
     sampler:
@@ -54,13 +54,13 @@ eureka:
 
 logging:
   level:
-    root: info
+    root: debug
     org.hibernate.SQL: debug
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
+#decorator:
+#  datasource:
+#    p6spy:
+#      enable-logging: true
 
 token:
   access-expired-time: 3600000
