@@ -11,9 +11,9 @@ spring:
   zipkin:
     base-url: http://127.0.0.1:9411
     enabled: true
-    sleuth:
-      sampler:
-        probability: 1.0
+  sleuth:
+    sampler:
+      probability: 1.0
   messages:
     basename: messages, errors
     encoding: UTF-8
