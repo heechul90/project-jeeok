@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 
 @Configuration
-public class P6spyConfig {
+public class P6SpyConfiguration {
 
     @PostConstruct
     public void setMessageFormat() {
-        P6SpyOptions.getActiveInstance().setLogMessageFormat(CustomP6spySqlFormat.class.getName());
+        P6SpyOptions.getActiveInstance().setLogMessageFormat(CustomP6SpySqlFormat.class.getName());
     }
 }

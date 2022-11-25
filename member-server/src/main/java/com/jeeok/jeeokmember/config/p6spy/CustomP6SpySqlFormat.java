@@ -9,9 +9,9 @@ import java.util.Stack;
 
 import static org.springframework.util.StringUtils.hasText;
 
-public class CustomP6spySqlFormat implements MessageFormattingStrategy {
+public class CustomP6SpySqlFormat implements MessageFormattingStrategy {
 
-    public static final String ALLOW_FILTER = "localhost";
+    public static final String ALLOW_FILTER = "com.jeeok.shop";
 
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
