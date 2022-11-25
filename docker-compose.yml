@@ -7,7 +7,15 @@ services:
       - "2181:2181"
     networks:
       - jeeok-network
-      -
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - jeeok-network
+
   kafka:
    image: wurstmeister/kafka
    ports:
