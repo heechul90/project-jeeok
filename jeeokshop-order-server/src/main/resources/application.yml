@@ -9,11 +9,11 @@ spring:
   config:
     import: optional:configserver:http://localhost:10000/
   zipkin:
-    base-url: http://127.0.0.1:9411
+    base-url: http://localhost:9411 #Open Zipkin 통신에 사용되는 URL
     enabled: true
   sleuth:
     sampler:
-      probability: 1.0
+      probability: 1.0 #Open Zipkin 으로 데이터를 전송하는 트랜잭션 샘플링 비율
   messages:
     basename: messages, errors
 
@@ -34,6 +34,13 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: true
 
+#actuator config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
 eureka:
   client:
     service-url:
@@ -47,6 +54,11 @@ logging:
   level:
     root: info
     org.hibernate.SQL: debug
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
 kafka:
   host: 127.0.0.1
