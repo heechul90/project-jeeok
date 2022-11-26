@@ -30,6 +30,7 @@ public class Member extends BaseTimeEntity {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RoleType roleType;
 
     @Enumerated(EnumType.STRING)

@@ -6,9 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,29 +29,48 @@ public class GlobalExceptionHandler {
      * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public JsonResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e, HttpServletRequest request) {
-       //TODO 메시지 네개의 코드로 가져오는 걸로 바꿔야 한다.
-
+    public ResponseEntity<JsonResult> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e, HttpServletRequest request) {
         List<JsonError> errors = e.getFieldErrors().stream()
                 .map(error -> JsonError.builder()
                         .fieldName(error.getField())
                         .errorMessage(messageSource.getMessage(error.getCodes()[1], error.getArguments(), request.getLocale()))
                         .build()
                 ).collect(Collectors.toList());
-        return JsonResult.ERROR(HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(JsonResult.ERROR(HttpStatus.BAD_REQUEST.getReasonPhrase(), errors));
+    }
+
+    /**
+     * enum type 일치하지 않아 binding 못할 경우 발생
+     * @RequestParam eunm 으로 binding 못했을 경우 발생
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<JsonResult> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
+        System.out.println("e.getName() = " + e.getName());
+        List<JsonError> errors = List.of(
+                JsonError.builder()
+                        .fieldName(e.getName())
+                        .errorMessage(messageSource.getMessage("enum.type.mismatch", null, request.getLocale()))
+                        .build()
+        );
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(JsonResult.ERROR(HttpStatus.BAD_REQUEST.getReasonPhrase(), errors));
     }
 
     /**
      * custom errors
      */
     @ExceptionHandler(CommonException.class)
-    public JsonResult commonExceptionHandler(CommonException e, HttpServletRequest request) {
+    public ResponseEntity<JsonResult> commonExceptionHandler(CommonException e, HttpServletRequest request) {
         List<JsonError> jsonErrors = e.getErrorCodes().stream()
                 .map(code -> JsonError.builder()
                         .fieldName(code.getFieldName())
                         .errorMessage(messageSource.getMessage(code.getErrorCode(), code.getArguments(), request.getLocale()))
                         .build()
                 ).collect(Collectors.toList());
-        return JsonResult.ERROR(e.getMessage(), jsonErrors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(JsonResult.ERROR(e.getMessage(), jsonErrors));
     }
 }
