@@ -1,6 +1,7 @@
 package com.jeeok.jeeokmember.core.auth.service;
 
 import com.jeeok.jeeokmember.core.member.domain.Member;
+import com.jeeok.jeeokmember.core.member.exception.MemberAlreadyExist;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class AuthService {
     @Transactional
     public Member signup(Member member) {
         if (memberRepository.existsByEmail(member.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 회원입니다.");
+            throw new MemberAlreadyExist();
         }
         return memberRepository.save(member);
     }
