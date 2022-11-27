@@ -1,10 +1,10 @@
 package com.jeeok.jeeokmember.core.member.service;
 
-import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.member.domain.Member;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
+import com.jeeok.jeeokmember.core.member.exception.MemberNotFound;
 import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
-
-    public static final String MEMBER = "Member";
 
     private final MemberQueryRepository memberQueryRepository;
     private final MemberRepository memberRepository;
@@ -37,7 +35,7 @@ public class MemberService {
      */
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
+                .orElseThrow(() -> new MemberNotFound(memberId));
     }
 
     /**
@@ -63,7 +61,7 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, UpdateMemberParam param) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
+                .orElseThrow(() -> new MemberNotFound(memberId));
         findMember.updateMember(param);
     }
 
@@ -73,7 +71,7 @@ public class MemberService {
     @Transactional
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound(MEMBER, memberId));
+                .orElseThrow(() -> new MemberNotFound(memberId));
         memberRepository.delete(findMember);
     }
 }

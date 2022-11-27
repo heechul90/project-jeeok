@@ -2,12 +2,14 @@ package com.jeeok.jeeokmember.core.member.service;
 
 import com.jeeok.jeeokmember.common.entity.Address;
 import com.jeeok.jeeokmember.common.entity.PhoneNumber;
-import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.core.MockTest;
-import com.jeeok.jeeokmember.core.member.domain.*;
+import com.jeeok.jeeokmember.core.member.domain.AuthType;
+import com.jeeok.jeeokmember.core.member.domain.Member;
+import com.jeeok.jeeokmember.core.member.domain.RoleType;
 import com.jeeok.jeeokmember.core.member.dto.MemberSearchCondition;
 import com.jeeok.jeeokmember.core.member.dto.SaveMemberParam;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
+import com.jeeok.jeeokmember.core.member.exception.MemberNotFound;
 import com.jeeok.jeeokmember.core.member.repository.MemberQueryRepository;
 import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static com.jeeok.jeeokmember.common.constant.GlobalEntityConstant.MEMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,16 +53,12 @@ class MemberServiceTest extends MockTest {
     public static final Address UPDATE_ADDRESS = new Address("99802", "세종시");
 
     //ERROR_MESSAGE
-    public static final String MEMBER = "Member";
     public static final Long NOT_FOUND_ID = 1L;
-    public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 ";
-    public static final String HAS_MESSAGE_ENDING_WITH = "id=";
+    public static final String HAS_MESSAGE = "존재하지 않는 회원입니다. 회원 고유번호=" + NOT_FOUND_ID;
 
-    @InjectMocks MemberService memberService;
-
-    @Mock MemberQueryRepository memberQueryRepository;
-
-    @Mock MemberRepository memberRepository;
+    @InjectMocks protected MemberService memberService;
+    @Mock protected MemberQueryRepository memberQueryRepository;
+    @Mock protected MemberRepository memberRepository;
 
     private Member getMember(String email, String password, String name, RoleType roleType, AuthType authType, PhoneNumber phoneNumber, Address address) {
         return Member.createMember()
@@ -201,13 +201,12 @@ class MemberServiceTest extends MockTest {
         @DisplayName("멤버 단건 조회_예외")
         void findMember_exception() {
             //given
-            given(memberRepository.findById(any(Long.class))).willThrow(new EntityNotFound(MEMBER, NOT_FOUND_ID));
+            given(memberRepository.findById(any(Long.class))).willThrow(new MemberNotFound(NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> memberService.findMember(NOT_FOUND_ID))
-                    .isInstanceOf(EntityNotFound.class)
-                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
-                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+                    .isInstanceOf(MemberNotFound.class)
+                    .hasMessage(HAS_MESSAGE);
 
             //then
             verify(memberRepository, times(1)).findById(any(Long.class));
@@ -217,13 +216,12 @@ class MemberServiceTest extends MockTest {
         @DisplayName("멤버 수정_예외")
         void updateMember_exception() {
             //given
-            given(memberRepository.findById(any(Long.class))).willThrow(new EntityNotFound(MEMBER, NOT_FOUND_ID));
+            given(memberRepository.findById(any(Long.class))).willThrow(new MemberNotFound(NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> memberService.updateMember(NOT_FOUND_ID, any(UpdateMemberParam.class)))
-                    .isInstanceOf(EntityNotFound.class)
-                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
-                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+                    .isInstanceOf(MemberNotFound.class)
+                    .hasMessage(HAS_MESSAGE);
 
             //then
             verify(memberRepository, times(1)).findById(any(Long.class));
@@ -233,13 +231,12 @@ class MemberServiceTest extends MockTest {
         @DisplayName("멤버 수정_예외")
         void deleteMember_exception() {
             //given
-            given(memberRepository.findById(any(Long.class))).willThrow(new EntityNotFound(MEMBER, NOT_FOUND_ID));
+            given(memberRepository.findById(any(Long.class))).willThrow(new MemberNotFound(NOT_FOUND_ID));
 
             //expected
             assertThatThrownBy(() -> memberService.deleteMember(NOT_FOUND_ID))
-                    .isInstanceOf(EntityNotFound.class)
-                    .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH + MEMBER)
-                    .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + NOT_FOUND_ID);
+                    .isInstanceOf(MemberNotFound.class)
+                    .hasMessage(HAS_MESSAGE);
 
             //then
             verify(memberRepository, times(1)).findById(any(Long.class));

@@ -1,14 +1,14 @@
 package com.jeeok.jeeokmember.core.auth.service;
 
-import com.jeeok.jeeokmember.common.exception.EntityNotFound;
 import com.jeeok.jeeokmember.common.utils.JwtTokenProvider;
-import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import com.jeeok.jeeokmember.core.auth.dto.JwtTokenDto;
 import com.jeeok.jeeokmember.core.auth.exception.AccessTokenNotValidException;
 import com.jeeok.jeeokmember.core.auth.exception.RefreshTokenNotValidException;
 import com.jeeok.jeeokmember.core.auth.redis.RefreshToken;
 import com.jeeok.jeeokmember.core.auth.repository.RefreshTokenRedisRepository;
+import com.jeeok.jeeokmember.core.member.domain.Member;
+import com.jeeok.jeeokmember.core.member.exception.MemberNotFound;
+import com.jeeok.jeeokmember.core.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +37,7 @@ public class RefreshTokenService {
     @Transactional
     public void updateRefreshToken(Long memberId, String uuid) {
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFound("Member", memberId));
+                .orElseThrow(() -> new MemberNotFound(memberId));
 
         refreshTokenRedisRepository.save(RefreshToken.of(findMember.getId().toString(), uuid));
     }
@@ -60,7 +60,7 @@ public class RefreshTokenService {
         }
 
         Member findMember = memberRepository.findById(Long.valueOf(memberId))
-                .orElseThrow(() -> new EntityNotFound("Member", Long.valueOf(memberId)));
+                .orElseThrow(() -> new MemberNotFound(Long.valueOf(memberId)));
 
         //access token
         Authentication authentication = getAuthentication(findMember.getEmail());

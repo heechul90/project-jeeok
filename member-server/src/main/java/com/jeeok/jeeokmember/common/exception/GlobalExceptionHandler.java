@@ -2,10 +2,14 @@ package com.jeeok.jeeokmember.common.exception;
 
 import com.jeeok.jeeokmember.common.json.JsonError;
 import com.jeeok.jeeokmember.common.json.JsonResult;
+import com.jeeok.jeeokmember.common.utils.CookieProvider;
+import com.jeeok.jeeokmember.core.auth.exception.RefreshTokenNotValidException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private final MessageSource messageSource;
+    private final CookieProvider cookieProvider;
 
     /**
      * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
@@ -57,6 +62,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(JsonResult.ERROR(HttpStatus.BAD_REQUEST.getReasonPhrase(), errors));
+    }
+
+    /**
+     * refreshTokenNotValidException
+     */
+    @ExceptionHandler(RefreshTokenNotValidException.class)
+    public ResponseEntity<JsonResult> refreshTokenNotValidException(RefreshTokenNotValidException e) {
+        //쿠키 삭제
+        ResponseCookie responseCookie = cookieProvider.removeRefreshTokenCookie();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(e.getJsonResult());
     }
 
     /**
