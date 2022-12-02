@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.core.notification.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +23,12 @@ public class Notification {
 
     @Enumerated(EnumType.STRING)
     private Yn readYn;
+
+    @Builder(builderMethodName = "createNotification")
+    public Notification(Long memberId, String title, String message, Yn readYn) {
+        this.memberId = memberId;
+        this.title = title;
+        this.message = message;
+        this.readYn = Yn.N;
+    }
 }
