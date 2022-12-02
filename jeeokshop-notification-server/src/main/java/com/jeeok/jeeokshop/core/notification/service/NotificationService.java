@@ -1,5 +1,7 @@
 package com.jeeok.jeeokshop.core.notification.service;
 
+import com.jeeok.jeeokshop.client.store.FindItemResponse;
+import com.jeeok.jeeokshop.client.store.StoreClient;
 import com.jeeok.jeeokshop.core.notification.domain.Notification;
 import com.jeeok.jeeokshop.core.notification.dto.NotificationSearchCondition;
 import com.jeeok.jeeokshop.core.notification.dto.SaveNotificationParam;
@@ -22,6 +24,8 @@ public class NotificationService {
     private final NotificationQueryRepository notificationQueryRepository;
     private final NotificationRepository notificationRepository;
 
+    private final StoreClient storeClient;
+
     /**
      * 알람 목록 조회
      */
@@ -42,20 +46,27 @@ public class NotificationService {
      */
     @Transactional
     public Notification saveNotification(SaveNotificationParam param) {
+        FindItemResponse findItem = storeClient.findItem(param.getItemId()).getData();
+
+        String storeName = "[" + findItem.getStoreName() + "] ";
+        String itemNam = "[" + findItem.getItemName() + "] ";
+
         Notification notification = Notification.createNotification()
                 .memberId(param.getMemberId())
-                .title(param.getTitle())
-                .message(param.getMessage())
+                .title(storeName + param.getTitle())
+                .message(storeName + itemNam + param.getMessage())
                 .build();
         return notificationRepository.save(notification);
 
     }
 
     /**
-     * 알람 수정
-     */
-
-    /**
      * 알람 삭제
      */
+    @Transactional
+    public void deleteNotification(Long notificationId) {
+        Notification findNotification = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new NotificationNotFound(notificationId));
+        notificationRepository.delete(findNotification);
+    }
 }
