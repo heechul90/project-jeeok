@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum DeliveryStatus {
 
     READY("배송준비"),
-    DELIVERY("배송중"),
+    DELIVERY("배송시작"),
     COMPLETE("배송완료"),
     CANCEL("취소");
 
