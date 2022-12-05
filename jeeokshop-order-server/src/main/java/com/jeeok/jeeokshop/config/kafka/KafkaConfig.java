@@ -24,7 +24,6 @@ public class KafkaConfig {
 
     public KafkaConfig(@Value("${kafka.host}") String kafkaServerHost,
                        @Value("${kafka.port}") String kafkaServerPort) {
-        System.out.println("kafkaServerHost = " + kafkaServerHost);
         this.kafkaServerHost = kafkaServerHost;
         this.kafkaServerPort = kafkaServerPort;
     }
