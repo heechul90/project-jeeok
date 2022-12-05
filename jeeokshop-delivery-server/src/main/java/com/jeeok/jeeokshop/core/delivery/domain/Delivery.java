@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "delivery")
 @Getter
+@EntityListeners(value = {DeliveryListener.class})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
