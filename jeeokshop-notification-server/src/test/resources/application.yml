@@ -1,0 +1,52 @@
+server:
+  port: 12000
+
+spring:
+  application:
+    name: member-server
+  profiles:
+    active: test
+  config:
+    import: optional:configserver:http://localhost:10000/
+  messages:
+    basename: messages, errors
+    encoding: UTF-8
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: google-client-id
+            client-secret: google-client-secret
+
+  datasource:
+    url: jdbc:mariadb://localhost:3307/jeeokshop_notification_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: jeeok_user
+    password: jeeok_pass
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        ues_sql_comment: true
+        default_batch_fetch_size: 1000
+    open-in-view: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: debug
