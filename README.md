@@ -1,10 +1,10 @@
 # [JEEOK-PROJECT] Spring Cloud 를 활용한 Back-End 개발 프로젝트
 
-## Client Server
+<!-- ## Client Server
 | 서버 | 설명 |
 | --- | --- |
 | [JEEOK-CLIENT-VUE](https://github.com/heechul90/project-jeeok/tree/main/jeeok-client-vue) | Front end 서버 |
-
+-->
 ## API Gateway Server
 | 서버 | 설명 |
 | --- | --- |
