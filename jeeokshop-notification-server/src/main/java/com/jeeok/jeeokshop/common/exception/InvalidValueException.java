@@ -1,17 +1,14 @@
 package com.jeeok.jeeokshop.common.exception;
 
-import org.springframework.http.HttpStatus;
-
-import java.util.List;
+import com.jeeok.jeeokshop.common.exception.dto.ErrorCode;
 
 public class InvalidValueException extends BusinessException {
 
-    public InvalidValueException(String message, List<ErrorCode> errorCodes) {
-        super(message, errorCodes);
+    public InvalidValueException(String value) {
+        super(value, ErrorCode.INVALID_INPUT_VALUE);
     }
 
-    @Override
-    public HttpStatus httpStatus() {
-        return HttpStatus.BAD_REQUEST;
+    public InvalidValueException(String value, ErrorCode errorCode) {
+        super(value, errorCode);
     }
 }

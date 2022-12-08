@@ -1,7 +1,6 @@
 package com.jeeok.jeeokshop.client.exception;
 
 import com.jeeok.jeeokshop.common.exception.BusinessException;
-import com.jeeok.jeeokshop.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;

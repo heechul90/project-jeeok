@@ -16,8 +16,6 @@ public class JsonResult<T> {
     private Code code;
     private String message;
 
-    private List<ErrorResponse> errors;
-
     @Nullable
     private T data;
 
@@ -33,23 +31,6 @@ public class JsonResult<T> {
                 .transaction_time(LocalDateTime.now())
                 .code(Code.SUCCESS)
                 .data(data)
-                .build();
-    }
-
-    public static <T> JsonResult<T> ERROR(String message) {
-        return (JsonResult<T>) JsonResult.builder()
-                .transaction_time(LocalDateTime.now())
-                .code(Code.ERROR)
-                .message(message)
-                .build();
-    }
-
-    public static <T> JsonResult<T> ERROR(String message, List<ErrorResponse> errors) {
-        return (JsonResult<T>) JsonResult.builder()
-                .transaction_time(LocalDateTime.now())
-                .code(Code.ERROR)
-                .message(message)
-                .errors(errors)
                 .build();
     }
 }

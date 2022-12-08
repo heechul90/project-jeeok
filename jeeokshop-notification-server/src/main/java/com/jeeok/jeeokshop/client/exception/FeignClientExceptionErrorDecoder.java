@@ -1,7 +1,6 @@
 package com.jeeok.jeeokshop.client.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jeeok.jeeokshop.common.exception.ErrorCode;
 import com.jeeok.jeeokshop.common.json.JsonResult;
 import feign.Response;
 import feign.codec.ErrorDecoder;

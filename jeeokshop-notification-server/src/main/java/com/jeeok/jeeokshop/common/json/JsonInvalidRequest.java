@@ -1,6 +1,5 @@
 package com.jeeok.jeeokshop.common.json;
 
-import com.jeeok.jeeokshop.common.exception.ErrorCode;
 import com.jeeok.jeeokshop.common.exception.InvalidValueException;
 
 import java.util.List;

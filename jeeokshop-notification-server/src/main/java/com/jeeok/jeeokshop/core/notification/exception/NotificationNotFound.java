@@ -1,7 +1,6 @@
 package com.jeeok.jeeokshop.core.notification.exception;
 
 import com.jeeok.jeeokshop.common.exception.EntityNotFoundException;
-import com.jeeok.jeeokshop.common.exception.ErrorCode;
 
 import java.util.List;
 
