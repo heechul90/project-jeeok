@@ -2,7 +2,9 @@ package com.jeeok.jeeokmember;
 
 import com.jeeok.jeeokmember.common.entity.Address;
 import com.jeeok.jeeokmember.common.entity.PhoneNumber;
-import com.jeeok.jeeokmember.core.member.domain.*;
+import com.jeeok.jeeokmember.core.member.domain.AuthType;
+import com.jeeok.jeeokmember.core.member.domain.Member;
+import com.jeeok.jeeokmember.core.member.domain.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

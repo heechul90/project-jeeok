@@ -1,12 +1,12 @@
 package com.jeeok.jeeokmember.core.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.common.json.Code;
 import com.jeeok.jeeokmember.core.IntegrationTest;
 import com.jeeok.jeeokmember.core.member.controller.request.MemberEditRequest;
 import com.jeeok.jeeokmember.core.member.domain.AuthType;
 import com.jeeok.jeeokmember.core.member.domain.Member;
-import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.domain.RoleType;
 import com.jeeok.jeeokmember.core.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
