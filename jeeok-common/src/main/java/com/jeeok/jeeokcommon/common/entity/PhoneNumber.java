@@ -1,4 +1,4 @@
-package com.jeeok.jeeokmember.common.entity;
+package com.jeeok.jeeokcommon.common.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

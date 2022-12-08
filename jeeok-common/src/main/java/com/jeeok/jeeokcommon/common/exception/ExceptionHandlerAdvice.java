@@ -1,7 +1,7 @@
 package com.jeeok.jeeokcommon.common.exception;
 
-import com.jeeok.jeeokshop.common.exception.dto.ErrorCode;
-import com.jeeok.jeeokshop.common.exception.dto.ErrorResponse;
+import com.jeeok.jeeokcommon.common.exception.dto.ErrorCode;
+import com.jeeok.jeeokcommon.common.exception.dto.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;

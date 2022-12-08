@@ -1,6 +1,6 @@
 package com.jeeok.jeeokcommon.common.exception;
 
-import com.jeeok.jeeokshop.common.exception.dto.ErrorCode;
+import com.jeeok.jeeokcommon.common.exception.dto.ErrorCode;
 import lombok.Getter;
 
 @Getter
