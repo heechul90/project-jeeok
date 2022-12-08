@@ -13,8 +13,9 @@ import java.util.List;
 public class JsonResult<T> {
 
     private LocalDateTime transaction_time;
-    private Code code;
     private String message;
+    private int status;
+    private Code code;
 
     @Nullable
     private T data;

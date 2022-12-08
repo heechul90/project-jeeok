@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
 
-    private LocalDateTime timestamp;
+    private LocalDateTime transaction_time;
     private String message;
     private int status;
     private String code;
@@ -25,7 +25,7 @@ public class ErrorResponse {
     private static final String DEFAULT_ERROR_MESSAGE = "ERROR";
 
     private ErrorResponse(final ErrorCode code, final List<FieldError> errors, MessageSource messageSource) {
-        this.timestamp = LocalDateTime.now();
+        this.transaction_time = LocalDateTime.now();
         this.message = messageSource.getMessage(code.getMessage(), new Object[]{}, DEFAULT_ERROR_MESSAGE, LocaleContextHolder.getLocale());
         this.status = code.getStatus();
         this.code = code.getCode();
@@ -33,7 +33,7 @@ public class ErrorResponse {
     }
 
     private ErrorResponse(final ErrorCode code, MessageSource messageSource) {
-        this.timestamp = LocalDateTime.now();
+        this.transaction_time = LocalDateTime.now();
         this.message = messageSource.getMessage(code.getMessage(), new Object[]{}, DEFAULT_ERROR_MESSAGE, LocaleContextHolder.getLocale());
         this.status = code.getStatus();
         this.code = code.getCode();
@@ -41,7 +41,7 @@ public class ErrorResponse {
     }
 
     private ErrorResponse(final ErrorCode code, String customMessage) {
-        this.timestamp = LocalDateTime.now();
+        this.transaction_time = LocalDateTime.now();
         this.message = customMessage;
         this.status = code.getStatus();
         this.code = code.getCode();
