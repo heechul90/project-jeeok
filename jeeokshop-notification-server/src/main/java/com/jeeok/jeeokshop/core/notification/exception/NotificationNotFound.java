@@ -7,9 +7,9 @@ import java.util.List;
 public class NotificationNotFound extends EntityNotFoundException {
 
 
-    public static final String MESSAGE = "Notification Not Found";
+    public static final String MESSAGE = "Notification Entity Not Found. id=";
 
-    public NotificationNotFound(Long entityId) {
-        super(MESSAGE, List.of(new ErrorCode("notification", "entity.notification", new Object[]{entityId})));
+    public NotificationNotFound(Long id) {
+        super(MESSAGE + id);
     }
 }
