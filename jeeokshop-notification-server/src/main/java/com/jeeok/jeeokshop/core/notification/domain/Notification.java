@@ -1,5 +1,6 @@
 package com.jeeok.jeeokshop.core.notification.domain;
 
+import com.jeeok.jeeokshop.common.entity.Yn;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
