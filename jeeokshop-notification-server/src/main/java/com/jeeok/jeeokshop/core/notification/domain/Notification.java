@@ -26,7 +26,7 @@ public class Notification {
     private Yn readYn;
 
     @Builder(builderMethodName = "createNotification")
-    public Notification(Long memberId, String title, String message, Yn readYn) {
+    public Notification(Long memberId, String title, String message) {
         this.memberId = memberId;
         this.title = title;
         this.message = message;
