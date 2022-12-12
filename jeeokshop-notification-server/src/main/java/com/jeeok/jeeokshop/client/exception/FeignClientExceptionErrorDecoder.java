@@ -1,6 +1,7 @@
 package com.jeeok.jeeokshop.client.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jeeok.jeeokshop.common.exception.dto.ErrorCode;
 import com.jeeok.jeeokshop.common.json.JsonResult;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -27,9 +28,9 @@ public class FeignClientExceptionErrorDecoder implements ErrorDecoder {
             } catch (IOException e) {
                 String catchErrorMessage = "Error Deserializing response body from failed feign request response.";
                 log.warn(methodKey + catchErrorMessage, e);
-                return new FeignClientException(new ErrorCode("feign cliend", "common.feign.error", new Object[]{}));
+                return new FeignClientException(ErrorCode.BUSINESS_CUSTOM_MESSAGE, "관리자에게 문의하세요");
             }
         }
-        return new FeignClientException(message, new ErrorCode("feign cliend", "common.feign.error", new Object[]{}));
+        return new FeignClientException(ErrorCode.BUSINESS_CUSTOM_MESSAGE, "관리자에게 문의하세요.");
     }
 }
