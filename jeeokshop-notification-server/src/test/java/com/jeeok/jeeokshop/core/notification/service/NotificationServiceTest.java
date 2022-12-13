@@ -47,6 +47,7 @@ class NotificationServiceTest extends MockTest {
 
     //ERROR MESSAGE
     public static final Long NOT_FOUND_NOTIFICATION_ID_0 = 0L;
+    public static final String NOT_FOUND_MESSAGE = "Notification Entity Not Found. id=";
 
     @InjectMocks protected NotificationService notificationService;
     @Mock protected NotificationRepository notificationRepository;
@@ -158,7 +159,19 @@ class NotificationServiceTest extends MockTest {
             //expected
             assertThatThrownBy(() -> notificationService.findNotification(NOT_FOUND_NOTIFICATION_ID_0))
                     .isInstanceOf(NotificationNotFound.class)
-                    .hasMessage("Notification Entity Not Found. id=" + NOT_FOUND_NOTIFICATION_ID_0);
+                    .hasMessage(NOT_FOUND_MESSAGE + NOT_FOUND_NOTIFICATION_ID_0);
+        }
+
+        @Test
+        @DisplayName("알림 삭제_예외")
+        void deleteNotification_exception() {
+            //given
+            given(notificationRepository.findById(any(Long.class))).willThrow(new NotificationNotFound(NOT_FOUND_NOTIFICATION_ID_0));
+
+            //expected
+            assertThatThrownBy(() -> notificationService.deleteNotification(NOT_FOUND_NOTIFICATION_ID_0))
+                    .isInstanceOf(NotificationNotFound.class)
+                    .hasMessage(NOT_FOUND_MESSAGE + NOT_FOUND_NOTIFICATION_ID_0);
         }
     }
 }
