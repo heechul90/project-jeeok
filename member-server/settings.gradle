@@ -1,4 +1,4 @@
 rootProject.name = 'member-server'
 
-include ':jeeok-common'
-project(':jeeok-common').projectDir = new File(settingsDir, '../jeeok-common')
+//include ':jeeok-common'
+//project(':jeeok-common').projectDir = new File(settingsDir, '../jeeok-common')

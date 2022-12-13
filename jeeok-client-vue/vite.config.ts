@@ -12,9 +12,11 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  /*server: {
+  server: {
     proxy: {
-      "/api": "http://localhost:11000",
+      "/api/posts" : {
+        target: "http://localhost/JEEOKLOG-SERVER/api/"
+      },
     },
-  },*/
+  },
 });
