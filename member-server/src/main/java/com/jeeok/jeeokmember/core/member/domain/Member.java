@@ -1,7 +1,7 @@
 package com.jeeok.jeeokmember.core.member.domain;
 
 import com.jeeok.jeeokmember.common.entity.Address;
-import com.jeeok.jeeokmember.common.entity.BaseTimeEntity;
+import com.jeeok.jeeokmember.common.entity.BaseEntity;
 import com.jeeok.jeeokmember.common.entity.PhoneNumber;
 import com.jeeok.jeeokmember.core.member.dto.UpdateMemberParam;
 import lombok.AccessLevel;
@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
