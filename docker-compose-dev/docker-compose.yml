@@ -21,3 +21,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
         #restart: unless-stopped
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: heech-zipkin
+    ports:
+      - "9411:9411"
